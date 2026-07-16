@@ -85,7 +85,7 @@
             border: 2px solid #FFD6E2;
         }
 
-        .preview-logo {
+        .preview-logo, .preview-jersey {
             max-width: 150px;
             max-height: 150px;
             object-fit: contain;
@@ -112,7 +112,6 @@
 <body class="bg-gradient-pink min-h-screen py-10 px-4">
 
     <div class="container mx-auto max-w-2xl">
-        <!-- Tombol Kembali -->
         <a href="index.html" class="inline-flex items-center text-pinkMain font-semibold mb-6 hover:text-pinkDark transition-colors">
             <i class="fa fa-arrow-left mr-2"></i> Kembali ke Beranda
         </a>
@@ -124,7 +123,6 @@
             </div>
 
             <form id="formDaftar" class="space-y-5" enctype="multipart/form-data">
-                <!-- Data Tim -->
                 <div class="bg-pinkLight/20 p-5 rounded-xl">
                     <h3 class="font-bold text-pinkMain mb-4 flex items-center">
                         <i class="fa fa-info-circle mr-2"></i> DATA TIM
@@ -143,7 +141,7 @@
                             <input type="tel" id="waKapten" required class="w-full px-4 py-3 rounded-lg input-style outline-none" placeholder="Contoh: 081234567890">
                         </div>
 
-                        <!-- Kolom Unggah Logo Tim -->
+                        <!-- Logo Tim -->
                         <div>
                             <label class="block mb-2 font-semibold text-gray-700">Logo Tim</label>
                             <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('logoTim').click()">
@@ -157,7 +155,21 @@
                             </div>
                         </div>
 
-                        <!-- Bagian Bukti Share Link (Wajib 5 Foto) -->
+                        <!-- ✅ KOLOM JERSEY TIM (DI BAWAH LOGO) -->
+                        <div>
+                            <label class="block mb-2 font-semibold text-gray-700">Foto Jersey Tim</label>
+                            <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('jerseyTim').click()">
+                                <input type="file" id="jerseyTim" name="jerseyTim" accept="image/*" class="hidden" required>
+                                <div id="promptJersey">
+                                    <i class="fa fa-shield text-3xl text-pinkMain mb-2"></i>
+                                    <p class="text-pinkDark font-medium">Klik di sini untuk pilih foto jersey</p>
+                                    <p class="text-sm text-gray-500 mt-1">Format: JPG/PNG</p>
+                                </div>
+                                <img id="previewJersey" class="preview-jersey hidden">
+                            </div>
+                        </div>
+
+                        <!-- Bukti Share Link -->
                         <div>
                             <label class="block mb-2 font-semibold text-gray-700">Bukti Share Link <span class="text-red-500">*(Wajib 5 Foto)</span></label>
                             <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('buktiShare').click()">
@@ -179,122 +191,67 @@
                     <h3 class="font-bold text-pinkMain mb-4 flex items-center">
                         <i class="fa fa-users mr-2"></i> DATA ANGGOTA TIM
                     </h3>
-
                     <div class="space-y-5">
-                        <!-- Pemain 1 -->
                         <div class="p-3 bg-white/70 rounded-lg">
                             <p class="font-semibold text-pinkDark mb-3">Pemain 1</p>
                             <div class="grid md:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
-                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
-                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
-                                </div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label><input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required></div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label><input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08..."></div>
                             </div>
                         </div>
-
-                        <!-- Pemain 2 -->
                         <div class="p-3 bg-white/70 rounded-lg">
                             <p class="font-semibold text-pinkDark mb-3">Pemain 2</p>
                             <div class="grid md:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
-                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
-                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
-                                </div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label><input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required></div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label><input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08..."></div>
                             </div>
                         </div>
-
-                        <!-- Pemain 3 -->
                         <div class="p-3 bg-white/70 rounded-lg">
                             <p class="font-semibold text-pinkDark mb-3">Pemain 3</p>
                             <div class="grid md:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
-                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
-                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
-                                </div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label><input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required></div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label><input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08..."></div>
                             </div>
                         </div>
-
-                        <!-- Pemain 4 -->
                         <div class="p-3 bg-white/70 rounded-lg">
                             <p class="font-semibold text-pinkDark mb-3">Pemain 4</p>
                             <div class="grid md:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
-                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
-                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
-                                </div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label><input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required></div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label><input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08..."></div>
                             </div>
                         </div>
-
-                        <!-- Pemain 5 -->
                         <div class="p-3 bg-white/70 rounded-lg">
                             <p class="font-semibold text-pinkDark mb-3">Pemain 5 (Cadangan)</p>
                             <div class="grid md:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
-                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
-                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
-                                </div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label><input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required></div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label><input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08..."></div>
                             </div>
                         </div>
-
-                        <!-- Pemain 6 -->
                         <div class="p-3 bg-white/70 rounded-lg">
                             <p class="font-semibold text-pinkDark mb-3">Pemain 6 (Cadangan)</p>
                             <div class="grid md:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
-                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
-                                </div>
-                                <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
-                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
-                                </div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label><input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required></div>
+                                <div><label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label><input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08..."></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ✅ BAGIAN BARU: PEMBAYARAN & BUKTI TRANSFER (PALING BAWAH) -->
+                <!-- Pembayaran -->
                 <div class="bg-pinkLight/20 p-5 rounded-xl">
                     <h3 class="font-bold text-pinkMain mb-4 flex items-center">
                         <i class="fa fa-credit-card mr-2"></i> PEMBAYARAN & BUKTI TRANSFER
                         <span class="ml-2 text-sm font-normal text-gray-500">(Opsional)</span>
                     </h3>
-
-                    <!-- Tampilkan QRIS -->
                     <div class="mb-5">
                         <p class="text-center font-semibold text-gray-700 mb-3">Scan QRIS Berikut</p>
-                        <!-- Ganti src dengan link foto QRIS milikmu -->
                         <img src="LINK_FOTO_QRIS_KAMU.jpg" alt="QRIS Pembayaran" class="qris-img">
                     </div>
-
-                    <!-- Nomor Tujuan -->
                     <div class="bg-white/70 rounded-lg p-4 mb-4 space-y-2">
                         <p class="font-semibold text-pinkDark mb-2">Atau Transfer Ke:</p>
                         <p class="text-gray-700"><i class="fa fa-wallet mr-2 text-pinkMain"></i> Dana: <strong>0812-xxxx-xxxx</strong> a.n. ..........</p>
                         <p class="text-gray-700"><i class="fa fa-credit-card mr-2 text-pinkMain"></i> GoPay: <strong>0812-xxxx-xxxx</strong> a.n. ..........</p>
                     </div>
-
-                    <!-- Upload Bukti Transfer -->
                     <div>
                         <label class="block mb-2 font-semibold text-gray-700">Unggah Bukti Transfer</label>
                         <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('buktiTransfer').click()">
@@ -309,7 +266,6 @@
                     </div>
                 </div>
 
-                <!-- Tombol Kirim -->
                 <button type="submit" class="btn-pink w-full py-4 rounded-xl text-white font-bold text-lg mt-6">
                     <i class="fa fa-send mr-2"></i> KIRIM PENDAFTARAN
                 </button>
@@ -318,165 +274,126 @@
     </div>
 
     <script>
-        // Pratinjau Logo Tim
+        let fileLogo = null, fileJersey = null, fileBukti = [], fileBuktiTransfer = null;
+
+        // Logo Tim
         const inputLogo = document.getElementById('logoTim');
         const promptLogo = document.getElementById('promptLogo');
         const previewLogo = document.getElementById('previewLogo');
-        let fileLogo = null;
-
-        inputLogo.addEventListener('change', function(e) {
+        inputLogo.addEventListener('change', e => {
             fileLogo = e.target.files[0];
-            if (fileLogo) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    previewLogo.src = event.target.result;
-                    previewLogo.classList.remove('hidden');
-                    promptLogo.classList.add('hidden');
-                }
-                reader.readAsDataURL(fileLogo);
+            if(fileLogo) {
+                const r = new FileReader();
+                r.onload = ev => { previewLogo.src = ev.target.result; previewLogo.classList.remove('hidden'); promptLogo.classList.add('hidden'); }
+                r.readAsDataURL(fileLogo);
             }
         });
 
-        // Pratinjau Bukti Share Link
+        // ✅ Jersey Tim
+        const inputJersey = document.getElementById('jerseyTim');
+        const promptJersey = document.getElementById('promptJersey');
+        const previewJersey = document.getElementById('previewJersey');
+        inputJersey.addEventListener('change', e => {
+            fileJersey = e.target.files[0];
+            if(fileJersey) {
+                const r = new FileReader();
+                r.onload = ev => { previewJersey.src = ev.target.result; previewJersey.classList.remove('hidden'); promptJersey.classList.add('hidden'); }
+                r.readAsDataURL(fileJersey);
+            }
+        });
+
+        // Bukti Share Link
         const inputBukti = document.getElementById('buktiShare');
         const promptBukti = document.getElementById('promptBukti');
         const previewBukti = document.getElementById('previewBukti');
         const pesanError = document.getElementById('pesanError');
-        let fileBukti = [];
-
-        inputBukti.addEventListener('change', function(e) {
+        inputBukti.addEventListener('change', e => {
             const files = Array.from(e.target.files);
-            fileBukti = files;
-            previewBukti.innerHTML = '';
-            pesanError.classList.add('hidden');
-
-            if (files.length !== 5) {
-                pesanError.textContent = `⚠️ Kamu memilih ${files.length} foto. Wajib pilih tepat 5 foto!`;
+            fileBukti = files; previewBukti.innerHTML = ''; pesanError.classList.add('hidden');
+            if(files.length !== 5) {
+                pesanError.textContent = `⚠️ Wajib pilih tepat 5 foto!`;
                 pesanError.classList.remove('hidden');
-                promptBukti.classList.remove('hidden');
-                previewBukti.classList.add('hidden');
                 return;
             }
-
-            promptBukti.classList.add('hidden');
-            previewBukti.classList.remove('hidden');
-
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = document.createElement('img');
-                    img.src = event.target.result;
-                    img.className = 'preview-img';
-                    previewBukti.appendChild(img);
-                }
-                reader.readAsDataURL(file);
+            promptBukti.classList.add('hidden'); previewBukti.classList.remove('hidden');
+            files.forEach(f => {
+                const r = new FileReader();
+                r.onload = ev => { const img = document.createElement('img'); img.src = ev.target.result; img.className = 'preview-img'; previewBukti.appendChild(img); }
+                r.readAsDataURL(f);
             });
         });
 
-        // ✅ Pratinjau Bukti Transfer
+        // Bukti Transfer
         const inputBuktiTransfer = document.getElementById('buktiTransfer');
         const promptBuktiTransfer = document.getElementById('promptBuktiTransfer');
         const previewBuktiTransfer = document.getElementById('previewBuktiTransfer');
-        let fileBuktiTransfer = null;
-
-        inputBuktiTransfer.addEventListener('change', function(e) {
+        inputBuktiTransfer.addEventListener('change', e => {
             fileBuktiTransfer = e.target.files[0];
-            if (fileBuktiTransfer) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    previewBuktiTransfer.src = event.target.result;
-                    previewBuktiTransfer.classList.remove('hidden');
-                    promptBuktiTransfer.classList.add('hidden');
-                }
-                reader.readAsDataURL(fileBuktiTransfer);
+            if(fileBuktiTransfer) {
+                const r = new FileReader();
+                r.onload = ev => { previewBuktiTransfer.src = ev.target.result; previewBuktiTransfer.classList.remove('hidden'); promptBuktiTransfer.classList.add('hidden'); }
+                r.readAsDataURL(fileBuktiTransfer);
             }
         });
 
-        // Simpan Data ke Halaman Admin
+        // Kirim & Simpan Data
         const form = document.getElementById('formDaftar');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            if (fileBukti.length !== 5) {
-                alert('❌ Wajib mengunggah tepat 5 foto Bukti Share Link!');
-                return;
-            }
+            if(fileBukti.length !== 5) return alert('❌ Wajib 5 foto bukti share link!');
 
-            const logoReader = new FileReader();
-            logoReader.readAsDataURL(fileLogo);
-            
-            logoReader.onload = function(logoHasil) {
-                let fotoBuktiList = [];
-                let jumlahSelesai = 0;
+            const bacaLogo = new FileReader();
+            bacaLogo.readAsDataURL(fileLogo);
+            bacaLogo.onload = logoHasil => {
+                const bacaJersey = new FileReader();
+                bacaJersey.readAsDataURL(fileJersey);
+                bacaJersey.onload = jerseyHasil => {
+                    let buktiShareList = [], selesai = 0;
+                    fileBukti.forEach(f => {
+                        const r = new FileReader();
+                        r.onload = ev => {
+                            buktiShareList.push(ev.target.result); selesai++;
+                            if(selesai === 5) {
+                                const nama = document.querySelectorAll('.namaPemain');
+                                const wa = document.querySelectorAll('.waPemain');
+                                const anggota = [];
+                                for(let i=0; i<6; i++) anggota.push({nama: nama[i].value, wa: wa[i].value});
 
-                fileBukti.forEach(foto => {
-                    const buktiReader = new FileReader();
-                    buktiReader.onload = function(buktiHasil) {
-                        fotoBuktiList.push(buktiHasil.target.result);
-                        jumlahSelesai++;
-                        
-                        if(jumlahSelesai === 5) {
-                            const daftarNama = document.querySelectorAll('.namaPemain');
-                            const daftarWa = document.querySelectorAll('.waPemain');
-                            const dataAnggota = [];
-
-                            for(let i = 0; i < 6; i++) {
-                                dataAnggota.push({
-                                    nama: daftarNama[i].value,
-                                    wa: daftarWa[i].value
-                                });
-                            }
-
-                            // Baca bukti transfer jika ada
-                            let buktiTransferData = null;
-                            if(fileBuktiTransfer) {
-                                const transferReader = new FileReader();
-                                transferReader.readAsDataURL(fileBuktiTransfer);
-                                transferReader.onload = function(transferHasil) {
-                                    buktiTransferData = transferHasil.target.result;
-                                    simpanData(logoHasil.target.result, fotoBuktiList, dataAnggota, buktiTransferData);
+                                const simpanUtama = (buktiTransfer) => {
+                                    const dataBaru = {
+                                        namaTim: document.getElementById('namaTim').value,
+                                        namaKapten: document.getElementById('namaKapten').value,
+                                        waKapten: document.getElementById('waKapten').value,
+                                        logo: logoHasil.target.result,
+                                        jersey: jerseyHasil.target.result,
+                                        anggota: anggota,
+                                        buktiShare: buktiShareList,
+                                        buktiTransfer: buktiTransfer
+                                    };
+                                    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+                                    semua.unshift(dataBaru);
+                                    localStorage.setItem('dataPendaftaran', JSON.stringify(semua));
+                                    alert('✅ Pendaftaran Berhasil!');
+                                    form.reset();
+                                    fileLogo = fileJersey = fileBuktiTransfer = null; fileBukti = [];
+                                    promptLogo.classList.remove('hidden'); previewLogo.classList.add('hidden');
+                                    promptJersey.classList.remove('hidden'); previewJersey.classList.add('hidden');
+                                    promptBukti.classList.remove('hidden'); previewBukti.classList.add('hidden');
+                                    promptBuktiTransfer.classList.remove('hidden'); previewBuktiTransfer.classList.add('hidden');
                                 };
-                            } else {
-                                simpanData(logoHasil.target.result, fotoBuktiList, dataAnggota, null);
+
+                                if(fileBuktiTransfer) {
+                                    const baca = new FileReader();
+                                    baca.onload = ev => simpanUtama(ev.target.result);
+                                    baca.readAsDataURL(fileBuktiTransfer);
+                                } else simpanUtama(null);
                             }
-                        }
-                    };
-                    buktiReader.readAsDataURL(foto);
-                });
-            };
-
-            function simpanData(logo, buktiShare, anggota, buktiTransfer) {
-                const dataTimBaru = {
-                    namaTim: document.getElementById('namaTim').value,
-                    namaKapten: document.getElementById('namaKapten').value,
-                    waKapten: document.getElementById('waKapten').value,
-                    logo: logo,
-                    anggota: anggota,
-                    buktiShare: buktiShare,
-                    buktiTransfer: buktiTransfer
+                        };
+                        r.readAsDataURL(f);
+                    });
                 };
-
-                const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-                semuaData.unshift(dataTimBaru);
-                localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
-
-                alert('✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar di BATTLE OF MASTER.');
-                form.reset();
-                fileBukti = [];
-                fileLogo = null;
-                fileBuktiTransfer = null;
-                
-                // Reset tampilan
-                promptLogo.classList.remove('hidden');
-                previewLogo.classList.add('hidden');
-                promptBukti.classList.remove('hidden');
-                previewBukti.classList.add('hidden');
-                pesanError.classList.add('hidden');
-                promptBuktiTransfer.classList.remove('hidden');
-                previewBuktiTransfer.classList.add('hidden');
-            }
+            };
         });
     </script>
-
 </body>
 </html>
