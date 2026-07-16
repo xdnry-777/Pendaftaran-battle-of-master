@@ -99,6 +99,42 @@
         .bukti-transfer-img:hover {
             transform: scale(1.05);
         }
+
+        .pengaturan-kontrol {
+            background: #FFF7ED;
+            border: 2px solid #FED7AA;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tombol-buka {
+            background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+        }
+
+        .tombol-tutup {
+            background: linear-gradient(90deg, #EF4444 0%, #F87171 100%);
+        }
+
+        .status-indikator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-buka {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-tutup {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
     </style>
 </head>
 <body class="bg-gradient-pink min-h-screen py-8 px-4">
@@ -134,9 +170,36 @@
             </div>
         </div>
 
+        <!-- ✅ PANEL KONTROL: BUKA/TUTUP & KUOTA -->
+        <div class="pengaturan-kontrol">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <h3 class="font-bold text-orange-700 flex items-center">
+                        <i class="fa fa-sliders mr-2"></i> KONTROL PENDAFTARAN
+                    </h3>
+                    <span id="statusPendaftaran" class="status-indikator">
+                        <i class="fa fa-circle"></i> Memuat...
+                    </span>
+                </div>
+                <div class="flex flex-wrap gap-3 items-center">
+                    <!-- Tombol Buka Tutup -->
+                    <button id="btnBukaTutup" onclick="ubahStatusPendaftaran()" class="tombol-tutup px-5 py-2 rounded-lg text-white font-bold">
+                        <i class="fa fa-lock mr-2"></i>TUTUP
+                    </button>
+                    <!-- Pengaturan Kuota -->
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="inputKuota" min="1" max="200" class="w-20 px-3 py-2 rounded-lg border-2 border-orange-300 outline-none focus:border-orange-500 text-center font-bold">
+                        <button onclick="simpanKuota()" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600">
+                            <i class="fa fa-check mr-1"></i>Atur Kuota
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Info Ringkasan -->
         <div class="bg-white rounded-xl p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-3">
-            <p class="font-semibold text-gray-700">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-xl">0</span></p>
+            <p class="font-semibold text-gray-700">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-xl">0</span> / <span id="maksimalTim">16</span></p>
             <div class="flex gap-2 flex-wrap">
                 <button onclick="eksporData()" class="bg-green-100 text-green-600 px-4 py-2 rounded-lg font-semibold hover:bg-green-200">
                     <i class="fa fa-download mr-2"></i>Simpan Cadangan
@@ -163,9 +226,57 @@
     </div>
 
     <script>
-        // === KODE RAHASIA (UBAH SESUAI KEINGINANMU) ===
+        // === KODE RAHASIA ===
         const KODE_AKSES = "battlemaster2026";
-        // ==============================================
+        // ====================
+
+        // Ambil pengaturan tersimpan
+        function ambilPengaturan() {
+            return {
+                kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'),
+                dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' // default terbuka
+            };
+        }
+
+        // Simpan kuota baru
+        function simpanKuota() {
+            const nilaiBaru = parseInt(document.getElementById('inputKuota').value);
+            if(isNaN(nilaiBaru) || nilaiBaru < 1) {
+                alert('❌ Masukkan angka yang benar (minimal 1)');
+                return;
+            }
+            localStorage.setItem('kuotaMaksimal', nilaiBaru);
+            document.getElementById('maksimalTim').textContent = nilaiBaru;
+            alert(`✅ Kuota diubah menjadi ${nilaiBaru} Tim!`);
+        }
+
+        // Ubah status BUKA / TUTUP
+        function ubahStatusPendaftaran() {
+            const pengaturan = ambilPengaturan();
+            const statusBaru = !pengaturan.dibuka;
+            localStorage.setItem('pendaftaranDibuka', statusBaru);
+            perbaruiTampilanStatus();
+            alert(statusBaru ? '✅ PENDAFTARAN DIBUKA!' : '❌ PENDAFTARAN DITUTUP!');
+        }
+
+        // Perbarui tampilan tombol dan status
+        function perbaruiTampilanStatus() {
+            const pengaturan = ambilPengaturan();
+            const elStatus = document.getElementById('statusPendaftaran');
+            const elBtn = document.getElementById('btnBukaTutup');
+
+            if(pengaturan.dibuka) {
+                elStatus.innerHTML = `<i class="fa fa-circle"></i> TERBUKA`;
+                elStatus.className = 'status-indikator status-buka';
+                elBtn.innerHTML = `<i class="fa fa-unlock mr-2"></i>TUTUP`;
+                elBtn.className = 'tombol-tutup px-5 py-2 rounded-lg text-white font-bold';
+            } else {
+                elStatus.innerHTML = `<i class="fa fa-circle"></i> DITUTUP`;
+                elStatus.className = 'status-indikator status-tutup';
+                elBtn.innerHTML = `<i class="fa fa-lock mr-2"></i>BUKA`;
+                elBtn.className = 'tombol-buka px-5 py-2 rounded-lg text-white font-bold';
+            }
+        }
 
         // Cek Kode Masuk
         function cekAkses() {
@@ -173,6 +284,11 @@
             if(input === KODE_AKSES) {
                 document.getElementById('halamanMasuk').classList.add('hidden');
                 document.getElementById('halamanUtama').classList.remove('hidden');
+                // Muat pengaturan saat buka
+                const pengaturan = ambilPengaturan();
+                document.getElementById('inputKuota').value = pengaturan.kuota;
+                document.getElementById('maksimalTim').textContent = pengaturan.kuota;
+                perbaruiTampilanStatus();
                 tampilkanData();
             } else {
                 alert('❌ Kode akses salah! Coba lagi ya.');
@@ -296,6 +412,7 @@
         // Segarkan Tampilan
         function refreshData() {
             tampilkanData();
+            perbaruiTampilanStatus();
             alert('✅ Data sudah diperbarui dengan yang terbaru!');
         }
 
