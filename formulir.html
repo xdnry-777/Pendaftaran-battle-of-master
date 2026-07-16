@@ -52,12 +52,11 @@
         .btn-pink {
             background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 77, 136, 0.3);
         }
 
         .btn-pink:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 77, 136, 0.3);
         }
 
         .upload-area {
@@ -68,6 +67,17 @@
 
         .upload-area:hover {
             background: #FFF0F5;
+        }
+
+        .preview-logo, .preview-jersey {
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin: 10px auto 0;
+            display: block;
+            border: 2px solid #FFD6E2;
+            background: white;
         }
 
         .preview-grid {
@@ -85,17 +95,6 @@
             border: 2px solid #FFD6E2;
         }
 
-        .preview-logo, .preview-jersey {
-            max-width: 150px;
-            max-height: 150px;
-            object-fit: contain;
-            border-radius: 12px;
-            margin: 10px auto 0;
-            display: block;
-            border: 2px solid #FFD6E2;
-            background: white;
-        }
-
         .qris-img {
             aspect-ratio: 3/4;
             width: 100%;
@@ -107,6 +106,15 @@
             margin: 0 auto;
             display: block;
         }
+
+        .kunci-pendaftaran {
+            background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+            border: 2px solid #FCA5A5;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="bg-gradient-pink min-h-screen py-10 px-4">
@@ -117,12 +125,20 @@
         </a>
 
         <div class="card-form rounded-2xl p-6 md:p-10">
-            <div class="text-center mb-8">
+            <div class="text-center mb-6">
                 <h2 class="text-3xl font-bold text-pinkDark mb-2">FORMULIR PENDAFTARAN</h2>
-                <p class="text-gray-500">Lengkapi data tim kamu dengan benar</p>
+                <p class="text-gray-500">BATTLE OF MASTER - Sisa kuota: <span id="sisaKuota" class="font-bold text-pinkMain">0</span> Tim</p>
             </div>
 
-            <form id="formDaftar" class="space-y-5" enctype="multipart/form-data">
+            <!-- NOTIFIKASI JIKA DITUTUP / PENUH -->
+            <div id="notifPenuh" class="kunci-pendaftaran hidden">
+                <i class="fa fa-lock text-4xl text-red-500 mb-3"></i>
+                <h3 id="judulNotif" class="text-xl font-bold text-red-600 mb-2"></h3>
+                <p id="teksNotif" class="text-red-500"></p>
+                <a href="index.html" class="inline-block mt-4 bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600">Kembali</a>
+            </div>
+
+            <form id="formDaftar" class="space-y-5 hidden" enctype="multipart/form-data">
                 <div class="bg-pinkLight/20 p-5 rounded-xl">
                     <h3 class="font-bold text-pinkMain mb-4 flex items-center">
                         <i class="fa fa-info-circle mr-2"></i> DATA TIM
@@ -155,7 +171,7 @@
                             </div>
                         </div>
 
-                        <!-- ✅ KOLOM JERSEY TIM (DI BAWAH LOGO) -->
+                        <!-- Jersey Tim -->
                         <div>
                             <label class="block mb-2 font-semibold text-gray-700">Foto Jersey Tim</label>
                             <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('jerseyTim').click()">
@@ -276,7 +292,48 @@
     <script>
         let fileLogo = null, fileJersey = null, fileBukti = [], fileBuktiTransfer = null;
 
-        // Logo Tim
+        // Ambil pengaturan dari Admin
+        function ambilPengaturan() {
+            return {
+                kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'),
+                dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false'
+            };
+        }
+
+        // Cek status pendaftaran saat halaman dibuka
+        function cekStatusPendaftaran() {
+            const pengaturan = ambilPengaturan();
+            const dataTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+            const sisaKuota = pengaturan.kuota - dataTerdaftar.length;
+            document.getElementById('sisaKuota').textContent = sisaKuota;
+
+            const notifKotak = document.getElementById('notifPenuh');
+            const form = document.getElementById('formDaftar');
+            const judulNotif = document.getElementById('judulNotif');
+            const teksNotif = document.getElementById('teksNotif');
+
+            // Jika ditutup admin atau kuota habis
+            if(!pengaturan.dibuka || sisaKuota <= 0) {
+                form.classList.add('hidden');
+                notifKotak.classList.remove('hidden');
+
+                if(!pengaturan.dibuka) {
+                    judulNotif.textContent = 'PENDAFTARAN DITUTUP';
+                    teksNotif.textContent = 'Mohon maaf, pendaftaran sedang ditutup sementara oleh panitia.';
+                } else {
+                    judulNotif.textContent = 'KUOTA SUDAH PENUH';
+                    teksNotif.textContent = `Maaf, kuota maksimal ${pengaturan.kuota} tim sudah terisi penuh.`;
+                }
+            } else {
+                notifKotak.classList.add('hidden');
+                form.classList.remove('hidden');
+            }
+        }
+
+        // Jalankan pengecekan saat halaman dimuat
+        cekStatusPendaftaran();
+
+        // Fungsi Upload Logo Tim
         const inputLogo = document.getElementById('logoTim');
         const promptLogo = document.getElementById('promptLogo');
         const previewLogo = document.getElementById('previewLogo');
@@ -289,7 +346,7 @@
             }
         });
 
-        // ✅ Jersey Tim
+        // Fungsi Upload Jersey Tim
         const inputJersey = document.getElementById('jerseyTim');
         const promptJersey = document.getElementById('promptJersey');
         const previewJersey = document.getElementById('previewJersey');
@@ -302,7 +359,7 @@
             }
         });
 
-        // Bukti Share Link
+        // Fungsi Upload Bukti Share Link
         const inputBukti = document.getElementById('buktiShare');
         const promptBukti = document.getElementById('promptBukti');
         const previewBukti = document.getElementById('previewBukti');
@@ -323,7 +380,7 @@
             });
         });
 
-        // Bukti Transfer
+        // Fungsi Upload Bukti Transfer
         const inputBuktiTransfer = document.getElementById('buktiTransfer');
         const promptBuktiTransfer = document.getElementById('promptBuktiTransfer');
         const previewBuktiTransfer = document.getElementById('previewBuktiTransfer');
@@ -336,11 +393,21 @@
             }
         });
 
-        // Kirim & Simpan Data
+        // Proses Kirim Data
         const form = document.getElementById('formDaftar');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            if(fileBukti.length !== 5) return alert('❌ Wajib 5 foto bukti share link!');
+
+            // Cek ulang status sebelum menyimpan
+            const pengaturan = ambilPengaturan();
+            const dataSekarang = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+            if(!pengaturan.dibuka || dataSekarang.length >= pengaturan.kuota) {
+                alert('❌ Maaf, pendaftaran sudah ditutup atau kuota habis!');
+                cekStatusPendaftaran();
+                return;
+            }
+
+            if(fileBukti.length !== 5) return alert('❌ Wajib unggah tepat 5 foto bukti share link!');
 
             const bacaLogo = new FileReader();
             bacaLogo.readAsDataURL(fileLogo);
@@ -354,39 +421,54 @@
                         r.onload = ev => {
                             buktiShareList.push(ev.target.result); selesai++;
                             if(selesai === 5) {
-                                const nama = document.querySelectorAll('.namaPemain');
-                                const wa = document.querySelectorAll('.waPemain');
-                                const anggota = [];
-                                for(let i=0; i<6; i++) anggota.push({nama: nama[i].value, wa: wa[i].value});
+                                const namaPemain = document.querySelectorAll('.namaPemain');
+                                const waPemain = document.querySelectorAll('.waPemain');
+                                const daftarAnggota = [];
+                                for(let i=0; i<6; i++) {
+                                    daftarAnggota.push({
+                                        nama: namaPemain[i].value,
+                                        wa: waPemain[i].value
+                                    });
+                                }
 
-                                const simpanUtama = (buktiTransfer) => {
+                                const simpanData = (buktiTransfer) => {
                                     const dataBaru = {
                                         namaTim: document.getElementById('namaTim').value,
                                         namaKapten: document.getElementById('namaKapten').value,
                                         waKapten: document.getElementById('waKapten').value,
                                         logo: logoHasil.target.result,
                                         jersey: jerseyHasil.target.result,
-                                        anggota: anggota,
+                                        anggota: daftarAnggota,
                                         buktiShare: buktiShareList,
                                         buktiTransfer: buktiTransfer
                                     };
-                                    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-                                    semua.unshift(dataBaru);
-                                    localStorage.setItem('dataPendaftaran', JSON.stringify(semua));
-                                    alert('✅ Pendaftaran Berhasil!');
+
+                                    const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+                                    semuaData.unshift(dataBaru);
+                                    localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
+
+                                    alert('✅ Pendaftaran Berhasil! Data tim sudah tersimpan.');
                                     form.reset();
-                                    fileLogo = fileJersey = fileBuktiTransfer = null; fileBukti = [];
+                                    fileLogo = fileJersey = fileBuktiTransfer = null;
+                                    fileBukti = [];
+
+                                    // Kembalikan tampilan upload
                                     promptLogo.classList.remove('hidden'); previewLogo.classList.add('hidden');
                                     promptJersey.classList.remove('hidden'); previewJersey.classList.add('hidden');
                                     promptBukti.classList.remove('hidden'); previewBukti.classList.add('hidden');
                                     promptBuktiTransfer.classList.remove('hidden'); previewBuktiTransfer.classList.add('hidden');
+
+                                    // Perbarui status kuota
+                                    cekStatusPendaftaran();
                                 };
 
                                 if(fileBuktiTransfer) {
                                     const baca = new FileReader();
-                                    baca.onload = ev => simpanUtama(ev.target.result);
+                                    baca.onload = ev => simpanData(ev.target.result);
                                     baca.readAsDataURL(fileBuktiTransfer);
-                                } else simpanUtama(null);
+                                } else {
+                                    simpanData(null);
+                                }
                             }
                         };
                         r.readAsDataURL(f);
