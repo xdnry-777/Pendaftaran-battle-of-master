@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran - BATTLE OF MASTER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pinkMain: '#FF4D88',
+                        pinkDark: '#CC2E66',
+                        pinkLight: '#FFB6C9',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bg-gradient-pink {
+            background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
+        }
+
+        .card-form {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(255, 77, 136, 0.15);
+        }
+
+        .input-style {
+            border: 2px solid #FFD6E2;
+            transition: all 0.3s ease;
+        }
+
+        .input-style:focus {
+            border-color: #FF4D88;
+            box-shadow: 0 0 0 4px rgba(255, 77, 136, 0.1);
+        }
+
+        .btn-pink {
+            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 136, 0.3);
+        }
+
+        .btn-pink:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gradient-pink min-h-screen py-10 px-4">
+
+    <div class="container mx-auto max-w-2xl">
+        <!-- Tombol Kembali -->
+        <a href="index.html" class="inline-flex items-center text-pinkMain font-semibold mb-6 hover:text-pinkDark transition-colors">
+            <i class="fa fa-arrow-left mr-2"></i> Kembali ke Beranda
+        </a>
+
+        <div class="card-form rounded-2xl p-6 md:p-10">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-pinkDark mb-2">FORMULIR PENDAFTARAN</h2>
+                <p class="text-gray-500">Lengkapi data tim kamu dengan benar</p>
+            </div>
+
+            <form id="formDaftar" class="space-y-5">
+                <!-- Data Tim -->
+                <div class="bg-pinkLight/20 p-5 rounded-xl">
+                    <h3 class="font-bold text-pinkMain mb-4 flex items-center">
+                        <i class="fa fa-info-circle mr-2"></i> DATA TIM
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block mb-2 font-semibold text-gray-700">Nama Tim</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-lg input-style outline-none">
+                        </div>
+                        <div>
+                            <label class="block mb-2 font-semibold text-gray-700">Nama Lengkap Kapten</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-lg input-style outline-none">
+                        </div>
+                        <div>
+                            <label class="block mb-2 font-semibold text-gray-700">Nomor WhatsApp Aktif</label>
+                            <input type="tel" required class="w-full px-4 py-3 rounded-lg input-style outline-none" placeholder="Contoh: 081234567890">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Anggota -->
+                <div class="bg-pinkLight/20 p-5 rounded-xl">
+                    <h3 class="font-bold text-pinkMain mb-4 flex items-center">
+                        <i class="fa fa-users mr-2"></i> DATA ANGGOTA TIM
+                    </h3>
+
+                    <div class="space-y-5">
+                        <!-- Pemain 1 -->
+                        <div class="p-3 bg-white/70 rounded-lg">
+                            <p class="font-semibold text-pinkDark mb-3">Pemain 1</p>
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pemain 2 -->
+                        <div class="p-3 bg-white/70 rounded-lg">
+                            <p class="font-semibold text-pinkDark mb-3">Pemain 2</p>
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pemain 3 -->
+                        <div class="p-3 bg-white/70 rounded-lg">
+                            <p class="font-semibold text-pinkDark mb-3">Pemain 3</p>
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pemain 4 -->
+                        <div class="p-3 bg-white/70 rounded-lg">
+                            <p class="font-semibold text-pinkDark mb-3">Pemain 4</p>
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
+                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Kirim -->
+                <button type="submit" class="btn-pink w-full py-4 rounded-xl text-white font-bold text-lg mt-6">
+                    <i class="fa fa-send mr-2"></i> KIRIM PENDAFTARAN
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formDaftar');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar di BATTLE OF MASTER. Kami akan menghubungi kamu segera.');
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>
