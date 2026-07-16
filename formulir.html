@@ -59,6 +59,42 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
         }
+
+        .upload-area {
+            border: 2px dashed #FF4D88;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: #FFF0F5;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #FFD6E2;
+        }
+
+        .preview-logo {
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin: 10px auto 0;
+            display: block;
+            border: 2px solid #FFD6E2;
+            background: white;
+        }
     </style>
 </head>
 <body class="bg-gradient-pink min-h-screen py-10 px-4">
@@ -75,7 +111,7 @@
                 <p class="text-gray-500">Lengkapi data tim kamu dengan benar</p>
             </div>
 
-            <form id="formDaftar" class="space-y-5">
+            <form id="formDaftar" class="space-y-5" enctype="multipart/form-data">
                 <!-- Data Tim -->
                 <div class="bg-pinkLight/20 p-5 rounded-xl">
                     <h3 class="font-bold text-pinkMain mb-4 flex items-center">
@@ -84,15 +120,44 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block mb-2 font-semibold text-gray-700">Nama Tim</label>
-                            <input type="text" required class="w-full px-4 py-3 rounded-lg input-style outline-none">
+                            <input type="text" id="namaTim" required class="w-full px-4 py-3 rounded-lg input-style outline-none" placeholder="Masukkan nama tim kamu">
                         </div>
                         <div>
                             <label class="block mb-2 font-semibold text-gray-700">Nama Lengkap Kapten</label>
-                            <input type="text" required class="w-full px-4 py-3 rounded-lg input-style outline-none">
+                            <input type="text" id="namaKapten" required class="w-full px-4 py-3 rounded-lg input-style outline-none" placeholder="Nama lengkap kapten tim">
                         </div>
                         <div>
                             <label class="block mb-2 font-semibold text-gray-700">Nomor WhatsApp Aktif</label>
-                            <input type="tel" required class="w-full px-4 py-3 rounded-lg input-style outline-none" placeholder="Contoh: 081234567890">
+                            <input type="tel" id="waKapten" required class="w-full px-4 py-3 rounded-lg input-style outline-none" placeholder="Contoh: 081234567890">
+                        </div>
+
+                        <!-- Kolom Unggah Logo Tim -->
+                        <div>
+                            <label class="block mb-2 font-semibold text-gray-700">Logo Tim</label>
+                            <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('logoTim').click()">
+                                <input type="file" id="logoTim" name="logoTim" accept="image/*" class="hidden" required>
+                                <div id="promptLogo">
+                                    <i class="fa fa-picture-o text-3xl text-pinkMain mb-2"></i>
+                                    <p class="text-pinkDark font-medium">Klik di sini untuk pilih logo tim</p>
+                                    <p class="text-sm text-gray-500 mt-1">Format: JPG/PNG</p>
+                                </div>
+                                <img id="previewLogo" class="preview-logo hidden">
+                            </div>
+                        </div>
+
+                        <!-- Bagian Bukti Share Link (Wajib 5 Foto) -->
+                        <div>
+                            <label class="block mb-2 font-semibold text-gray-700">Bukti Share Link <span class="text-red-500">*(Wajib 5 Foto)</span></label>
+                            <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('buktiShare').click()">
+                                <input type="file" id="buktiShare" name="buktiShare" accept="image/*" multiple class="hidden" required>
+                                <div id="promptBukti">
+                                    <i class="fa fa-cloud-upload text-3xl text-pinkMain mb-2"></i>
+                                    <p class="text-pinkDark font-medium">Klik di sini untuk pilih foto</p>
+                                    <p class="text-sm text-gray-500 mt-1">Pilih tepat 5 file foto</p>
+                                </div>
+                                <div id="previewBukti" class="preview-grid hidden"></div>
+                            </div>
+                            <p id="pesanError" class="text-red-500 text-sm mt-2 hidden"></p>
                         </div>
                     </div>
                 </div>
@@ -109,12 +174,12 @@
                             <p class="font-semibold text-pinkDark mb-3">Pemain 1</p>
                             <div class="grid md:grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
+                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
+                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
                                 </div>
                             </div>
                         </div>
@@ -124,12 +189,12 @@
                             <p class="font-semibold text-pinkDark mb-3">Pemain 2</p>
                             <div class="grid md:grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
+                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
+                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
                                 </div>
                             </div>
                         </div>
@@ -139,12 +204,12 @@
                             <p class="font-semibold text-pinkDark mb-3">Pemain 3</p>
                             <div class="grid md:grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
+                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
+                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
                                 </div>
                             </div>
                         </div>
@@ -154,12 +219,42 @@
                             <p class="font-semibold text-pinkDark mb-3">Pemain 4</p>
                             <div class="grid md:grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">Nama Karakter</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
+                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
                                 </div>
                                 <div>
-                                    <label class="text-sm text-gray-600 mb-1 block">ID Akun Free Fire</label>
-                                    <input type="text" required class="w-full px-3 py-2 rounded-lg input-style outline-none">
+                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
+                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pemain 5 -->
+                        <div class="p-3 bg-white/70 rounded-lg">
+                            <p class="font-semibold text-pinkDark mb-3">Pemain 5 (Cadangan)</p>
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
+                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
+                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pemain 6 -->
+                        <div class="p-3 bg-white/70 rounded-lg">
+                            <p class="font-semibold text-pinkDark mb-3">Pemain 6 (Cadangan)</p>
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nama Pemain</label>
+                                    <input type="text" class="namaPemain w-full px-3 py-2 rounded-lg input-style outline-none" required>
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600 mb-1 block">Nomor WhatsApp</label>
+                                    <input type="tel" class="waPemain w-full px-3 py-2 rounded-lg input-style outline-none" required placeholder="08...">
                                 </div>
                             </div>
                         </div>
@@ -175,11 +270,132 @@
     </div>
 
     <script>
+        // Pratinjau Logo Tim
+        const inputLogo = document.getElementById('logoTim');
+        const promptLogo = document.getElementById('promptLogo');
+        const previewLogo = document.getElementById('previewLogo');
+        let fileLogo = null;
+
+        inputLogo.addEventListener('change', function(e) {
+            fileLogo = e.target.files[0];
+            if (fileLogo) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    previewLogo.src = event.target.result;
+                    previewLogo.classList.remove('hidden');
+                    promptLogo.classList.add('hidden');
+                }
+                reader.readAsDataURL(fileLogo);
+            }
+        });
+
+        // Pratinjau & Validasi Bukti Share Link
+        const inputBukti = document.getElementById('buktiShare');
+        const promptBukti = document.getElementById('promptBukti');
+        const previewBukti = document.getElementById('previewBukti');
+        const pesanError = document.getElementById('pesanError');
         const form = document.getElementById('formDaftar');
+        let fileBukti = [];
+
+        inputBukti.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            fileBukti = files;
+            previewBukti.innerHTML = '';
+            pesanError.classList.add('hidden');
+
+            if (files.length !== 5) {
+                pesanError.textContent = `⚠️ Kamu memilih ${files.length} foto. Wajib pilih tepat 5 foto!`;
+                pesanError.classList.remove('hidden');
+                promptBukti.classList.remove('hidden');
+                previewBukti.classList.add('hidden');
+                return;
+            }
+
+            promptBukti.classList.add('hidden');
+            previewBukti.classList.remove('hidden');
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.className = 'preview-img';
+                    previewBukti.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Fungsi Simpan Data ke Halaman Admin
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar di BATTLE OF MASTER. Kami akan menghubungi kamu segera.');
-            form.reset();
+            
+            // Validasi jumlah foto bukti
+            if (fileBukti.length !== 5) {
+                alert('❌ Wajib mengunggah tepat 5 foto Bukti Share Link!');
+                return;
+            }
+
+            // Baca Logo Tim
+            const logoReader = new FileReader();
+            logoReader.readAsDataURL(fileLogo);
+            
+            logoReader.onload = function(logoHasil) {
+                let fotoBuktiList = [];
+                let jumlahSelesai = 0;
+
+                // Baca semua 5 foto bukti
+                fileBukti.forEach(foto => {
+                    const buktiReader = new FileReader();
+                    buktiReader.onload = function(buktiHasil) {
+                        fotoBuktiList.push(buktiHasil.target.result);
+                        jumlahSelesai++;
+                        
+                        // Jika semua foto sudah dibaca
+                        if(jumlahSelesai === 5) {
+                            // Kumpulkan data semua anggota
+                            const daftarNama = document.querySelectorAll('.namaPemain');
+                            const daftarWa = document.querySelectorAll('.waPemain');
+                            const dataAnggota = [];
+
+                            for(let i = 0; i < 6; i++) {
+                                dataAnggota.push({
+                                    nama: daftarNama[i].value,
+                                    wa: daftarWa[i].value
+                                });
+                            }
+
+                            // Susun data lengkap tim
+                            const dataTimBaru = {
+                                namaTim: document.getElementById('namaTim').value,
+                                namaKapten: document.getElementById('namaKapten').value,
+                                waKapten: document.getElementById('waKapten').value,
+                                logo: logoHasil.target.result,
+                                anggota: dataAnggota,
+                                bukti: fotoBuktiList
+                            };
+
+                            // Simpan ke penyimpanan untuk halaman admin
+                            const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+                            semuaData.unshift(dataTimBaru); // Data terbaru tampil paling atas
+                            localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
+
+                            alert('✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar di BATTLE OF MASTER.');
+                            form.reset();
+                            fileBukti = [];
+                            fileLogo = null;
+                            
+                            // Kembalikan tampilan upload ke awal
+                            promptLogo.classList.remove('hidden');
+                            previewLogo.classList.add('hidden');
+                            promptBukti.classList.remove('hidden');
+                            previewBukti.classList.add('hidden');
+                            pesanError.classList.add('hidden');
+                        }
+                    };
+                    buktiReader.readAsDataURL(foto);
+                });
+            };
         });
     </script>
 
