@@ -214,13 +214,10 @@
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="font-semibold text-gray-700 text-sm">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTim">16</span></p>
+                <p class="font-semibold text-gray-700 text-sm">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTim">2</span></p>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="eksporData()" class="bg-green-100 text-green-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-green-200">
+                    <button onclick="eksporDataLengkap()" class="bg-green-100 text-green-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-green-200">
                         <i class="fa fa-download mr-1"></i>Simpan Cadangan
-                    </button>
-                    <button onclick="rangkumDanArsip()" class="bg-purple-500 text-white px-3 py-2 rounded-lg font-semibold text-sm hover:bg-purple-600">
-                        <i class="fa fa-archive mr-1"></i>Rangkum & Kosongkan
                     </button>
                     <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-red-200">
                         <i class="fa fa-trash mr-1"></i>Hapus Semua
@@ -246,6 +243,7 @@
         const KODE_AKSES = "battlemaster2026";
         let linkGambarAktif = "";
 
+        // === FUNGSI ZOOM FOTO ===
         function bukaZoom(link) {
             linkGambarAktif = link;
             document.getElementById('gambarZoom').src = link;
@@ -260,22 +258,23 @@
             alert('✅ Gambar terunduh!');
         }
 
+        // === PENGATURAN PENDAFTARAN ===
         function ambilPengaturan() {
-            return { kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'), dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' };
+            return { kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '2'), dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' };
         }
         function simpanKuota() {
             const v = parseInt(document.getElementById('inputKuota').value);
-            if(isNaN(v) || v < 1) return alert('❌ Angka salah!');
+            if(isNaN(v) || v < 1) return alert('❌ Masukkan angka yang benar!');
             localStorage.setItem('kuotaMaksimal', v);
             document.getElementById('maksimalTim').textContent = v;
-            alert(`✅ Kuota: ${v} Tim`);
+            alert(`✅ Kuota diubah menjadi ${v} Tim`);
         }
         function ubahStatusPendaftaran() {
             const s = ambilPengaturan();
             const b = !s.dibuka;
             localStorage.setItem('pendaftaranDibuka', b);
             perbaruiStatus();
-            alert(b ? '✅ DIBUKA!' : '❌ DITUTUP!');
+            alert(b ? '✅ PENDAFTARAN DIBUKA!' : '❌ PENDAFTARAN DITUTUP!');
         }
         function perbaruiStatus() {
             const s = ambilPengaturan();
@@ -292,24 +291,21 @@
             }
         }
 
-        function rangkumDanArsip() {
+        // === SIMPAN CADANGAN LENGKAP ===
+        function eksporDataLengkap() {
             const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-            if(data.length === 0) return alert('⚠️ Belum ada data!');
-            const nama = prompt('Nama arsip:', 'PENDAFTARAN SESI BARU');
-            if(!nama) return;
-            if(!confirm(`Simpan ${data.length} tim ke arsip? Daftar utama akan dikosongkan.`)) return;
+            if(data.length === 0) return alert('⚠️ Belum ada data tim untuk disimpan!');
             
-            const arsip = JSON.parse(localStorage.getItem('arsipPendaftaran') || '[]');
-            arsip.unshift({
-                id: Date.now(), nama: nama.trim(), tanggal: new Date().toLocaleString('id-ID'),
-                jumlahTim: data.length, dataTim: data
-            });
-            localStorage.setItem('arsipPendaftaran', JSON.stringify(arsip));
-            localStorage.removeItem('dataPendaftaran');
-            alert('✅ Berhasil dirangkum!');
-            tampilkanData();
+            const dataRapi = JSON.stringify(data, null, 2);
+            const berkas = new Blob([dataRapi], {type: 'application/json;charset=utf-8'});
+            const tautan = document.createElement('a');
+            tautan.href = URL.createObjectURL(berkas);
+            tautan.download = `CADANGAN_BATTLE_OF_MASTER_${new Date().toISOString().slice(0,10)}.json`;
+            tautan.click();
+            alert(`✅ Berhasil menyimpan ${data.length} Tim!\nSemua data: Nama, Kapten, Anggota, Bukti Share, Bukti Transfer, Logo & Jersey tersimpan lengkap.`);
         }
 
+        // === LOGIN & NAVIGASI ===
         function cekAkses() {
             const i = document.getElementById('kunciAdmin').value;
             if(i === KODE_AKSES) {
@@ -328,33 +324,49 @@
             document.getElementById('kunciAdmin').value = '';
         }
 
+        // === TAMPILKAN SEMUA DATA ===
         function tampilkanData() {
             const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
             const wadah = document.getElementById('wadahData');
             document.getElementById('totalTim').textContent = data.length;
+            
             if(data.length === 0) {
-                wadah.innerHTML = `<div class="text-center py-12 text-gray-500"><i class="fa fa-folder-open text-4xl mb-3"></i><p class="text-lg">Belum ada data pendaftaran</p></div>`;
+                wadah.innerHTML = `<div class="text-center py-12 text-gray-500"><i class="fa fa-folder-open text-4xl mb-3"></i><p class="text-lg">Belum ada data pendaftaran</p><p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p></div>`;
                 return;
             }
+
             wadah.innerHTML = '';
             data.forEach((tim, idx) => {
                 wadah.innerHTML += `
                 <div class="tim-card bg-white rounded-xl p-4" data-nama="${tim.namaTim.toLowerCase()}" data-kapten="${tim.namaKapten.toLowerCase()}">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="flex gap-3 flex-shrink-0">
-                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
-                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
+                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo Tim</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
+                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey Tim</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
                         </div>
                         <div class="flex-grow">
                             <div class="flex justify-between items-start">
-                                <div><h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3><p class="text-gray-600">Kapten: ${tim.namaKapten} | WA: ${tim.waKapten}</p></div>
-                                <button onclick="hapusSatu(${idx})" class="text-red-500"><i class="fa fa-times-circle text-xl"></i></button>
+                                <div>
+                                    <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
+                                    <p class="text-gray-600">Kapten: ${tim.namaKapten}</p>
+                                    <p class="text-gray-600">WA Kapten: <a href="https://wa.me/${tim.waKapten}" target="_blank" class="text-pinkMain font-semibold">${tim.waKapten}</a></p>
+                                </div>
+                                <button onclick="hapusSatu(${idx})" class="text-red-500 p-2">
+                                    <i class="fa fa-times-circle text-xl"></i>
+                                </button>
                             </div>
                             <div class="mt-3 p-3 bg-pinkLight/20 rounded-lg">
-                                <h4 class="font-semibold text-pinkDark mb-2">Anggota:</h4>
-                                ${tim.anggota.map(a => `<div class="text-sm">• ${a.nama} - ${a.wa}</div>`).join('')}
+                                <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota Tim:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-1 text-sm">
+                                    ${tim.anggota.map(a => `<div class="text-gray-700">• ${a.nama} - ${a.wa}</div>`).join('')}
+                                </div>
                             </div>
-                            <div class="mt-3"><h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4><div class="flex flex-wrap gap-2">${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" onclick="bukaZoom('${f}')">`).join('')}</div></div>
+                            <div class="mt-3">
+                                <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" onclick="bukaZoom('${f}')">`).join('')}
+                                </div>
+                            </div>
                             <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
                                 <h4 class="font-semibold text-green-700 mb-2">Bukti Transfer Pembayaran</h4>
                                 ${tim.buktiTransfer ? `<img src="${tim.buktiTransfer}" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` : `<p class="text-gray-500 italic">Belum mengunggah bukti transfer</p>`}
@@ -365,6 +377,7 @@
             });
         }
 
+        // === FUNGSI LAINNYA ===
         function cariData() {
             const k = document.getElementById('cariTim').value.toLowerCase();
             document.querySelectorAll('.tim-card').forEach(kartu => {
@@ -372,7 +385,7 @@
             });
         }
         function hapusSatu(idx) {
-            if(confirm('Yakin hapus?')) {
+            if(confirm('Yakin ingin menghapus data tim ini?')) {
                 const d = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
                 d.splice(idx,1);
                 localStorage.setItem('dataPendaftaran', JSON.stringify(d));
@@ -380,21 +393,12 @@
             }
         }
         function hapusSemua() {
-            if(confirm('Yakin hapus SEMUA data utama?')) {
+            if(confirm('⚠️ Yakin hapus SEMUA data tim? Tindakan ini tidak bisa dibatalkan!')) {
                 localStorage.removeItem('dataPendaftaran');
                 tampilkanData();
             }
         }
-        function refreshData() { tampilkanData(); perbaruiStatus(); alert('✅ Disegarkan!'); }
-        function eksporData() {
-            const d = localStorage.getItem('dataPendaftaran') || '[]';
-            const b = new Blob([d], {type:'application/json'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(b);
-            a.download = `cadangan-${new Date().toISOString().slice(0,10)}.json`;
-            a.click();
-            alert('✅ Cadangan terunduh!');
-        }
+        function refreshData() { tampilkanData(); perbaruiStatus(); alert('✅ Data sudah disegarkan!'); }
     </script>
 </body>
 </html>
