@@ -95,6 +95,18 @@
             border: 2px solid #FFD6E2;
             background: white;
         }
+
+        .qris-img {
+            aspect-ratio: 3/4;
+            width: 100%;
+            max-width: 240px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 3px solid #FF4D88;
+            background: #fff;
+            margin: 0 auto;
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gradient-pink min-h-screen py-10 px-4">
@@ -261,6 +273,42 @@
                     </div>
                 </div>
 
+                <!-- ✅ BAGIAN BARU: PEMBAYARAN & BUKTI TRANSFER (PALING BAWAH) -->
+                <div class="bg-pinkLight/20 p-5 rounded-xl">
+                    <h3 class="font-bold text-pinkMain mb-4 flex items-center">
+                        <i class="fa fa-credit-card mr-2"></i> PEMBAYARAN & BUKTI TRANSFER
+                        <span class="ml-2 text-sm font-normal text-gray-500">(Opsional)</span>
+                    </h3>
+
+                    <!-- Tampilkan QRIS -->
+                    <div class="mb-5">
+                        <p class="text-center font-semibold text-gray-700 mb-3">Scan QRIS Berikut</p>
+                        <!-- Ganti src dengan link foto QRIS milikmu -->
+                        <img src="LINK_FOTO_QRIS_KAMU.jpg" alt="QRIS Pembayaran" class="qris-img">
+                    </div>
+
+                    <!-- Nomor Tujuan -->
+                    <div class="bg-white/70 rounded-lg p-4 mb-4 space-y-2">
+                        <p class="font-semibold text-pinkDark mb-2">Atau Transfer Ke:</p>
+                        <p class="text-gray-700"><i class="fa fa-wallet mr-2 text-pinkMain"></i> Dana: <strong>0812-xxxx-xxxx</strong> a.n. ..........</p>
+                        <p class="text-gray-700"><i class="fa fa-credit-card mr-2 text-pinkMain"></i> GoPay: <strong>0812-xxxx-xxxx</strong> a.n. ..........</p>
+                    </div>
+
+                    <!-- Upload Bukti Transfer -->
+                    <div>
+                        <label class="block mb-2 font-semibold text-gray-700">Unggah Bukti Transfer</label>
+                        <div class="upload-area rounded-lg p-5 text-center" onclick="document.getElementById('buktiTransfer').click()">
+                            <input type="file" id="buktiTransfer" name="buktiTransfer" accept="image/*" class="hidden">
+                            <div id="promptBuktiTransfer">
+                                <i class="fa fa-file-image-o text-3xl text-pinkMain mb-2"></i>
+                                <p class="text-pinkDark font-medium">Klik di sini untuk pilih foto bukti</p>
+                                <p class="text-sm text-gray-500 mt-1">Format: JPG/PNG (Tidak Wajib)</p>
+                            </div>
+                            <img id="previewBuktiTransfer" class="preview-logo hidden">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Tombol Kirim -->
                 <button type="submit" class="btn-pink w-full py-4 rounded-xl text-white font-bold text-lg mt-6">
                     <i class="fa fa-send mr-2"></i> KIRIM PENDAFTARAN
@@ -289,12 +337,11 @@
             }
         });
 
-        // Pratinjau & Validasi Bukti Share Link
+        // Pratinjau Bukti Share Link
         const inputBukti = document.getElementById('buktiShare');
         const promptBukti = document.getElementById('promptBukti');
         const previewBukti = document.getElementById('previewBukti');
         const pesanError = document.getElementById('pesanError');
-        const form = document.getElementById('formDaftar');
         let fileBukti = [];
 
         inputBukti.addEventListener('change', function(e) {
@@ -326,17 +373,35 @@
             });
         });
 
-        // Fungsi Simpan Data ke Halaman Admin
+        // ✅ Pratinjau Bukti Transfer
+        const inputBuktiTransfer = document.getElementById('buktiTransfer');
+        const promptBuktiTransfer = document.getElementById('promptBuktiTransfer');
+        const previewBuktiTransfer = document.getElementById('previewBuktiTransfer');
+        let fileBuktiTransfer = null;
+
+        inputBuktiTransfer.addEventListener('change', function(e) {
+            fileBuktiTransfer = e.target.files[0];
+            if (fileBuktiTransfer) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    previewBuktiTransfer.src = event.target.result;
+                    previewBuktiTransfer.classList.remove('hidden');
+                    promptBuktiTransfer.classList.add('hidden');
+                }
+                reader.readAsDataURL(fileBuktiTransfer);
+            }
+        });
+
+        // Simpan Data ke Halaman Admin
+        const form = document.getElementById('formDaftar');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Validasi jumlah foto bukti
             if (fileBukti.length !== 5) {
                 alert('❌ Wajib mengunggah tepat 5 foto Bukti Share Link!');
                 return;
             }
 
-            // Baca Logo Tim
             const logoReader = new FileReader();
             logoReader.readAsDataURL(fileLogo);
             
@@ -344,16 +409,13 @@
                 let fotoBuktiList = [];
                 let jumlahSelesai = 0;
 
-                // Baca semua 5 foto bukti
                 fileBukti.forEach(foto => {
                     const buktiReader = new FileReader();
                     buktiReader.onload = function(buktiHasil) {
                         fotoBuktiList.push(buktiHasil.target.result);
                         jumlahSelesai++;
                         
-                        // Jika semua foto sudah dibaca
                         if(jumlahSelesai === 5) {
-                            // Kumpulkan data semua anggota
                             const daftarNama = document.querySelectorAll('.namaPemain');
                             const daftarWa = document.querySelectorAll('.waPemain');
                             const dataAnggota = [];
@@ -365,37 +427,54 @@
                                 });
                             }
 
-                            // Susun data lengkap tim
-                            const dataTimBaru = {
-                                namaTim: document.getElementById('namaTim').value,
-                                namaKapten: document.getElementById('namaKapten').value,
-                                waKapten: document.getElementById('waKapten').value,
-                                logo: logoHasil.target.result,
-                                anggota: dataAnggota,
-                                bukti: fotoBuktiList
-                            };
-
-                            // Simpan ke penyimpanan untuk halaman admin
-                            const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-                            semuaData.unshift(dataTimBaru); // Data terbaru tampil paling atas
-                            localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
-
-                            alert('✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar di BATTLE OF MASTER.');
-                            form.reset();
-                            fileBukti = [];
-                            fileLogo = null;
-                            
-                            // Kembalikan tampilan upload ke awal
-                            promptLogo.classList.remove('hidden');
-                            previewLogo.classList.add('hidden');
-                            promptBukti.classList.remove('hidden');
-                            previewBukti.classList.add('hidden');
-                            pesanError.classList.add('hidden');
+                            // Baca bukti transfer jika ada
+                            let buktiTransferData = null;
+                            if(fileBuktiTransfer) {
+                                const transferReader = new FileReader();
+                                transferReader.readAsDataURL(fileBuktiTransfer);
+                                transferReader.onload = function(transferHasil) {
+                                    buktiTransferData = transferHasil.target.result;
+                                    simpanData(logoHasil.target.result, fotoBuktiList, dataAnggota, buktiTransferData);
+                                };
+                            } else {
+                                simpanData(logoHasil.target.result, fotoBuktiList, dataAnggota, null);
+                            }
                         }
                     };
                     buktiReader.readAsDataURL(foto);
                 });
             };
+
+            function simpanData(logo, buktiShare, anggota, buktiTransfer) {
+                const dataTimBaru = {
+                    namaTim: document.getElementById('namaTim').value,
+                    namaKapten: document.getElementById('namaKapten').value,
+                    waKapten: document.getElementById('waKapten').value,
+                    logo: logo,
+                    anggota: anggota,
+                    buktiShare: buktiShare,
+                    buktiTransfer: buktiTransfer
+                };
+
+                const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+                semuaData.unshift(dataTimBaru);
+                localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
+
+                alert('✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar di BATTLE OF MASTER.');
+                form.reset();
+                fileBukti = [];
+                fileLogo = null;
+                fileBuktiTransfer = null;
+                
+                // Reset tampilan
+                promptLogo.classList.remove('hidden');
+                previewLogo.classList.add('hidden');
+                promptBukti.classList.remove('hidden');
+                previewBukti.classList.add('hidden');
+                pesanError.classList.add('hidden');
+                promptBuktiTransfer.classList.remove('hidden');
+                previewBuktiTransfer.classList.add('hidden');
+            }
         });
     </script>
 
