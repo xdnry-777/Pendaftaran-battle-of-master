@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BATTLE OF MASTER</title>
+    <title>BATTLE OF MASTER - Turnamen Free Fire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -23,7 +23,7 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
         
         * {
             font-family: 'Poppins', sans-serif;
@@ -33,56 +33,72 @@
             background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
         }
 
-        .btn-pink {
+        .btn-utama {
             background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 77, 136, 0.3);
         }
 
-        .btn-pink:hover {
+        .btn-utama:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
         }
 
-        .logo-wrapper {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 8px 30px rgba(255, 77, 136, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+        .btn-admin {
+            background: rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
-        .title-text {
-            background: linear-gradient(90deg, #CC2E66 0%, #FF4D88 50%, #FF6B9E 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .btn-admin:hover {
+            background: rgba(0,0,0,0.2);
         }
     </style>
 </head>
-<body class="bg-gradient-pink min-h-screen flex flex-col items-center justify-center text-center px-4">
+<body class="bg-gradient-pink min-h-screen flex flex-col">
 
-    <!-- Logo -->
-    <div class="logo-wrapper mb-8">
-        <!-- Ganti "logo.png" dengan nama file logomu nanti -->
-        <img src="logo.png" alt="Logo BATTLE OF MASTER" class="w-full h-full object-contain p-3" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa fa-shield text-5xl text-pinkMain\'></i>'">
-    </div>
+    <!-- Bagian Atas -->
+    <header class="py-6 px-4">
+        <div class="container mx-auto max-w-3xl flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-pinkDark">BATTLE OF MASTER</h1>
+                <p class="text-gray-600 text-sm">Turnamen Free Fire Seru & Berhadiah</p>
+            </div>
+            <!-- ✅ TOMBOL ADMIN BARU -->
+            <a href="data-admin.html" class="btn-admin px-3 py-2 rounded-lg text-gray-600 text-sm font-medium flex items-center gap-1">
+                <i class="fa fa-lock"></i>
+                <span class="hidden sm:inline">Admin</span>
+            </a>
+        </div>
+    </header>
 
-    <!-- Judul -->
-    <h1 class="text-4xl md:text-6xl font-extrabold title-text mb-4">BATTLE OF MASTER</h1>
-    <p class="text-gray-600 text-lg md:text-xl mb-10 max-w-md">Buktikan kemampuan terbaikmu di medan pertempuran!</p>
+    <!-- Bagian Tengah -->
+    <main class="flex-grow flex flex-col justify-center px-4 py-10">
+        <div class="container mx-auto max-w-xl text-center">
+            <div class="mb-8">
+                <i class="fa fa-trophy text-5xl text-pinkMain mb-4"></i>
+                <h2 class="text-3xl md:text-4xl font-bold text-pinkDark mb-3">AYO DAFTARKAN TIM KAMU!</h2>
+                <p class="text-gray-600 text-lg">Bergabunglah di turnamen BATTLE OF MASTER, buktikan tim kamu yang terbaik!</p>
+            </div>
 
-    <!-- Tombol Masuk -->
-    <a href="formulir.html" class="btn-pink px-10 py-4 rounded-full text-white font-bold text-lg inline-block">
-        DAFTARKAN TIM SEKARANG
-    </a>
+            <a href="formulir.html" class="btn-utama block w-full py-4 rounded-xl text-white font-bold text-xl mb-6">
+                <i class="fa fa-pencil-square-o mr-2"></i> DAFTAR SEKARANG
+            </a>
 
-    <footer class="absolute bottom-6 text-gray-500 text-sm">
-        &copy; 2026 BATTLE OF MASTER. All Rights Reserved.
+            <div class="bg-white/70 rounded-xl p-5 text-left">
+                <h3 class="font-bold text-pinkDark mb-3"><i class="fa fa-info-circle mr-2"></i> Informasi Penting</h3>
+                <ul class="text-gray-700 space-y-2 text-sm">
+                    <li>• Biaya pendaftaran: Rp ..... / Tim</li>
+                    <li>• Kuota terbatas: Hanya 32 Tim</li>
+                    <li>• Format: 4 Inti + 2 Cadangan</li>
+                    <li>• Waktu pendaftaran: ..... s/d .....</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bagian Bawah -->
+    <footer class="py-5 px-4 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 BATTLE OF MASTER. Semua Hak Dilindungi.</p>
     </footer>
 
 </body>
