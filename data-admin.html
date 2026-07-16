@@ -66,6 +66,12 @@
             border-radius: 10px;
             background: #FFF;
             border: 2px solid #FFD6E2;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .logo-tim:hover {
+            transform: scale(1.1);
         }
 
         .foto-bukti {
@@ -75,6 +81,7 @@
             border-radius: 6px;
             cursor: pointer;
             transition: transform 0.2s;
+            border: 1px solid #FFD6E2;
         }
 
         .foto-bukti:hover {
@@ -86,6 +93,11 @@
             border-radius: 8px;
             border: 2px solid #FF4D88;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .bukti-transfer-img:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -112,7 +124,7 @@
                 <h1 class="text-2xl md:text-3xl font-bold text-pinkDark">DAFTAR TIM TERDAFTAR</h1>
                 <p class="text-gray-500">BATTLE OF MASTER - Data Lengkap Pendaftaran</p>
             </div>
-            <div class="flex gap-2">
+            <div class="flex gap-2 flex-wrap">
                 <button onclick="refreshData()" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
                     <i class="fa fa-refresh mr-2"></i>Segarkan
                 </button>
@@ -125,9 +137,9 @@
         <!-- Info Ringkasan -->
         <div class="bg-white rounded-xl p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-3">
             <p class="font-semibold text-gray-700">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-xl">0</span></p>
-            <div class="flex gap-2">
+            <div class="flex gap-2 flex-wrap">
                 <button onclick="eksporData()" class="bg-green-100 text-green-600 px-4 py-2 rounded-lg font-semibold hover:bg-green-200">
-                    <i class="fa fa-download mr-2"></i>Simpan Data
+                    <i class="fa fa-download mr-2"></i>Simpan Cadangan
                 </button>
                 <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg font-semibold hover:bg-red-200">
                     <i class="fa fa-trash mr-2"></i>Hapus Semua
@@ -195,14 +207,24 @@
                 wadah.innerHTML += `
                 <div class="tim-card bg-white rounded-xl p-5" data-nama="${tim.namaTim.toLowerCase()}" data-kapten="${tim.namaKapten.toLowerCase()}">
                     <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-shrink-0">
-                            <img src="${tim.logo}" alt="Logo ${tim.namaTim}" class="logo-tim">
+                        <!-- Logo & Jersey -->
+                        <div class="flex gap-4 flex-shrink-0 justify-center md:justify-start">
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 mb-1 font-medium">Logo Tim</p>
+                                <img src="${tim.logo}" alt="Logo ${tim.namaTim}" class="logo-tim" onclick="window.open('${tim.logo}', '_blank')">
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 mb-1 font-medium">Jersey Tim</p>
+                                <img src="${tim.jersey}" alt="Jersey ${tim.namaTim}" class="logo-tim" onclick="window.open('${tim.jersey}', '_blank')">
+                            </div>
                         </div>
+
+                        <!-- Data Utama -->
                         <div class="flex-grow">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
-                                    <p class="text-gray-600">Kapten: ${tim.namaKapten}</p>
+                                    <p class="text-gray-600 mt-1">Kapten: ${tim.namaKapten}</p>
                                     <p class="text-gray-600">WA Kapten: <a href="https://wa.me/${tim.waKapten}" target="_blank" class="text-pinkMain font-semibold">${tim.waKapten}</a></p>
                                 </div>
                                 <button onclick="hapusSatu(${idx})" class="text-red-500 hover:text-red-700 p-2">
@@ -210,13 +232,15 @@
                                 </button>
                             </div>
 
+                            <!-- Daftar Anggota -->
                             <div class="mt-4 p-4 bg-pinkLight/20 rounded-lg">
-                                <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota:</h4>
+                                <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota Tim:</h4>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                    ${tim.anggota.map(a => `<div>• ${a.nama} - ${a.wa}</div>`).join('')}
+                                    ${tim.anggota.map(a => `<div class="text-gray-700">• ${a.nama} - ${a.wa}</div>`).join('')}
                                 </div>
                             </div>
 
+                            <!-- Bukti Share Link -->
                             <div class="mt-4">
                                 <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
                                 <div class="flex flex-wrap gap-2">
@@ -224,7 +248,7 @@
                                 </div>
                             </div>
 
-                            <!-- ✅ BAGIAN BUKTI TRANSFER BARU -->
+                            <!-- Bukti Transfer -->
                             <div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
                                 <h4 class="font-semibold text-green-700 mb-2 flex items-center">
                                     <i class="fa fa-check-circle mr-2"></i> Bukti Transfer Pembayaran
@@ -253,7 +277,7 @@
 
         // Hapus Satu Tim
         function hapusSatu(idx) {
-            if(confirm('Yakin ingin menghapus data tim ini? Tidak bisa dikembalikan!')) {
+            if(confirm('Yakin ingin menghapus data tim ini? Tindakan ini tidak bisa dibatalkan!')) {
                 const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
                 data.splice(idx, 1);
                 localStorage.setItem('dataPendaftaran', JSON.stringify(data));
@@ -263,7 +287,7 @@
 
         // Hapus Semua Data
         function hapusSemua() {
-            if(confirm('⚠️ PERINGATAN KERAS: Semua data tim akan dihapus permanen! Yakin sekali?')) {
+            if(confirm('⚠️ PERINGATAN KERAS: Semua data tim akan dihapus permanen! Yakin sekali ingin melanjutkan?')) {
                 localStorage.removeItem('dataPendaftaran');
                 tampilkanData();
             }
@@ -272,7 +296,7 @@
         // Segarkan Tampilan
         function refreshData() {
             tampilkanData();
-            alert('✅ Data sudah diperbarui!');
+            alert('✅ Data sudah diperbarui dengan yang terbaru!');
         }
 
         // Ekspor Data Cadangan
@@ -281,9 +305,9 @@
             const berkas = new Blob([data], {type: 'application/json'});
             const tautan = document.createElement('a');
             tautan.href = URL.createObjectURL(berkas);
-            tautan.download = `cadangan-data-${new Date().toISOString().slice(0,10)}.json`;
+            tautan.download = `cadangan-pendaftaran-${new Date().toISOString().slice(0,10)}.json`;
             tautan.click();
-            alert('✅ Data cadangan sudah terunduh!');
+            alert('✅ File cadangan data sudah terunduh ke perangkatmu!');
         }
     </script>
 </body>
