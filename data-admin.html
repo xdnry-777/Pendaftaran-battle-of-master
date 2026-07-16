@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATA ADMIN - BATTLE OF MASTER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pinkMain: '#FF4D88',
+                        pinkDark: '#CC2E66',
+                        pinkLight: '#FFB6C9',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bg-gradient-pink {
+            background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
+        }
+
+        .card-admin {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(255, 77, 136, 0.15);
+        }
+
+        .btn-pink {
+            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-pink:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 77, 136, 0.3);
+        }
+
+        .tim-card {
+            border-left: 4px solid #FF4D88;
+            transition: all 0.3s ease;
+        }
+
+        .tim-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(255, 77, 136, 0.1);
+        }
+
+        .logo-tim {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #FFF;
+            border: 2px solid #FFD6E2;
+        }
+
+        .foto-bukti {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .foto-bukti:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-pink min-h-screen py-8 px-4">
+
+    <!-- HALAMAN LOGIN KHUSUS ADMIN -->
+    <div id="halamanMasuk" class="container mx-auto max-w-md">
+        <div class="card-admin rounded-2xl p-8 text-center">
+            <i class="fa fa-shield text-5xl text-pinkMain mb-4"></i>
+            <h2 class="text-2xl font-bold text-pinkDark mb-2">AKSES DATA ADMIN</h2>
+            <p class="text-gray-500 mb-6">Halaman ini rahasia, hanya untuk pengelola turnamen</p>
+            
+            <div class="space-y-4">
+                <input type="password" id="kunciAdmin" placeholder="Masukkan Kode Akses" class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain">
+                <button onclick="cekAkses()" class="btn-pink w-full py-3 rounded-lg text-white font-bold">MASUK KE DATA</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN DATA PENDAFTAR -->
+    <div id="halamanUtama" class="container mx-auto max-w-5xl hidden">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-pinkDark">DAFTAR TIM TERDAFTAR</h1>
+                <p class="text-gray-500">BATTLE OF MASTER - Data Lengkap Pendaftaran</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="refreshData()" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
+                    <i class="fa fa-refresh mr-2"></i>Segarkan
+                </button>
+                <button onclick="keluar()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg font-semibold text-gray-700">
+                    <i class="fa fa-sign-out mr-2"></i>Keluar
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Ringkasan -->
+        <div class="bg-white rounded-xl p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-3">
+            <p class="font-semibold text-gray-700">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-xl">0</span></p>
+            <div class="flex gap-2">
+                <button onclick="eksporData()" class="bg-green-100 text-green-600 px-4 py-2 rounded-lg font-semibold hover:bg-green-200">
+                    <i class="fa fa-download mr-2"></i>Simpan Data
+                </button>
+                <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg font-semibold hover:bg-red-200">
+                    <i class="fa fa-trash mr-2"></i>Hapus Semua
+                </button>
+            </div>
+        </div>
+
+        <!-- Pencarian -->
+        <div class="mb-6">
+            <input type="text" id="cariTim" placeholder="Cari nama tim / nama kapten..." class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain" oninput="cariData()">
+        </div>
+
+        <!-- Daftar Data Tim -->
+        <div id="wadahData" class="space-y-5">
+            <div class="text-center py-16 text-gray-500">
+                <i class="fa fa-folder-open text-5xl mb-4"></i>
+                <p class="text-lg">Belum ada data pendaftaran yang masuk</p>
+                <p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === KODE RAHASIA (UBAH SESUAI KEINGINANMU) ===
+        const KODE_AKSES = "battlemaster2026";
+        // ==============================================
+
+        // Cek Kode Masuk
+        function cekAkses() {
+            const input = document.getElementById('kunciAdmin').value;
+            if(input === KODE_AKSES) {
+                document.getElementById('halamanMasuk').classList.add('hidden');
+                document.getElementById('halamanUtama').classList.remove('hidden');
+                tampilkanData();
+            } else {
+                alert('❌ Kode akses salah! Coba lagi ya.');
+            }
+        }
+
+        // Keluar dari Halaman Admin
+        function keluar() {
+            document.getElementById('halamanUtama').classList.add('hidden');
+            document.getElementById('halamanMasuk').classList.remove('hidden');
+            document.getElementById('kunciAdmin').value = '';
+        }
+
+        // Tampilkan Semua Data
+        function tampilkanData() {
+            const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+            const wadah = document.getElementById('wadahData');
+            document.getElementById('totalTim').textContent = data.length;
+
+            if(data.length === 0) {
+                wadah.innerHTML = `
+                <div class="text-center py-16 text-gray-500">
+                    <i class="fa fa-folder-open text-5xl mb-4"></i>
+                    <p class="text-lg">Belum ada data pendaftaran yang masuk</p>
+                    <p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p>
+                </div>`;
+                return;
+            }
+
+            wadah.innerHTML = '';
+            data.forEach((tim, idx) => {
+                wadah.innerHTML += `
+                <div class="tim-card bg-white rounded-xl p-5" data-nama="${tim.namaTim.toLowerCase()}" data-kapten="${tim.namaKapten.toLowerCase()}">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-shrink-0">
+                            <img src="${tim.logo}" alt="Logo ${tim.namaTim}" class="logo-tim">
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
+                                    <p class="text-gray-600">Kapten: ${tim.namaKapten}</p>
+                                    <p class="text-gray-600">WA Kapten: <a href="https://wa.me/${tim.waKapten}" target="_blank" class="text-pinkMain font-semibold">${tim.waKapten}</a></p>
+                                </div>
+                                <button onclick="hapusSatu(${idx})" class="text-red-500 hover:text-red-700 p-2">
+                                    <i class="fa fa-times-circle text-xl"></i>
+                                </button>
+                            </div>
+
+                            <div class="mt-4 p-4 bg-pinkLight/20 rounded-lg">
+                                <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                    ${tim.anggota.map(a => `<div>• ${a.nama} - ${a.wa}</div>`).join('')}
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link (5 Foto):</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${tim.bukti.map(f => `<img src="${f}" class="foto-bukti" alt="Bukti" onclick="window.open('${f}', '_blank')">`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+        }
+
+        // Cari Data Tim
+        function cariData() {
+            const kataKunci = document.getElementById('cariTim').value.toLowerCase();
+            const semuaKartu = document.querySelectorAll('.tim-card');
+            
+            semuaKartu.forEach(kartu => {
+                const nama = kartu.dataset.nama;
+                const kapten = kartu.dataset.kapten;
+                kartu.classList.toggle('hidden', !(nama.includes(kataKunci) || kapten.includes(kataKunci)));
+            });
+        }
+
+        // Hapus Satu Tim
+        function hapusSatu(idx) {
+            if(confirm('Yakin ingin menghapus data tim ini? Tidak bisa dikembalikan!')) {
+                const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+                data.splice(idx, 1);
+                localStorage.setItem('dataPendaftaran', JSON.stringify(data));
+                tampilkanData();
+            }
+        }
+
+        // Hapus Semua Data
+        function hapusSemua() {
+            if(confirm('⚠️ PERINGATAN KERAS: Semua data tim akan dihapus permanen! Yakin sekali?')) {
+                localStorage.removeItem('dataPendaftaran');
+                tampilkanData();
+            }
+        }
+
+        // Segarkan Tampilan
+        function refreshData() {
+            tampilkanData();
+            alert('✅ Data sudah diperbarui!');
+        }
+
+        // Ekspor Data Cadangan
+        function eksporData() {
+            const data = localStorage.getItem('dataPendaftaran') || '[]';
+            const berkas = new Blob([data], {type: 'application/json'});
+            const tautan = document.createElement('a');
+            tautan.href = URL.createObjectURL(berkas);
+            tautan.download = `cadangan-data-${new Date().toISOString().slice(0,10)}.json`;
+            tautan.click();
+            alert('✅ Data cadangan sudah terunduh!');
+        }
+    </script>
+</body>
+</html>
