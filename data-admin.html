@@ -80,6 +80,13 @@
         .foto-bukti:hover {
             transform: scale(1.2);
         }
+
+        .bukti-transfer-img {
+            max-width: 180px;
+            border-radius: 8px;
+            border: 2px solid #FF4D88;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-gradient-pink min-h-screen py-8 px-4">
@@ -211,10 +218,20 @@
                             </div>
 
                             <div class="mt-4">
-                                <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link (5 Foto):</h4>
+                                <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
                                 <div class="flex flex-wrap gap-2">
-                                    ${tim.bukti.map(f => `<img src="${f}" class="foto-bukti" alt="Bukti" onclick="window.open('${f}', '_blank')">`).join('')}
+                                    ${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" alt="Bukti" onclick="window.open('${f}', '_blank')">`).join('')}
                                 </div>
+                            </div>
+
+                            <!-- ✅ BAGIAN BUKTI TRANSFER BARU -->
+                            <div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                                <h4 class="font-semibold text-green-700 mb-2 flex items-center">
+                                    <i class="fa fa-check-circle mr-2"></i> Bukti Transfer Pembayaran
+                                </h4>
+                                ${tim.buktiTransfer 
+                                    ? `<img src="${tim.buktiTransfer}" alt="Bukti Transfer" class="bukti-transfer-img" onclick="window.open('${tim.buktiTransfer}', '_blank')">` 
+                                    : `<p class="text-gray-500 italic">Belum mengunggah bukti transfer</p>`}
                             </div>
                         </div>
                     </div>
