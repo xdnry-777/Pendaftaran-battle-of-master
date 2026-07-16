@@ -39,11 +39,6 @@
             box-shadow: 0 10px 40px rgba(255, 77, 136, 0.15);
         }
 
-        .btn-pink {
-            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
-            transition: all 0.3s ease;
-        }
-
         .tim-card {
             border-left: 4px solid #FF4D88;
             transition: all 0.3s ease;
@@ -103,13 +98,8 @@
             margin-bottom: 20px;
         }
 
-        .tombol-buka {
-            background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
-        }
-
-        .tombol-tutup {
-            background: linear-gradient(90deg, #EF4444 0%, #F87171 100%);
-        }
+        .tombol-buka { background: linear-gradient(90deg, #10B981 0%, #34D399 100%); }
+        .tombol-tutup { background: linear-gradient(90deg, #EF4444 0%, #F87171 100%); }
 
         .status-indikator {
             display: inline-flex;
@@ -120,107 +110,41 @@
             font-weight: 600;
             font-size: 0.9rem;
         }
+        .status-buka { background: #D1FAE5; color: #065F46; }
+        .status-tutup { background: #FEE2E2; color: #991B1B; }
 
-        .status-buka {
-            background: #D1FAE5;
-            color: #065F46;
-        }
-
-        .status-tutup {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        /* MODAL ZOOM FOTO */
+        /* MODAL */
         .modal-zoom {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; padding: 20px;
         }
+        .modal-zoom img { max-width: 90%; max-height: 70vh; border-radius: 8px; margin-bottom: 15px; }
 
-        .modal-zoom img {
-            max-width: 90%;
-            max-height: 70vh;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .tombol-modal {
-            display: flex;
-            gap: 10px;
-        }
-
-        .tombol-modal button {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-unduh {
-            background: #10B981;
-            color: white;
-        }
-
-        .btn-tutup {
-            background: #EF4444;
-            color: white;
-        }
-
-        /* MODAL RANGKUMAN */
         .modal-rangkuman {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.92);
-            display: none;
-            flex-direction: column;
-            z-index: 9998;
-            padding: 15px;
-            overflow-y: auto;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); display: none;
+            flex-direction: column; z-index: 9998; padding: 15px; overflow-y: auto;
         }
-
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: white;
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            flex-shrink: 0;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; background: white; padding: 12px 15px;
+            border-radius: 10px; margin-bottom: 15px; flex-shrink: 0;
         }
-
-        .isi-rangkuman {
-            flex-grow: 1;
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-        }
+        .isi-rangkuman { flex-grow: 1; background: white; border-radius: 12px; padding: 15px; }
     </style>
 </head>
 <body class="bg-gradient-pink min-h-screen py-8 px-4">
 
-    <!-- MODAL ZOOM FOTO -->
+    <!-- MODAL ZOOM -->
     <div id="modalZoom" class="modal-zoom" onclick="tutupModal()">
         <img id="gambarZoom" src="" alt="Perbesar">
-        <div class="tombol-modal">
-            <button class="btn-unduh" onclick="event.stopPropagation(); unduhGambar()"><i class="fa fa-download mr-2"></i>Unduh Gambar</button>
-            <button class="btn-tutup" onclick="tutupModal()"><i class="fa fa-times mr-2"></i>Tutup</button>
+        <div class="flex gap-3 mt-4">
+            <button class="bg-green-500 text-white px-5 py-2 rounded-lg font-semibold" onclick="event.stopPropagation(); unduhGambar()"><i class="fa fa-download mr-2"></i>Unduh</button>
+            <button class="bg-red-500 text-white px-5 py-2 rounded-lg font-semibold" onclick="tutupModal()"><i class="fa fa-times mr-2"></i>Tutup</button>
         </div>
     </div>
 
@@ -235,261 +159,130 @@
         <div id="isiRangkuman" class="isi-rangkuman"></div>
     </div>
 
-    <!-- HALAMAN LOGIN KHUSUS ADMIN -->
+    <!-- HALAMAN LOGIN -->
     <div id="halamanMasuk" class="container mx-auto max-w-md">
         <div class="card-admin rounded-2xl p-8 text-center">
             <i class="fa fa-shield text-5xl text-pinkMain mb-4"></i>
             <h2 class="text-2xl font-bold text-pinkDark mb-2">AKSES DATA ADMIN</h2>
-            <p class="text-gray-500 mb-6">Halaman ini rahasia, hanya untuk pengelola turnamen</p>
-            
-            <div class="space-y-4">
-                <input type="password" id="kunciAdmin" placeholder="Masukkan Kode Akses" class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain">
-                <button onclick="cekAkses()" class="btn-pink w-full py-3 rounded-lg text-white font-bold">MASUK KE DATA</button>
-            </div>
+            <input type="password" id="kunciAdmin" placeholder="Masukkan Kode Akses" class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain my-4">
+            <button onclick="cekAkses()" class="bg-gradient-to-r from-pinkMain to-pink-500 w-full py-3 rounded-lg text-white font-bold">MASUK</button>
         </div>
     </div>
 
-    <!-- HALAMAN DATA PENDAFTAR -->
+    <!-- HALAMAN UTAMA -->
     <div id="halamanUtama" class="container mx-auto max-w-5xl hidden">
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold text-pinkDark">DAFTAR TIM TERDAFTAR</h1>
-                <p class="text-gray-500">BATTLE OF MASTER - Data Lengkap Pendaftaran</p>
+                <p class="text-gray-500">BATTLE OF MASTER - Data Lengkap</p>
             </div>
             <div class="flex gap-2 flex-wrap">
-                <button onclick="refreshData()" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
-                    <i class="fa fa-refresh mr-2"></i>Segarkan
-                </button>
-                <button onclick="keluar()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg font-semibold text-gray-700">
-                    <i class="fa fa-sign-out mr-2"></i>Keluar
-                </button>
+                <button onclick="refreshData()" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200"><i class="fa fa-refresh mr-2"></i>Segarkan</button>
+                <button onclick="keluar()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg font-semibold text-gray-700"><i class="fa fa-sign-out mr-2"></i>Keluar</button>
             </div>
         </div>
 
-        <!-- PANEL KONTROL & TOMBOL -->
         <div class="pengaturan-kontrol">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
                 <div class="flex items-center gap-3">
-                    <h3 class="font-bold text-orange-700 flex items-center">
-                        <i class="fa fa-sliders mr-2"></i> KONTROL PENDAFTARAN
-                    </h3>
-                    <span id="statusPendaftaran" class="status-indikator">
-                        <i class="fa fa-circle"></i> Memuat...
-                    </span>
+                    <h3 class="font-bold text-orange-700"><i class="fa fa-sliders mr-2"></i> KONTROL</h3>
+                    <span id="statusPendaftaran" class="status-indikator"><i class="fa fa-circle"></i> Memuat...</span>
                 </div>
                 <div class="flex flex-wrap gap-3 items-center">
-                    <button id="btnBukaTutup" onclick="ubahStatusPendaftaran()" class="tombol-tutup px-5 py-2 rounded-lg text-white font-bold">
-                        <i class="fa fa-lock mr-2"></i>TUTUP
-                    </button>
+                    <button id="btnBukaTutup" onclick="ubahStatusPendaftaran()" class="tombol-tutup px-5 py-2 rounded-lg text-white font-bold"><i class="fa fa-lock mr-2"></i>TUTUP</button>
                     <div class="flex items-center gap-2">
-                        <input type="number" id="inputKuota" min="1" max="200" class="w-20 px-3 py-2 rounded-lg border-2 border-orange-300 outline-none focus:border-orange-500 text-center font-bold">
-                        <button onclick="simpanKuota()" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600">
-                            <i class="fa fa-check mr-1"></i>Atur Kuota
-                        </button>
+                        <input type="number" id="inputKuota" min="1" max="200" class="w-20 px-3 py-2 rounded-lg border-2 border-orange-300 text-center font-bold">
+                        <button onclick="simpanKuota()" class="bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600"><i class="fa fa-check mr-1"></i>Atur</button>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="font-semibold text-gray-700">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-xl">0</span> / <span id="maksimalTim">16</span></p>
+                <p class="font-semibold text-gray-700">Total Tim: <span id="totalTim" class="text-pinkMain font-bold text-xl">0</span> / <span id="maksimalTim">16</span></p>
                 <div class="flex gap-2 flex-wrap">
-                    <button onclick="eksporData()" class="bg-green-100 text-green-600 px-4 py-2 rounded-lg font-semibold hover:bg-green-200">
-                        <i class="fa fa-download mr-2"></i>Simpan Cadangan
-                    </button>
-                    <button onclick="bukaRangkuman()" class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600">
-                        <i class="fa fa-book mr-2"></i>Rangkuman
-                    </button>
-                    <button onclick="rangkumDanArsip()" class="bg-purple-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-600">
-                        <i class="fa fa-archive mr-2"></i>Rangkum & Kosongkan
-                    </button>
-                    <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg font-semibold hover:bg-red-200">
-                        <i class="fa fa-trash mr-2"></i>Hapus Semua
-                    </button>
+                    <button onclick="eksporData()" class="bg-green-100 text-green-600 px-4 py-2 rounded-lg font-semibold hover:bg-green-200"><i class="fa fa-download mr-2"></i>Backup</button>
+                    <button onclick="bukaRangkuman()" class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600"><i class="fa fa-book mr-2"></i>Rangkuman</button>
+                    <button onclick="rangkumDanArsip()" class="bg-purple-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-600"><i class="fa fa-archive mr-2"></i>Rangkum & Kosongkan</button>
+                    <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-4 py-2 rounded-lg font-semibold hover:bg-red-200"><i class="fa fa-trash mr-2"></i>Hapus Semua</button>
                 </div>
             </div>
         </div>
 
-        <!-- Pencarian -->
         <div class="mb-6">
-            <input type="text" id="cariTim" placeholder="Cari nama tim / nama kapten..." class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain" oninput="cariData()">
+            <input type="text" id="cariTim" placeholder="Cari nama tim / kapten..." class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain" oninput="cariData()">
         </div>
 
-        <!-- DAFTAR TIM AKTIF -->
         <div id="wadahData" class="space-y-5">
             <div class="text-center py-16 text-gray-500">
                 <i class="fa fa-folder-open text-5xl mb-4"></i>
-                <p class="text-lg">Belum ada data pendaftaran yang masuk</p>
-                <p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p>
+                <p class="text-lg">Belum ada data pendaftaran</p>
             </div>
         </div>
     </div>
 
     <script>
-        // === KODE RAHASIA ===
         const KODE_AKSES = "battlemaster2026";
         let linkGambarAktif = "";
-        // ====================
 
-        // === FUNGSI MODAL ZOOM & UNDUH FOTO ===
-        function bukaZoom(link) {
-            linkGambarAktif = link;
-            document.getElementById('gambarZoom').src = link;
-            document.getElementById('modalZoom').style.display = 'flex';
-        }
+        // FUNGSI ZOOM
+        function bukaZoom(link) { linkGambarAktif = link; document.getElementById('gambarZoom').src = link; document.getElementById('modalZoom').style.display = 'flex'; }
+        function tutupModal() { document.getElementById('modalZoom').style.display = 'none'; }
+        function unduhGambar() { const a = document.createElement('a'); a.href = linkGambarAktif; a.download = `foto-${Date.now()}.png`; a.click(); alert('✅ Terunduh!'); }
 
-        function tutupModal() {
-            document.getElementById('modalZoom').style.display = 'none';
-        }
-
-        function unduhGambar() {
-            const a = document.createElement('a');
-            a.href = linkGambarAktif;
-            a.download = `foto-tim-${Date.now()}.png`;
-            a.click();
-            alert('✅ Gambar sedang diunduh!');
-        }
-
-        // === FUNGSI MODAL RANGKUMAN ===
+        // FUNGSI RANGKUMAN
         function bukaRangkuman() {
-            const daftarRangkuman = JSON.parse(localStorage.getItem('arsipPendaftaran') || '[]');
+            const arsip = JSON.parse(localStorage.getItem('arsipPendaftaran') || '[]');
             const wadah = document.getElementById('isiRangkuman');
             wadah.innerHTML = '';
 
-            if(daftarRangkuman.length === 0) {
-                wadah.innerHTML = `
-                <div class="text-center py-16 text-gray-500">
-                    <i class="fa fa-info-circle text-5xl mb-4"></i>
-                    <p class="text-lg">Belum ada data rangkuman</p>
-                    <p class="text-sm mt-1">Klik tombol "Rangkum & Kosongkan" untuk menyimpan data ke sini</p>
-                </div>`;
+            if(arsip.length === 0) {
+                wadah.innerHTML = `<div class="text-center py-16 text-gray-500"><i class="fa fa-info-circle text-5xl mb-4"></i><p class="text-lg">Belum ada data rangkuman</p><p class="text-sm mt-1">Klik "Rangkum & Kosongkan" untuk menyimpan</p></div>`;
             } else {
-                daftarRangkuman.forEach(arsip => {
-                    wadah.innerHTML += `
-                    <div class="mb-6 pb-6 border-b-2 border-pinkLight">
-                        <h4 class="text-xl font-bold text-pinkDark mb-2">${arsip.nama}</h4>
-                        <p class="text-gray-500 mb-4">Total: ${arsip.jumlahTim} Tim | Disimpan: ${arsip.tanggal}</p>
-                        <div class="space-y-4">`;
-                    
-                    arsip.dataTim.forEach(tim => {
+                arsip.forEach(sesi => {
+                    wadah.innerHTML += `<h4 class="text-xl font-bold text-pinkDark mb-2">${sesi.nama}</h4><p class="text-gray-500 mb-4">${sesi.jumlahTim} Tim | ${sesi.tanggal}</p><div class="space-y-4">`;
+                    sesi.dataTim.forEach(tim => {
                         wadah.innerHTML += `
                         <div class="tim-card bg-white rounded-xl p-5">
                             <div class="flex flex-col md:flex-row gap-4">
-                                <div class="flex gap-4 flex-shrink-0 justify-center md:justify-start">
-                                    <div class="text-center">
-                                        <p class="text-xs text-gray-500 mb-1 font-medium">Logo Tim</p>
-                                        <img src="${tim.logo}" alt="Logo ${tim.namaTim}" class="logo-tim" onclick="bukaZoom('${tim.logo}')">
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-xs text-gray-500 mb-1 font-medium">Jersey Tim</p>
-                                        <img src="${tim.jersey}" alt="Jersey ${tim.namaTim}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')">
-                                    </div>
+                                <div class="flex gap-4 flex-shrink-0">
+                                    <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
+                                    <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
                                 </div>
                                 <div class="flex-grow">
                                     <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
-                                    <p class="text-gray-600 mt-1">Kapten: ${tim.namaKapten}</p>
-                                    <p class="text-gray-600">WA Kapten: <a href="https://wa.me/${tim.waKapten}" target="_blank" class="text-pinkMain font-semibold">${tim.waKapten}</a></p>
-                                    
-                                    <div class="mt-4 p-4 bg-pinkLight/20 rounded-lg">
-                                        <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota Tim:</h4>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                            ${tim.anggota.map(a => `<div class="text-gray-700">• ${a.nama} - ${a.wa}</div>`).join('')}
-                                        </div>
+                                    <p class="text-gray-600">Kapten: ${tim.namaKapten} | WA: ${tim.waKapten}</p>
+                                    <div class="mt-4 p-3 bg-pinkLight/20 rounded-lg">
+                                        <h4 class="font-semibold mb-2">Anggota:</h4>
+                                        ${tim.anggota.map(a => `<div class="text-sm">• ${a.nama} - ${a.wa}</div>`).join('')}
                                     </div>
-                                    
-                                    <div class="mt-4">
-                                        <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
-                                        <div class="flex flex-wrap gap-2">
-                                            ${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" alt="Bukti" onclick="bukaZoom('${f}')">`).join('')}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                                        <h4 class="font-semibold text-green-700 mb-2 flex items-center">
-                                            <i class="fa fa-check-circle mr-2"></i> Bukti Transfer Pembayaran
-                                        </h4>
-                                        ${tim.buktiTransfer 
-                                            ? `<img src="${tim.buktiTransfer}" alt="Bukti Transfer" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` 
-                                            : `<p class="text-gray-500 italic">Belum mengunggah bukti transfer</p>`}
+                                    <div class="mt-3"><h4 class="font-semibold mb-2">Bukti Share:</h4><div class="flex flex-wrap gap-2">${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" onclick="bukaZoom('${f}')">`).join('')}</div></div>
+                                    <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                                        <h4 class="font-semibold text-green-700 mb-2">Bukti Transfer:</h4>
+                                        ${tim.buktiTransfer ? `<img src="${tim.buktiTransfer}" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` : `<p class="text-gray-500 italic">Belum ada</p>`}
                                     </div>
                                 </div>
                             </div>
                         </div>`;
                     });
-                    wadah.innerHTML += `</div></div>`;
+                    wadah.innerHTML += `</div><hr class="my-6 border-pinkLight">`;
                 });
             }
             document.getElementById('modalRangkuman').style.display = 'flex';
         }
+        function tutupRangkuman() { document.getElementById('modalRangkuman').style.display = 'none'; }
 
-        function tutupRangkuman() {
-            document.getElementById('modalRangkuman').style.display = 'none';
-        }
-
-        // === PENGATURAN PENDAFTARAN ===
-        function ambilPengaturan() {
-            return {
-                kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'),
-                dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false'
-            };
-        }
-
-        function simpanKuota() {
-            const nilaiBaru = parseInt(document.getElementById('inputKuota').value);
-            if(isNaN(nilaiBaru) || nilaiBaru < 1) {
-                alert('❌ Masukkan angka yang benar (minimal 1)');
-                return;
-            }
-            localStorage.setItem('kuotaMaksimal', nilaiBaru);
-            document.getElementById('maksimalTim').textContent = nilaiBaru;
-            alert(`✅ Kuota diubah menjadi ${nilaiBaru} Tim!`);
-        }
-
-        function ubahStatusPendaftaran() {
-            const pengaturan = ambilPengaturan();
-            const statusBaru = !pengaturan.dibuka;
-            localStorage.setItem('pendaftaranDibuka', statusBaru);
-            perbaruiTampilanStatus();
-            alert(statusBaru ? '✅ PENDAFTARAN DIBUKA!' : '❌ PENDAFTARAN DITUTUP!');
-        }
-
-        function perbaruiTampilanStatus() {
-            const pengaturan = ambilPengaturan();
-            const elStatus = document.getElementById('statusPendaftaran');
-            const elBtn = document.getElementById('btnBukaTutup');
-
-            if(pengaturan.dibuka) {
-                elStatus.innerHTML = `<i class="fa fa-circle"></i> TERBUKA`;
-                elStatus.className = 'status-indikator status-buka';
-                elBtn.innerHTML = `<i class="fa fa-unlock mr-2"></i>TUTUP`;
-                elBtn.className = 'tombol-tutup px-5 py-2 rounded-lg text-white font-bold';
-            } else {
-                elStatus.innerHTML = `<i class="fa fa-circle"></i> DITUTUP`;
-                elStatus.className = 'status-indikator status-tutup';
-                elBtn.innerHTML = `<i class="fa fa-lock mr-2"></i>BUKA`;
-                elBtn.className = 'tombol-buka px-5 py-2 rounded-lg text-white font-bold';
-            }
-        }
-
-        // === FUNGSI RANGKUM & ARSIP ===
+        // FUNGSI UTAMA RANGKUM
         function rangkumDanArsip() {
             const dataSekarang = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-            if(dataSekarang.length === 0) {
-                alert('⚠️ Belum ada data tim untuk dirangkum!');
-                return;
-            }
+            if(dataSekarang.length === 0) { alert('⚠️ Belum ada data tim!'); return; }
 
-            const namaArsip = prompt(
-                `Masukkan nama untuk rangkuman ini:\nContoh: PENDAFTARAN BATTLE OF MASTER S1`,
-                `PENDAFTARAN BATTLE OF MASTER S1`
-            );
-            if(!namaArsip || namaArsip.trim() === '') {
-                alert('❌ Nama rangkuman tidak boleh kosong!');
-                return;
-            }
+            const namaArsip = prompt('Masukkan nama sesi:\nContoh: PENDAFTARAN BATTLE OF MASTER S1', 'PENDAFTARAN BATTLE OF MASTER S1');
+            if(!namaArsip || namaArsip.trim() === '') { alert('❌ Nama tidak boleh kosong!'); return; }
 
-            if(!confirm(`⚠️ Yakin ingin merangkum ${dataSekarang.length} tim?\nNama: ${namaArsip}\nDaftar utama akan dikosongkan dan disimpan ke Rangkuman.`)) return;
+            if(!confirm(`Yakin simpan ${dataSekarang.length} tim ke:\n${namaArsip}\nDaftar utama akan dikosongkan?`)) return;
 
-            const daftarRangkuman = JSON.parse(localStorage.getItem('arsipPendaftaran') || '[]');
+            // PERBAIKAN: Paksa simpan ulang agar tidak gagal
+            let arsipLama = JSON.parse(localStorage.getItem('arsipPendaftaran') || '[]');
             const arsipBaru = {
                 id: Date.now(),
                 nama: namaArsip.trim(),
@@ -497,97 +290,50 @@
                 jumlahTim: dataSekarang.length,
                 dataTim: dataSekarang
             };
+            arsipLama.unshift(arsipBaru);
+            localStorage.setItem('arsipPendaftaran', JSON.stringify(arsipLama));
+            localStorage.removeItem('dataPendaftaran'); // Paksa hapus data utama
 
-            daftarRangkuman.unshift(arsipBaru);
-            localStorage.setItem('arsipPendaftaran', JSON.stringify(daftarRangkuman));
-            localStorage.removeItem('dataPendaftaran');
-
-            alert(`✅ Berhasil disimpan ke Rangkuman!\nNama: ${namaArsip}\nJumlah Tim: ${dataSekarang.length}`);
+            alert(`✅ Berhasil disimpan!\n${namaArsip}\n${dataSekarang.length} Tim`);
             tampilkanData();
         }
 
-        // === FUNGSI UTAMA ===
-        function cekAkses() {
-            const input = document.getElementById('kunciAdmin').value;
-            if(input === KODE_AKSES) {
-                document.getElementById('halamanMasuk').classList.add('hidden');
-                document.getElementById('halamanUtama').classList.remove('hidden');
-                const pengaturan = ambilPengaturan();
-                document.getElementById('inputKuota').value = pengaturan.kuota;
-                document.getElementById('maksimalTim').textContent = pengaturan.kuota;
-                perbaruiTampilanStatus();
-                tampilkanData();
-            } else {
-                alert('❌ Kode akses salah! Coba lagi ya.');
-            }
-        }
+        // FUNGSI LAINNYA
+        function ambilPengaturan() { return { kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'), dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' }; }
+        function simpanKuota() { const v = parseInt(document.getElementById('inputKuota').value); if(isNaN(v)||v<1) return alert('❌ Angka salah'); localStorage.setItem('kuotaMaksimal', v); document.getElementById('maksimalTim').textContent = v; alert(`✅ Kuota: ${v} Tim`); }
+        function ubahStatusPendaftaran() { const s = ambilPengaturan(); const b = !s.dibuka; localStorage.setItem('pendaftaranDibuka', b); perbaruiStatus(); alert(b ? '✅ DIBUKA' : '❌ DITUTUP'); }
+        function perbaruiStatus() { const s = ambilPengaturan(); const st = document.getElementById('statusPendaftaran'); const btn = document.getElementById('btnBukaTutup'); if(s.dibuka) { st.innerHTML = `<i class="fa fa-circle"></i> TERBUKA`; st.className = 'status-indikator status-buka'; btn.innerHTML = `<i class="fa fa-unlock mr-2"></i>TUTUP`; btn.className = 'tombol-tutup px-5 py-2 rounded-lg text-white font-bold'; } else { st.innerHTML = `<i class="fa fa-circle"></i> DITUTUP`; st.className = 'status-indikator status-tutup'; btn.innerHTML = `<i class="fa fa-lock mr-2"></i>BUKA`; btn.className = 'tombol-buka px-5 py-2 rounded-lg text-white font-bold'; } }
 
-        function keluar() {
-            document.getElementById('halamanUtama').classList.add('hidden');
-            document.getElementById('halamanMasuk').classList.remove('hidden');
-            document.getElementById('kunciAdmin').value = '';
-        }
+        function cekAkses() { const i = document.getElementById('kunciAdmin').value; if(i === KODE_AKSES) { document.getElementById('halamanMasuk').classList.add('hidden'); document.getElementById('halamanUtama').classList.remove('hidden'); const s = ambilPengaturan(); document.getElementById('inputKuota').value = s.kuota; document.getElementById('maksimalTim').textContent = s.kuota; perbaruiStatus(); tampilkanData(); } else alert('❌ Kode salah!'); }
+        function keluar() { document.getElementById('halamanUtama').classList.add('hidden'); document.getElementById('halamanMasuk').classList.remove('hidden'); document.getElementById('kunciAdmin').value = ''; }
 
         function tampilkanData() {
             const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
             const wadah = document.getElementById('wadahData');
             document.getElementById('totalTim').textContent = data.length;
-
-            if(data.length === 0) {
-                wadah.innerHTML = `
-                <div class="text-center py-16 text-gray-500">
-                    <i class="fa fa-folder-open text-5xl mb-4"></i>
-                    <p class="text-lg">Belum ada data pendaftaran yang masuk</p>
-                    <p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p>
-                </div>`;
-                return;
-            }
-
+            if(data.length === 0) { wadah.innerHTML = `<div class="text-center py-16 text-gray-500"><i class="fa fa-folder-open text-5xl mb-4"></i><p class="text-lg">Belum ada data pendaftaran</p></div>`; return; }
             wadah.innerHTML = '';
             data.forEach((tim, idx) => {
                 wadah.innerHTML += `
                 <div class="tim-card bg-white rounded-xl p-5" data-nama="${tim.namaTim.toLowerCase()}" data-kapten="${tim.namaKapten.toLowerCase()}">
                     <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex gap-4 flex-shrink-0 justify-center md:justify-start">
-                            <div class="text-center">
-                                <p class="text-xs text-gray-500 mb-1 font-medium">Logo Tim</p>
-                                <img src="${tim.logo}" alt="Logo ${tim.namaTim}" class="logo-tim" onclick="bukaZoom('${tim.logo}')">
-                            </div>
-                            <div class="text-center">
-                                <p class="text-xs text-gray-500 mb-1 font-medium">Jersey Tim</p>
-                                <img src="${tim.jersey}" alt="Jersey ${tim.namaTim}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')">
-                            </div>
+                        <div class="flex gap-4 flex-shrink-0">
+                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
+                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
                         </div>
                         <div class="flex-grow">
                             <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
-                                    <p class="text-gray-600 mt-1">Kapten: ${tim.namaKapten}</p>
-                                    <p class="text-gray-600">WA Kapten: <a href="https://wa.me/${tim.waKapten}" target="_blank" class="text-pinkMain font-semibold">${tim.waKapten}</a></p>
-                                </div>
-                                <button onclick="hapusSatu(${idx})" class="text-red-500 hover:text-red-700 p-2">
-                                    <i class="fa fa-times-circle text-xl"></i>
-                                </button>
+                                <div><h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3><p class="text-gray-600">Kapten: ${tim.namaKapten} | WA: ${tim.waKapten}</p></div>
+                                <button onclick="hapusSatu(${idx})" class="text-red-500 p-2"><i class="fa fa-times-circle text-xl"></i></button>
                             </div>
-                            <div class="mt-4 p-4 bg-pinkLight/20 rounded-lg">
-                                <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota Tim:</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                    ${tim.anggota.map(a => `<div class="text-gray-700">• ${a.nama} - ${a.wa}</div>`).join('')}
-                                </div>
+                            <div class="mt-4 p-3 bg-pinkLight/20 rounded-lg">
+                                <h4 class="font-semibold mb-2">Anggota:</h4>
+                                ${tim.anggota.map(a => `<div class="text-sm">• ${a.nama} - ${a.wa}</div>`).join('')}
                             </div>
-                            <div class="mt-4">
-                                <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    ${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" alt="Bukti" onclick="bukaZoom('${f}')">`).join('')}
-                                </div>
-                            </div>
-                            <div class="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                                <h4 class="font-semibold text-green-700 mb-2 flex items-center">
-                                    <i class="fa fa-check-circle mr-2"></i> Bukti Transfer Pembayaran
-                                </h4>
-                                ${tim.buktiTransfer 
-                                    ? `<img src="${tim.buktiTransfer}" alt="Bukti Transfer" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` 
-                                    : `<p class="text-gray-500 italic">Belum mengunggah bukti transfer</p>`}
+                            <div class="mt-3"><h4 class="font-semibold mb-2">Bukti Share:</h4><div class="flex flex-wrap gap-2">${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" onclick="bukaZoom('${f}')">`).join('')}</div></div>
+                            <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                                <h4 class="font-semibold text-green-700 mb-2">Bukti Transfer:</h4>
+                                ${tim.buktiTransfer ? `<img src="${tim.buktiTransfer}" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` : `<p class="text-gray-500 italic">Belum ada</p>`}
                             </div>
                         </div>
                     </div>
@@ -595,47 +341,11 @@
             });
         }
 
-        function cariData() {
-            const kataKunci = document.getElementById('cariTim').value.toLowerCase();
-            const semuaKartu = document.querySelectorAll('.tim-card');
-            semuaKartu.forEach(kartu => {
-                const nama = kartu.dataset.nama;
-                const kapten = kartu.dataset.kapten;
-                kartu.classList.toggle('hidden', !(nama.includes(kataKunci) || kapten.includes(kataKunci)));
-            });
-        }
-
-        function hapusSatu(idx) {
-            if(confirm('Yakin ingin menghapus data tim ini? Tindakan ini tidak bisa dibatalkan!')) {
-                const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-                data.splice(idx, 1);
-                localStorage.setItem('dataPendaftaran', JSON.stringify(data));
-                tampilkanData();
-            }
-        }
-
-        function hapusSemua() {
-            if(confirm('⚠️ PERINGATAN: Semua data tim aktif akan dihapus permanen!')) {
-                localStorage.removeItem('dataPendaftaran');
-                tampilkanData();
-            }
-        }
-
-        function refreshData() {
-            tampilkanData();
-            perbaruiTampilanStatus();
-            alert('✅ Data sudah diperbarui dengan yang terbaru!');
-        }
-
-        function eksporData() {
-            const data = localStorage.getItem('dataPendaftaran') || '[]';
-            const berkas = new Blob([data], {type: 'application/json'});
-            const tautan = document.createElement('a');
-            tautan.href = URL.createObjectURL(berkas);
-            tautan.download = `cadangan-pendaftaran-${new Date().toISOString().slice(0,10)}.json`;
-            tautan.click();
-            alert('✅ File cadangan data sudah terunduh!');
-        }
+        function cariData() { const k = document.getElementById('cariTim').value.toLowerCase(); document.querySelectorAll('.tim-card').forEach(kartu => { const n = kartu.dataset.nama; const c = kartu.dataset.kapten; kartu.classList.toggle('hidden', !(n.includes(k) || c.includes(k))); }); }
+        function hapusSatu(idx) { if(confirm('Yakin hapus?')) { const d = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]'); d.splice(idx,1); localStorage.setItem('dataPendaftaran', JSON.stringify(d)); tampilkanData(); } }
+        function hapusSemua() { if(confirm('Yakin hapus SEMUA data utama?')) { localStorage.removeItem('dataPendaftaran'); tampilkanData(); } }
+        function refreshData() { tampilkanData(); perbaruiStatus(); alert('✅ Disegarkan!'); }
+        function eksporData() { const d = localStorage.getItem('dataPendaftaran') || '[]'; const b = new Blob([d], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `backup-${new Date().toISOString().slice(0,10)}.json`; a.click(); alert('✅ Backup terunduh!'); }
     </script>
 </body>
 </html>
