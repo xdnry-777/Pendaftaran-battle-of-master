@@ -216,7 +216,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
                 <p class="font-semibold text-gray-700 text-sm">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTim">2</span></p>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="eksporDataLengkap()" class="bg-green-100 text-green-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-green-200">
+                    <button onclick="eksporDataTeks()" class="bg-green-100 text-green-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-green-200">
                         <i class="fa fa-download mr-1"></i>Simpan Cadangan
                     </button>
                     <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-red-200">
@@ -291,18 +291,58 @@
             }
         }
 
-        // === SIMPAN CADANGAN LENGKAP ===
-        function eksporDataLengkap() {
+        // === SIMPAN CADANGAN JADI FILE TEKS BIASA ===
+        function eksporDataTeks() {
             const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
             if(data.length === 0) return alert('⚠️ Belum ada data tim untuk disimpan!');
             
-            const dataRapi = JSON.stringify(data, null, 2);
-            const berkas = new Blob([dataRapi], {type: 'application/json;charset=utf-8'});
+            let isiFile = `============================================================\n`;
+            isiFile += `          DAFTAR LENGKAP PENDAFTARAN TURNAMEN\n`;
+            isiFile += `                BATTLE OF MASTER\n`;
+            isiFile += `Tanggal Unduh: ${new Date().toLocaleString('id-ID')}\n`;
+            isiFile += `Total Tim Terdaftar: ${data.length}\n`;
+            isiFile += `============================================================\n\n`;
+
+            data.forEach((tim, nomor) => {
+                isiFile += `==================== TIM KE-${nomor + 1} ====================\n`;
+                isiFile += `Nama Tim        : ${tim.namaTim}\n`;
+                isiFile += `Nama Kapten     : ${tim.namaKapten}\n`;
+                isiFile += `Nomor WA Kapten : ${tim.waKapten}\n`;
+                isiFile += `Link Logo Tim   : ${tim.logo}\n`;
+                isiFile += `Link Jersey Tim : ${tim.jersey}\n\n`;
+
+                isiFile += `--- DAFTAR ANGGOTA TIM ---\n`;
+                tim.anggota.forEach((anggota, urut) => {
+                    isiFile += `${urut + 1}. ${anggota.nama} - WA: ${anggota.wa}\n`;
+                });
+
+                isiFile += `\n--- BUKTI SHARE LINK ---\n`;
+                if(tim.buktiShare.length === 0) {
+                    isiFile += `Tidak ada bukti share link\n`;
+                } else {
+                    tim.buktiShare.forEach((link, urut) => {
+                        isiFile += `${urut + 1}. ${link}\n`;
+                    });
+                }
+
+                isiFile += `\n--- BUKTI TRANSFER ---\n`;
+                if(tim.buktiTransfer) {
+                    isiFile += `Sudah Mengirim Bukti Transfer\n`;
+                    isiFile += `Link Bukti: ${tim.buktiTransfer}\n`;
+                } else {
+                    isiFile += `BELUM mengirim bukti transfer\n`;
+                }
+
+                isiFile += `\n============================================================\n\n`;
+            });
+
+            const berkas = new Blob([isiFile], { type: 'text/plain;charset=utf-8' });
             const tautan = document.createElement('a');
             tautan.href = URL.createObjectURL(berkas);
-            tautan.download = `CADANGAN_BATTLE_OF_MASTER_${new Date().toISOString().slice(0,10)}.json`;
+            tautan.download = `DAFTAR_TIM_BATTLE_OF_MASTER_${new Date().toISOString().slice(0,10)}.txt`;
             tautan.click();
-            alert(`✅ Berhasil menyimpan ${data.length} Tim!\nSemua data: Nama, Kapten, Anggota, Bukti Share, Bukti Transfer, Logo & Jersey tersimpan lengkap.`);
+
+            alert(`✅ Berhasil disimpan!\nFile berisi ${data.length} Tim, format teks biasa, mudah dibaca.`);
         }
 
         // === LOGIN & NAVIGASI ===
