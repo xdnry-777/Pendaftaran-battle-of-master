@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORMULIR PENDAFTARAN - BATTLE OF MASTER</title>
+    <title>BATTLE OF MASTER - Pendaftaran Turnamen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -14,6 +14,8 @@
                         pinkMain: '#FF4D88',
                         pinkDark: '#CC2E66',
                         pinkLight: '#FFB6C9',
+                        hijauGratis: '#10B981',
+                        biruBayar: '#2563EB',
                     },
                     fontFamily: {
                         poppins: ['Poppins', 'sans-serif'],
@@ -30,204 +32,76 @@
         }
         body {
             background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
+            min-height: 100vh;
         }
         .btn-pink {
             background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
             transition: all 0.3s ease;
         }
-        .btn-pink:hover {
+        .btn-gratis {
+            background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-bayar {
+            background: linear-gradient(90deg, #2563EB 0%, #3B82F6 100%);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,77,136,0.25);
-        }
-        .input-custom {
-            border: 2px solid #FFD6E2;
-            transition: all 0.2s;
-        }
-        .input-custom:focus {
-            border-color: #FF4D88;
-            box-shadow: 0 0 0 3px rgba(255,77,136,0.15);
-        }
-        .bagian-tersembunyi {
-            display: none !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
     </style>
 </head>
-<body class="p-5 max-w-2xl mx-auto">
-    <div class="bg-white rounded-2xl p-6 shadow-lg">
-        <div class="text-center mb-6">
-            <a href="index.html" class="text-pinkMain text-sm mb-2 inline-block"><i class="fa fa-arrow-left mr-1"></i>Kembali ke Halaman Utama</a>
-            <h1 class="text-2xl font-bold text-pinkDark">FORMULIR PENDAFTARAN</h1>
-            <p id="jenisJudul" class="text-gray-500 text-sm mt-1">BATTLE OF MASTER</p>
+<body class="p-6 max-w-md mx-auto">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-pinkDark">BATTLE OF MASTER</h1>
+            <p class="text-gray-600 text-sm">Turnamen Free Fire Para Cees Elite</p>
         </div>
+        <a href="data-admin.html" class="bg-white p-2 rounded-full shadow-sm">
+            <i class="fa fa-lock text-pinkMain"></i>
+        </a>
+    </div>
 
-        <form id="formPendaftaran" class="space-y-5">
-            <!-- DATA UTAMA -->
-            <div class="space-y-4">
-                <h3 class="font-bold text-pinkDark border-b border-pinkLight pb-2">DATA TIM</h3>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Tim *</label>
-                    <input type="text" id="namaTim" class="input-custom w-full px-4 py-3 rounded-lg" required placeholder="Contoh: GANTENC FF">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Kapten *</label>
-                    <input type="text" id="namaKapten" class="input-custom w-full px-4 py-3 rounded-lg" required placeholder="Contoh: Nova">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WhatsApp Kapten *</label>
-                    <input type="tel" id="waKapten" class="input-custom w-full px-4 py-3 rounded-lg" required placeholder="Contoh: 0858xxxxxxx">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Logo Tim *</label>
-                    <input type="file" id="logoTim" accept="image/*" class="input-custom w-full px-4 py-3 rounded-lg" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Jersey Tim</label>
-                    <input type="file" id="jerseyTim" accept="image/*" class="input-custom w-full px-4 py-3 rounded-lg">
-                </div>
-            </div>
+    <div class="text-center my-12">
+        <i class="fa fa-trophy text-6xl text-pinkMain mb-4"></i>
+        <h2 class="text-3xl font-bold text-pinkDark mb-3">AYO DAFTARKAN TIM KAMU!</h2>
+        <p class="text-gray-600 mb-8">Bergabunglah di turnamen Battle Of Master, dan buktikan tim kamu yang paling terbaik!</p>
+    </div>
 
-            <!-- ANGGOTA TIM -->
-            <div class="space-y-4">
-                <h3 class="font-bold text-pinkDark border-b border-pinkLight pb-2">ANGGOTA TIM (4 Inti + 2 Cadangan) *</h3>
-                <div id="daftarAnggota" class="space-y-3">
-                    <!-- Isi otomatis 6 anggota -->
-                </div>
-            </div>
+    <!-- PILIH JENIS PENDAFTARAN -->
+    <div class="space-y-4 mb-8">
+        <button onclick="window.location.href='formulir.html?jenis=gratis'" class="btn-gratis w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-2">
+            <i class="fa fa-gift"></i> PENDAFTARAN GRATIS
+        </button>
+        <button onclick="window.location.href='formulir.html?jenis=berbayar'" class="btn-bayar w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-2">
+            <i class="fa fa-credit-card"></i> PENDAFTARAN BERBAYAR
+        </button>
+    </div>
 
-            <!-- BUKTI SHARE LINK (HANYA GRATIS) -->
-            <div id="bagianShare" class="space-y-4">
-                <h3 class="font-bold text-pinkDark border-b border-pinkLight pb-2">BUKTI SHARE LINK *</h3>
-                <p class="text-sm text-gray-500">Wajib upload 5 foto bukti share link</p>
-                <div id="daftarShare" class="space-y-3">
-                    <!-- Isi otomatis 5 upload -->
-                </div>
-            </div>
-
-            <!-- METODE PEMBAYARAN & BUKTI TRANSFER (HANYA BERBAYAR) -->
-            <div id="bagianPembayaran" class="space-y-4">
-                <h3 class="font-bold text-pinkDark border-b border-pinkLight pb-2">METODE PEMBAYARAN</h3>
-                <div class="text-center p-4 bg-pinkLight/20 rounded-xl">
-                    <p class="font-semibold text-pinkDark mb-3">Scan QRIS Berikut:</p>
-                    <img src="qris-kamu.png" alt="QRIS Pembayaran" class="w-48 mx-auto rounded-lg border-2 border-pinkMain">
-                    <p class="text-sm text-gray-600 mt-3">Atau transfer ke:</p>
-                    <p class="font-semibold">DANA / GOPAY: 0858648434</p>
-                    <p class="text-xs text-gray-500 mt-1">An. Battle Of Master</p>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Upload Bukti Transfer *</label>
-                    <input type="file" id="buktiTransfer" accept="image/*" class="input-custom w-full px-4 py-3 rounded-lg">
-                </div>
-            </div>
-
-            <button type="submit" class="btn-pink w-full py-4 rounded-xl text-white font-bold text-lg">
-                <i class="fa fa-paper-plane mr-2"></i> KIRIM PENDAFTARAN
-            </button>
-        </form>
+    <div class="bg-white rounded-xl p-5 shadow-sm">
+        <h3 class="font-bold text-pinkDark mb-3 flex items-center gap-2">
+            <i class="fa fa-info-circle"></i> Informasi Penting
+        </h3>
+        <ul class="text-gray-700 text-sm space-y-2">
+            <li>• Biaya berbayar: Rp 5.000 / Tim</li>
+            <li>• Kuota terbatas: Maksimal 16 Tim</li>
+            <li>• Format: 4 Inti + 2 Cadangan</li>
+            <li>• Waktu pendaftaran: 20 Juli - 30 Juli 2026</li>
+        </ul>
     </div>
 
     <script>
-        // === DETEKSI JENIS PENDAFTARAN ===
-        const urlParams = new URLSearchParams(window.location.search);
-        const jenisPendaftaran = urlParams.get('jenis') || 'gratis';
-        const judul = document.getElementById('jenisJudul');
-        const bagianShare = document.getElementById('bagianShare');
-        const bagianBayar = document.getElementById('bagianPembayaran');
-        const inputBukti = document.getElementById('buktiTransfer');
-
-        if(jenisPendaftaran === 'gratis') {
-            judul.textContent = "PENDAFTARAN GRATIS - BATTLE OF MASTER";
-            bagianBayar.classList.add('bagian-tersembunyi');
-            inputBukti.removeAttribute('required');
-        } else {
-            judul.textContent = "PENDAFTARAN BERBAYAR - BATTLE OF MASTER";
-            bagianShare.classList.add('bagian-tersembunyi');
-            // Hapus required dari share link
-            for(let i=1; i<=5; i++) {
-                document.getElementById(`share${i}`).removeAttribute('required');
-            }
-            inputBukti.setAttribute('required', 'required');
+        // Cek jika pendaftaran ditutup
+        const pengaturan = {
+            kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'),
+            dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false',
+            total: JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length
+        };
+        if(!pengaturan.dibuka || pengaturan.total >= pengaturan.kuota) {
+            alert("⚠️ Pendaftaran sudah ditutup atau kuota sudah penuh!");
+            document.querySelectorAll('button').forEach(b => b.disabled = true);
         }
-
-        // === BUAT FORM ANGGOTA & SHARE OTOMATIS ===
-        const wadahAnggota = document.getElementById('daftarAnggota');
-        for(let i=1; i<=6; i++) {
-            wadahAnggota.innerHTML += `
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Pemain ${i} *</label>
-                    <input type="text" class="input-custom w-full px-3 py-2 rounded-lg" id="namaPemain${i}" required placeholder="Nama Lengkap">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">No WhatsApp Pemain ${i}</label>
-                    <input type="tel" class="input-custom w-full px-3 py-2 rounded-lg" id="waPemain${i}" placeholder="08xxx">
-                </div>
-            </div>`;
-        }
-
-        const wadahShare = document.getElementById('daftarShare');
-        for(let i=1; i<=5; i++) {
-            wadahShare.innerHTML += `
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Bukti Share Link ${i} *</label>
-                <input type="file" id="share${i}" accept="image/*" class="input-custom w-full px-4 py-3 rounded-lg" required>
-            </div>`;
-        }
-
-        // === FUNGSI SIMPAN DATA ===
-        function ubahKeBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        document.getElementById('formPendaftaran').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Cek kuota & status
-            const dataLama = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-            const kuotaMaksimal = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
-            const pendaftaranBuka = localStorage.getItem('pendaftaranDibuka') !== 'false';
-            if(!pendaftaranBuka || dataLama.length >= kuotaMaksimal) {
-                return alert("⚠️ Pendaftaran sudah ditutup atau kuota sudah penuh!");
-            }
-
-            // Ambil data dasar
-            const dataTim = {
-                jenis: jenisPendaftaran,
-                namaTim: document.getElementById('namaTim').value.trim(),
-                namaKapten: document.getElementById('namaKapten').value.trim(),
-                waKapten: document.getElementById('waKapten').value.trim(),
-                logo: await ubahKeBase64(document.getElementById('logoTim').files[0]),
-                jersey: document.getElementById('jerseyTim').files[0] ? await ubahKeBase64(document.getElementById('jerseyTim').files[0]) : '',
-                anggota: [],
-                buktiShare: [],
-                buktiTransfer: jenisPendaftaran === 'berbayar' ? await ubahKeBase64(document.getElementById('buktiTransfer').files[0]) : ''
-            };
-
-            // Masukkan anggota
-            for(let i=1; i<=6; i++) {
-                dataTim.anggota.push({
-                    nama: document.getElementById(`namaPemain${i}`).value.trim(),
-                    wa: document.getElementById(`waPemain${i}`).value.trim()
-                });
-            }
-
-            // Masukkan bukti share jika gratis
-            if(jenisPendaftaran === 'gratis') {
-                for(let i=1; i<=5; i++) {
-                    dataTim.buktiShare.push(await ubahKeBase64(document.getElementById(`share${i}`).files[0]));
-                }
-            }
-
-            // Simpan ke penyimpanan
-            dataLama.push(dataTim);
-            localStorage.setItem('dataPendaftaran', JSON.stringify(dataLama));
-            alert(`✅ Pendaftaran Berhasil!\nTerima kasih sudah mendaftar sebagai ${jenisPendaftaran.toUpperCase()}`);
-            window.location.href = "index.html";
-        });
     </script>
 </body>
 </html>
