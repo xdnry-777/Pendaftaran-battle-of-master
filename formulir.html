@@ -27,120 +27,22 @@
         
         * {
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         body {
             background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
             padding: 16px;
+            min-height: 100vh;
         }
         .wadah-form {
             max-width: 480px;
             margin: 0 auto;
-            background: #fff;
+            background: #ffffff;
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 4px 20px rgba(255,77,136,0.1);
-        }
-        .bagian-form {
-            background: #FFF5F8;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
-        }
-        .label-utama {
-            font-size: 18px;
-            font-weight: 700;
-            color: #FF4D88;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .label-input {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 6px;
-            display: block;
-        }
-        .input-biasa {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #FFE6EE;
-            border-radius: 10px;
-            font-size: 16px;
-            margin-bottom: 16px;
-            outline: none;
-            transition: all 0.2s;
-        }
-        .input-biasa:focus {
-            border-color: #FF4D88;
-            background: #fff;
-        }
-        .area-upload {
-            border: 2px dashed #FF4D88;
-            border-radius: 12px;
-            padding: 32px 16px;
-            text-align: center;
-            margin-bottom: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .area-upload:hover {
-            background: #FFF5F8;
-        }
-        .area-upload i {
-            font-size: 32px;
-            color: #FF4D88;
-            margin-bottom: 8px;
-            display: block;
-        }
-        .area-upload p {
-            color: #FF4D88;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .area-upload span {
-            font-size: 14px;
-            color: #6b7280;
-            margin-top: 4px;
-            display: block;
-        }
-        .bagian-pembayaran {
-            background: #FFF5F8;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .bagian-pembayaran img {
-            width: 180px;
-            border-radius: 10px;
-            border: 2px solid #FF4D88;
-            margin: 12px auto;
-        }
-        .bagian-pembayaran p {
-            font-size: 15px;
-            color: #374151;
-            margin: 6px 0;
-        }
-        .bagian-pembayaran .nomor {
-            font-weight: 700;
-            color: #FF4D88;
-            font-size: 17px;
-        }
-        .btn-kirim {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-kirim:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,77,136,0.25);
+            box-shadow: 0 4px 15px rgba(255,77,136,0.1);
         }
         .link-kembali {
             color: #FF4D88;
@@ -150,18 +52,141 @@
             align-items: center;
             gap: 6px;
             margin-bottom: 16px;
-        }
-        .sisa-kuota {
-            text-align: center;
-            color: #6b7280;
             font-size: 15px;
-            margin-bottom: 20px;
         }
-        .sisa-kuota span {
+        .judul-utama {
+            font-size: 28px;
             font-weight: 700;
             color: #FF4D88;
+            text-align: center;
+            margin-bottom: 8px;
         }
-        .tersembunyi {
+        .keterangan-jenis {
+            text-align: center;
+            color: #6B7280;
+            font-size: 15px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .bagian-kolom {
+            background: #FFF5F8;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+        .judul-bagian {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FF4D88;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .label-isian {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .input-teks {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #FFE6EE;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            outline: none;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+        .input-teks:focus {
+            border-color: #FF4D88;
+            box-shadow: 0 0 0 3px rgba(255,77,136,0.15);
+        }
+        /* === KOLOM UPLOAD YANG SUDAH DIRAPIKAN === */
+        .kolom-upload {
+            width: 100%;
+            border: 2px dashed #FF4D88;
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+        .kolom-upload:hover {
+            background: #FFF5F8;
+            border-color: #CC2E66;
+        }
+        .kolom-upload i {
+            font-size: 32px;
+            color: #FF4D88;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .kolom-upload .teks-utama {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FF4D88;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .kolom-upload .teks-kecil {
+            font-size: 14px;
+            color: #6B7280;
+            display: block;
+        }
+        .info-pembayaran {
+            background: #FFF5F8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.7;
+        }
+        .info-pembayaran h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #FF4D88;
+            margin-bottom: 10px;
+        }
+        .info-pembayaran p {
+            font-size: 15px;
+            color: #374151;
+        }
+        .info-pembayaran .nomor-akun {
+            font-weight: 700;
+            color: #FF4D88;
+            font-size: 17px;
+            margin: 8px 0;
+        }
+        .info-pembayaran img {
+            width: 180px;
+            border-radius: 10px;
+            border: 2px solid #FF4D88;
+            margin: 12px auto;
+            display: block;
+        }
+        .tombol-kirim {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tombol-kirim:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,77,136,0.25);
+        }
+        .sembunyikan {
             display: none !important;
         }
     </style>
@@ -172,139 +197,126 @@
             <i class="fa fa-arrow-left"></i> Kembali ke Beranda
         </a>
 
-        <h1 class="text-3xl font-bold text-center text-pinkDark mb-2">FORMULIR PENDAFTARAN</h1>
-        <p id="judulJenis" class="sisa-kuota">BATTLE OF MASTER - Sisa kuota: <span id="sisaKuota">16</span> Tim</p>
+        <h1 class="judul-utama">FORMULIR PENDAFTARAN</h1>
+        <p id="teksJenis" class="keterangan-jenis"></p>
 
         <form id="formPendaftaran">
-            <!-- DATA TIM -->
-            <div class="bagian-form">
-                <span class="label-utama">📌 DATA TIM</span>
+            <!-- BAGIAN DATA TIM -->
+            <div class="bagian-kolom">
+                <h3 class="judul-bagian">📌 DATA TIM</h3>
 
-                <label class="label-input">Nama Tim</label>
-                <input type="text" id="namaTim" class="input-biasa" placeholder="Masukkan nama tim kamu" required>
+                <label class="label-isian">Nama Tim</label>
+                <input type="text" id="namaTim" class="input-teks" placeholder="Masukkan nama tim kamu" required>
 
-                <label class="label-input">Nama Lengkap Kapten</label>
-                <input type="text" id="namaKapten" class="input-biasa" placeholder="Nama lengkap kapten tim" required>
+                <label class="label-isian">Nama Lengkap Kapten</label>
+                <input type="text" id="namaKapten" class="input-teks" placeholder="Nama lengkap kapten tim" required>
 
-                <label class="label-input">Nomor WhatsApp Aktif</label>
-                <input type="tel" id="waKapten" class="input-biasa" placeholder="Contoh: 081234567890" required>
+                <label class="label-isian">Nomor WhatsApp Aktif</label>
+                <input type="tel" id="waKapten" class="input-teks" placeholder="Contoh: 081234567890" required>
 
-                <label class="label-input">Logo Tim</label>
-                <label class="area-upload">
+                <label class="label-isian">Logo Tim</label>
+                <label class="kolom-upload">
                     <input type="file" id="logoTim" accept="image/*" class="hidden" required>
                     <i class="fa fa-image"></i>
-                    <p>Klik di sini untuk pilih logo tim</p>
-                    <span>Format: JPG/PNG</span>
+                    <span class="teks-utama">Klik di sini untuk pilih logo tim</span>
+                    <span class="teks-kecil">Format: JPG / PNG</span>
                 </label>
 
-                <label class="label-input">Foto Jersey Tim</label>
-                <label class="area-upload">
+                <label class="label-isian">Foto Jersey Tim</label>
+                <label class="kolom-upload">
                     <input type="file" id="jerseyTim" accept="image/*" class="hidden">
                     <i class="fa fa-shield"></i>
-                    <p>Klik di sini untuk pilih foto jersey</p>
-                    <span>Format: JPG/PNG</span>
+                    <span class="teks-utama">Klik di sini untuk pilih foto jersey</span>
+                    <span class="teks-kecil">Format: JPG / PNG</span>
                 </label>
             </div>
 
-            <!-- BUKTI SHARE LINK (HANYA GRATIS) -->
-            <div id="bagianShare" class="bagian-form">
-                <label class="label-input">Bukti Share Link <span class="text-red-500 font-bold">*(Wajib 5 Foto)</span></label>
-                <label class="area-upload">
+            <!-- BAGIAN BUKTI SHARE LINK (KHUSUS GRATIS) -->
+            <div id="kolomShare" class="bagian-kolom">
+                <label class="label-isian">Bukti Share Link <span class="text-red-500 font-bold">*(Wajib 5 Foto)</span></label>
+                <label class="kolom-upload">
                     <input type="file" id="buktiShare" accept="image/*" multiple class="hidden" required>
                     <i class="fa fa-upload"></i>
-                    <p>Klik di sini untuk pilih foto</p>
-                    <span>Pilih tepat 5 file foto</span>
+                    <span class="teks-utama">Klik di sini untuk pilih foto</span>
+                    <span class="teks-kecil">Pilih tepat 5 file foto</span>
                 </label>
             </div>
 
-            <!-- PEMBAYARAN & BUKTI TRANSFER (HANYA BERBAYAR) -->
-            <div id="bagianBayar" class="tersembunyi">
-                <div class="bagian-pembayaran">
-                    <h3 class="font-bold text-pinkDark text-lg mb-2">METODE PEMBAYARAN</h3>
+            <!-- BAGIAN PEMBAYARAN (KHUSUS BERBAYAR) -->
+            <div id="kolomBayar" class="sembunyikan">
+                <div class="info-pembayaran">
+                    <h4>METODE PEMBAYARAN</h4>
                     <p>Scan QRIS di bawah ini atau transfer ke nomor Dana:</p>
                     <img src="qris.png" alt="QRIS Pembayaran">
-                    <p class="nomor">DANA: 0858xxxxxxx</p>
+                    <p class="nomor-akun">DANA: 0858xxxxxxx</p>
                     <p class="text-sm text-gray-500">An. Battle Of Master</p>
                     <p class="font-semibold text-pinkDark mt-2">Total: Rp 5.000 / Tim</p>
                 </div>
 
-                <label class="label-input">Unggah Bukti Transfer</label>
-                <label class="area-upload">
+                <label class="label-isian">Unggah Bukti Transfer</label>
+                <label class="kolom-upload">
                     <input type="file" id="buktiTransfer" accept="image/*" class="hidden" required>
                     <i class="fa fa-file-text-o"></i>
-                    <p>Klik di sini untuk unggah bukti transfer</p>
-                    <span>Format: JPG/PNG</span>
+                    <span class="teks-utama">Klik di sini untuk unggah bukti transfer</span>
+                    <span class="teks-kecil">Format: JPG / PNG</span>
                 </label>
             </div>
 
-            <!-- ANGGOTA TIM -->
-            <div class="bagian-form">
-                <span class="label-utama">👥 DATA ANGGOTA TIM</span>
+            <!-- BAGIAN DATA ANGGOTA -->
+            <div class="bagian-kolom">
+                <h3 class="judul-bagian">👥 DATA ANGGOTA TIM</h3>
 
-                <div class="mb-4">
-                    <label class="label-input">Pemain 1</label>
-                    <input type="text" id="pemain1Nama" class="input-biasa" placeholder="Nama Pemain" required>
-                    <input type="tel" id="pemain1Wa" class="input-biasa" placeholder="08..." required>
-                </div>
+                <label class="label-isian">Pemain 1</label>
+                <input type="text" id="p1Nama" class="input-teks" placeholder="Nama lengkap pemain" required>
+                <input type="tel" id="p1Wa" class="input-teks" placeholder="Nomor WhatsApp" required>
 
-                <div class="mb-4">
-                    <label class="label-input">Pemain 2</label>
-                    <input type="text" id="pemain2Nama" class="input-biasa" placeholder="Nama Pemain" required>
-                    <input type="tel" id="pemain2Wa" class="input-biasa" placeholder="08..." required>
-                </div>
+                <label class="label-isian">Pemain 2</label>
+                <input type="text" id="p2Nama" class="input-teks" placeholder="Nama lengkap pemain" required>
+                <input type="tel" id="p2Wa" class="input-teks" placeholder="Nomor WhatsApp" required>
 
-                <div class="mb-4">
-                    <label class="label-input">Pemain 3</label>
-                    <input type="text" id="pemain3Nama" class="input-biasa" placeholder="Nama Pemain" required>
-                    <input type="tel" id="pemain3Wa" class="input-biasa" placeholder="08..." required>
-                </div>
+                <label class="label-isian">Pemain 3</label>
+                <input type="text" id="p3Nama" class="input-teks" placeholder="Nama lengkap pemain" required>
+                <input type="tel" id="p3Wa" class="input-teks" placeholder="Nomor WhatsApp" required>
 
-                <div class="mb-4">
-                    <label class="label-input">Pemain 4</label>
-                    <input type="text" id="pemain4Nama" class="input-biasa" placeholder="Nama Pemain" required>
-                    <input type="tel" id="pemain4Wa" class="input-biasa" placeholder="08..." required>
-                </div>
+                <label class="label-isian">Pemain 4</label>
+                <input type="text" id="p4Nama" class="input-teks" placeholder="Nama lengkap pemain" required>
+                <input type="tel" id="p4Wa" class="input-teks" placeholder="Nomor WhatsApp" required>
 
-                <div class="mb-4">
-                    <label class="label-input">Pemain 5 (Cadangan)</label>
-                    <input type="text" id="pemain5Nama" class="input-biasa" placeholder="Nama Pemain" required>
-                    <input type="tel" id="pemain5Wa" class="input-biasa" placeholder="08..." required>
-                </div>
+                <label class="label-isian">Pemain 5 (Cadangan)</label>
+                <input type="text" id="p5Nama" class="input-teks" placeholder="Nama lengkap pemain" required>
+                <input type="tel" id="p5Wa" class="input-teks" placeholder="Nomor WhatsApp" required>
 
-                <div class="mb-4">
-                    <label class="label-input">Pemain 6 (Cadangan)</label>
-                    <input type="text" id="pemain6Nama" class="input-biasa" placeholder="Nama Pemain" required>
-                    <input type="tel" id="pemain6Wa" class="input-biasa" placeholder="08..." required>
-                </div>
+                <label class="label-isian">Pemain 6 (Cadangan)</label>
+                <input type="text" id="p6Nama" class="input-teks" placeholder="Nama lengkap pemain" required>
+                <input type="tel" id="p6Wa" class="input-teks" placeholder="Nomor WhatsApp" required>
             </div>
 
-            <button type="submit" class="btn-kirim">KIRIM PENDAFTARAN</button>
+            <button type="submit" class="tombol-kirim">KIRIM PENDAFTARAN</button>
         </form>
     </div>
 
     <script>
         // === DETEKSI JENIS PENDAFTARAN ===
         const urlParams = new URLSearchParams(window.location.search);
-        const jenis = urlParams.get('jenis') || 'gratis';
-        const judul = document.getElementById('judulJenis');
-        const bagianShare = document.getElementById('bagianShare');
-        const bagianBayar = document.getElementById('bagianBayar');
+        const jenisDaftar = urlParams.get('jenis') || 'gratis';
+        const teksJenis = document.getElementById('teksJenis');
+        const kolomShare = document.getElementById('kolomShare');
+        const kolomBayar = document.getElementById('kolomBayar');
         const kuotaMaksimal = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
         const totalTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
-        document.getElementById('sisaKuota').textContent = kuotaMaksimal - totalTerdaftar;
 
-        if(jenis === 'gratis') {
-            judul.textContent = "PENDAFTARAN GRATIS - BATTLE OF MASTER - Sisa kuota: " + (kuotaMaksimal - totalTerdaftar) + " Tim";
-            bagianBayar.classList.add('tersembunyi');
+        if(jenisDaftar === 'gratis') {
+            teksJenis.textContent = `PENDAFTARAN GRATIS • BATTLE OF MASTER • Sisa kuota: ${kuotaMaksimal - totalTerdaftar} Tim`;
+            kolomBayar.classList.add('sembunyikan');
             document.getElementById('buktiTransfer').removeAttribute('required');
         } else {
-            judul.textContent = "PENDAFTARAN BERBAYAR - BATTLE OF MASTER - Sisa kuota: " + (kuotaMaksimal - totalTerdaftar) + " Tim";
-            bagianShare.classList.add('tersembunyi');
+            teksJenis.textContent = `PENDAFTARAN BERBAYAR • BATTLE OF MASTER • Sisa kuota: ${kuotaMaksimal - totalTerdaftar} Tim`;
+            kolomShare.classList.add('sembunyikan');
             document.getElementById('buktiShare').removeAttribute('required');
-            bagianBayar.classList.remove('tersembunyi');
+            kolomBayar.classList.remove('sembunyikan');
         }
 
-        // === FUNGSI UBAH GAMBAR KE LINK ===
+        // === FUNGSI UBAH FILE KE LINK ===
         function bacaFile(file) {
             return new Promise(resolve => {
                 const reader = new FileReader();
@@ -313,51 +325,51 @@
             });
         }
 
-        // === KIRIM DATA ===
+        // === SIMPAN DATA KE PENYIMPANAN ===
         document.getElementById('formPendaftaran').addEventListener('submit', async e => {
             e.preventDefault();
 
             // Cek status pendaftaran
             if(!localStorage.getItem('pendaftaranDibuka') || totalTerdaftar >= kuotaMaksimal) {
-                return alert("⚠️ Pendaftaran sudah ditutup atau kuota habis!");
+                return alert("⚠️ Pendaftaran sudah ditutup atau kuota sudah penuh!");
             }
 
-            // Ambil data dasar
-            const data = {
-                jenis: jenis,
+            // Ambil semua data isian
+            const dataBaru = {
+                jenis: jenisDaftar,
                 namaTim: document.getElementById('namaTim').value.trim(),
                 namaKapten: document.getElementById('namaKapten').value.trim(),
                 waKapten: document.getElementById('waKapten').value.trim(),
                 logo: await bacaFile(document.getElementById('logoTim').files[0]),
                 jersey: document.getElementById('jerseyTim').files[0] ? await bacaFile(document.getElementById('jerseyTim').files[0]) : '',
+                buktiShare: [],
+                buktiTransfer: '',
                 anggota: []
             };
 
-            // Masukkan anggota
+            // Masukkan bukti sesuai jenis
+            if(jenisDaftar === 'gratis') {
+                const files = document.getElementById('buktiShare').files;
+                if(files.length !== 5) return alert("⚠️ Wajib unggah tepat 5 foto bukti share link!");
+                for(let f of files) dataBaru.buktiShare.push(await bacaFile(f));
+            } else {
+                dataBaru.buktiTransfer = await bacaFile(document.getElementById('buktiTransfer').files[0]);
+            }
+
+            // Masukkan data anggota
             for(let i=1; i<=6; i++) {
-                data.anggota.push({
-                    nama: document.getElementById(`pemain${i}Nama`).value.trim(),
-                    wa: document.getElementById(`pemain${i}Wa`).value.trim()
+                dataBaru.anggota.push({
+                    nama: document.getElementById(`p${i}Nama`).value.trim(),
+                    wa: document.getElementById(`p${i}Wa`).value.trim()
                 });
             }
 
-            // Masukkan bukti sesuai jenis
-            if(jenis === 'gratis') {
-                const files = document.getElementById('buktiShare').files;
-                if(files.length !== 5) return alert("⚠️ Wajib unggah tepat 5 foto bukti share link!");
-                data.buktiShare = [];
-                for(let f of files) data.buktiShare.push(await bacaFile(f));
-            } else {
-                data.buktiTransfer = await bacaFile(document.getElementById('buktiTransfer').files[0]);
-                data.buktiShare = [];
-            }
-
-            // Simpan data
+            // Simpan ke penyimpanan lokal
             const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-            semuaData.push(data);
+            semuaData.push(dataBaru);
             localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
 
-            alert(`✅ Berhasil mendaftar sebagai ${jenis.toUpperCase()}!\nTerima kasih sudah bergabung.`);
+            alert(`✅ Pendaftaran berhasil!\nTerima kasih sudah mendaftar sebagai ${jenisDaftar.toUpperCase()}`);
             window.location.href = "index.html";
         });
     </script>
