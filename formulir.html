@@ -27,10 +27,9 @@
         .kotak-upload { width:100%; min-height:140px; border:2px dashed #B57F50; border-radius:12px; cursor:pointer; margin-bottom:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; padding:16px; text-align:center; }
         .kotak-upload i { font-size:36px; color:#B57F50; margin-bottom:8px; }
         .teks-tombol { font-size:15px; font-weight:600; color:#8B5A2B; }
-        .teks-kecil { font-size:12px; color:#887058; margin-top:4px; }
         .wadah-foto { position:absolute; inset:0; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px; padding:12px; background:#FFF; opacity:0; pointer-events:none; }
         .wadah-foto img { max-width:90px; max-height:90px; object-fit:contain; border-radius:8px; }
-        .ada-foto i, .ada-foto .teks-tombol, .ada-foto .teks-kecil { opacity:0; }
+        .ada-foto i, .ada-foto .teks-tombol { opacity:0; }
         .ada-foto .wadah-foto { opacity:1; pointer-events:auto; }
         .info-bayar { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:20px; text-align:center; margin-bottom:16px; }
         .info-bayar p { font-size:15px; color:#654321; margin:6px 0; }
@@ -110,30 +109,35 @@
 <script>
 const url = new URLSearchParams(window.location.search);
 const jenis = url.get('jenis') || 'gratis';
-const kuota = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
-const totalTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
 const teksJenis = document.getElementById('teksJenis');
 const btnKirim = document.getElementById('btnKirim');
 const bagianShare = document.getElementById('bagianShare');
 const bagianBayar = document.getElementById('bagianBayar');
 
-// CEK STATUS SESUAI JENIS PENDAFTARAN
+// CEK STATUS & KUOTA SESUAI JENIS
 let dibuka = false;
+let kuotaMaks = 0;
+let jumlahTerdaftar = 0;
+
 if(jenis === 'gratis') {
     dibuka = localStorage.getItem('gratisDibuka') === 'true';
-    teksJenis.textContent = `PENDAFTARAN GRATIS • Sisa ${kuota-totalTerdaftar} kuota`;
+    kuotaMaks = parseInt(localStorage.getItem('kuotaGratis') || '8');
+    jumlahTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='gratis').length;
+    teksJenis.textContent = `PENDAFTARAN GRATIS • Sisa ${kuotaMaks - jumlahTerdaftar} kuota`;
     bagianBayar.classList.add('sembunyi');
 } else {
     dibuka = localStorage.getItem('bayarDibuka') === 'true';
-    teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa ${kuota-totalTerdaftar} kuota`;
+    kuotaMaks = parseInt(localStorage.getItem('kuotaBayar') || '8');
+    jumlahTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='bayar').length;
+    teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa ${kuotaMaks - jumlahTerdaftar} kuota`;
     bagianShare.classList.add('sembunyi');
 }
 
-if(!dibuka || totalTerdaftar >= kuota) {
-    teksJenis.textContent = `⚠️ PENDAFTARAN ${jenis.toUpperCase()} SUDAH DITUTUP`;
+if(!dibuka || jumlahTerdaftar >= kuotaMaks) {
+    teksJenis.textContent = `⚠️ PENDAFTARAN ${jenis.toUpperCase()} ${jumlahTerdaftar>=kuotaMaks?'SUDAH PENUH':'SUDAH DITUTUP'}`;
     teksJenis.style.color = "#DC143C";
     btnKirim.disabled = true;
-    btnKirim.textContent = "DITUTUP";
+    btnKirim.textContent = "TIDAK BISA DAFTAR";
 }
 
 function cekFoto(input, kotakId, wadahId) {
@@ -154,14 +158,22 @@ function bacaFile(file) {
 }
 
 async function kirimData() {
-    // CEK ULANG STATUS TERBARU
+    // CEK ULANG TERBARU SAAT TEKAN KIRIM
     let statusTerbaru = false;
-    if(jenis === 'gratis') statusTerbaru = localStorage.getItem('gratisDibuka') === 'true';
-    else statusTerbaru = localStorage.getItem('bayarDibuka') === 'true';
-    const totalTerbaru = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
+    let kuotaTerbaru = 0;
+    let totalTerbaru = 0;
+    if(jenis === 'gratis') {
+        statusTerbaru = localStorage.getItem('gratisDibuka') === 'true';
+        kuotaTerbaru = parseInt(localStorage.getItem('kuotaGratis') || '8');
+        totalTerbaru = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='gratis').length;
+    } else {
+        statusTerbaru = localStorage.getItem('bayarDibuka') === 'true';
+        kuotaTerbaru = parseInt(localStorage.getItem('kuotaBayar') || '8');
+        totalTerbaru = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='bayar').length;
+    }
     
-    if(!statusTerbaru || totalTerbaru >= kuota) {
-        alert(`⚠️ Pendaftaran ${jenis.toUpperCase()} sudah ditutup atau kuota penuh!`);
+    if(!statusTerbaru || totalTerbaru >= kuotaTerbaru) {
+        alert(`⚠️ Pendaftaran ${jenis.toUpperCase()} sudah ditutup atau penuh!`);
         location.reload(); return;
     }
 
