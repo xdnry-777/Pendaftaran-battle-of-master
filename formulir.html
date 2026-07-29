@@ -32,9 +32,10 @@
         .ada-foto i, .ada-foto .teks-tombol { opacity:0; }
         .ada-foto .wadah-foto { opacity:1; pointer-events:auto; }
         .info-bayar { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:20px; text-align:center; margin-bottom:16px; }
+        .info-bayar h4 { font-size:17px; font-weight:700; color:#8B5A2B; margin-bottom:12px; }
         .info-bayar p { font-size:15px; color:#654321; margin:6px 0; }
-        .info-bayar .nomor { font-size:17px; font-weight:700; color:#8B5A2B; }
-        .info-bayar img { width:170px; border-radius:10px; border:2px solid #B57F50; margin:12px auto; display:block; }
+        .info-bayar .nomor { font-size:18px; font-weight:700; color:#B57F50; margin:8px 0; }
+        .info-bayar img { width:180px; border-radius:10px; border:3px solid #B57F50; margin:12px auto; display:block; object-fit:contain; }
         .tombol-kirim { width:100%; padding:15px; background:linear-gradient(90deg,#B57F50,#8B5A2B); color:#FFF; font-size:18px; font-weight:700; border:none; border-radius:12px; cursor:pointer; }
         .tombol-kirim:disabled { background:#C9B8A5; cursor:not-allowed; }
         .sembunyi { display:none !important; }
@@ -77,17 +78,26 @@
         </div>
 
         <div id="bagianBayar" class="bagian sembunyi">
-            <h3 class="judul-bagian">PEMBAYARAN</h3>
+            <h3 class="judul-bagian">INFORMASI PEMBAYARAN</h3>
             <div class="info-bayar">
-                <p>Biaya pendaftaran: Rp 5.000 / Tim</p>
-                <img src="qris.png" alt="QRIS">
-                <p class="nomor">DANA: 0858xxxxxxx</p>
-                <p>Atau scan QRIS di atas</p>
+                <h4>💳 BIAYA PENDAFTARAN: Rp 5.000 / TIM</h4>
+                <p>Silakan bayar melalui salah satu cara di bawah ini:</p>
+                
+                <p><b>1. SCAN QRIS</b></p>
+                <img src="qris.png" alt="QRIS Pembayaran">
+                <p style="font-size:13px; color:#887058;">Bisa untuk semua E-Wallet & Mobile Banking</p>
+
+                <hr style="margin:16px 0; border-color:#E8D4C0;">
+
+                <p><b>2. TRANSFER DANA</b></p>
+                <div class="nomor">0858-XXXX-XXXX</div>
+                <p style="font-size:13px; color:#887058;">Atas Nama: ....................</p>
             </div>
-            <label class="label">Bukti Transfer *</label>
+
+            <label class="label">Bukti Transfer Pembayaran *</label>
             <label class="kotak-upload" id="kotakBayar">
                 <input type="file" id="buktiTransfer" accept="image/*" class="hidden" onchange="cekFoto(this,'kotakBayar','wadahBayar')">
-                <i class="fa fa-file-text-o"></i><span class="teks-tombol">Pilih Bukti</span>
+                <i class="fa fa-file-text-o"></i><span class="teks-tombol">Pilih Foto Bukti</span>
                 <div id="wadahBayar" class="wadah-foto"></div>
             </label>
         </div>
