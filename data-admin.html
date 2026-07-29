@@ -205,7 +205,7 @@
                         <i class="fa fa-lock mr-1"></i>TUTUP
                     </button>
                     <div class="flex items-center gap-2">
-                        <input type="number" id="inputKuota" min="1" max="200" class="w-16 px-2 py-2 rounded-lg border-2 border-orange-300 outline-none focus:border-orange-500 text-center font-bold text-sm">
+                        <input type="number" id="inputKuota" min="1" max="200" class="w-16 px-2 py-2 rounded-lg border-2 border-orange-300 outline-none focus:border-orange-500 text-center font-bold text-sm" value="16">
                         <button onclick="simpanKuota()" class="bg-orange-500 text-white px-3 py-2 rounded-lg font-semibold text-sm hover:bg-orange-600">
                             <i class="fa fa-check mr-1"></i>Atur Kuota
                         </button>
@@ -214,11 +214,8 @@
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="font-semibold text-gray-700 text-sm">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTim">2</span></p>
+                <p class="font-semibold text-gray-700 text-sm">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTim">16</span></p>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="eksporDataTeks()" class="bg-green-100 text-green-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-green-200">
-                        <i class="fa fa-download mr-1"></i>Simpan Cadangan
-                    </button>
                     <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-red-200">
                         <i class="fa fa-trash mr-1"></i>Hapus Semua
                     </button>
@@ -233,7 +230,7 @@
         <div id="wadahData" class="space-y-4">
             <div class="text-center py-12 text-gray-500">
                 <i class="fa fa-folder-open text-4xl mb-3"></i>
-                <p class="text-lg">Belum ada data pendaftaran yang masuk</p>
+                <p class="text-lg">Belum ada data pendaftaran</p>
                 <p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p>
             </div>
         </div>
@@ -243,7 +240,6 @@
         const KODE_AKSES = "battlemaster2026";
         let linkGambarAktif = "";
 
-        // === FUNGSI ZOOM FOTO ===
         function bukaZoom(link) {
             linkGambarAktif = link;
             document.getElementById('gambarZoom').src = link;
@@ -258,9 +254,8 @@
             alert('✅ Gambar terunduh!');
         }
 
-        // === PENGATURAN PENDAFTARAN ===
         function ambilPengaturan() {
-            return { kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '2'), dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' };
+            return { kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'), dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' };
         }
         function simpanKuota() {
             const v = parseInt(document.getElementById('inputKuota').value);
@@ -291,61 +286,6 @@
             }
         }
 
-        // === SIMPAN CADANGAN JADI FILE TEKS BIASA ===
-        function eksporDataTeks() {
-            const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-            if(data.length === 0) return alert('⚠️ Belum ada data tim untuk disimpan!');
-            
-            let isiFile = `============================================================\n`;
-            isiFile += `          DAFTAR LENGKAP PENDAFTARAN TURNAMEN\n`;
-            isiFile += `                BATTLE OF MASTER\n`;
-            isiFile += `Tanggal Unduh: ${new Date().toLocaleString('id-ID')}\n`;
-            isiFile += `Total Tim Terdaftar: ${data.length}\n`;
-            isiFile += `============================================================\n\n`;
-
-            data.forEach((tim, nomor) => {
-                isiFile += `==================== TIM KE-${nomor + 1} ====================\n`;
-                isiFile += `Nama Tim        : ${tim.namaTim}\n`;
-                isiFile += `Nama Kapten     : ${tim.namaKapten}\n`;
-                isiFile += `Nomor WA Kapten : ${tim.waKapten}\n`;
-                isiFile += `Link Logo Tim   : ${tim.logo}\n`;
-                isiFile += `Link Jersey Tim : ${tim.jersey}\n\n`;
-
-                isiFile += `--- DAFTAR ANGGOTA TIM ---\n`;
-                tim.anggota.forEach((anggota, urut) => {
-                    isiFile += `${urut + 1}. ${anggota.nama} - WA: ${anggota.wa}\n`;
-                });
-
-                isiFile += `\n--- BUKTI SHARE LINK ---\n`;
-                if(tim.buktiShare.length === 0) {
-                    isiFile += `Tidak ada bukti share link\n`;
-                } else {
-                    tim.buktiShare.forEach((link, urut) => {
-                        isiFile += `${urut + 1}. ${link}\n`;
-                    });
-                }
-
-                isiFile += `\n--- BUKTI TRANSFER ---\n`;
-                if(tim.buktiTransfer) {
-                    isiFile += `Sudah Mengirim Bukti Transfer\n`;
-                    isiFile += `Link Bukti: ${tim.buktiTransfer}\n`;
-                } else {
-                    isiFile += `BELUM mengirim bukti transfer\n`;
-                }
-
-                isiFile += `\n============================================================\n\n`;
-            });
-
-            const berkas = new Blob([isiFile], { type: 'text/plain;charset=utf-8' });
-            const tautan = document.createElement('a');
-            tautan.href = URL.createObjectURL(berkas);
-            tautan.download = `DAFTAR_TIM_BATTLE_OF_MASTER_${new Date().toISOString().slice(0,10)}.txt`;
-            tautan.click();
-
-            alert(`✅ Berhasil disimpan!\nFile berisi ${data.length} Tim, format teks biasa, mudah dibaca.`);
-        }
-
-        // === LOGIN & NAVIGASI ===
         function cekAkses() {
             const i = document.getElementById('kunciAdmin').value;
             if(i === KODE_AKSES) {
@@ -364,7 +304,6 @@
             document.getElementById('kunciAdmin').value = '';
         }
 
-        // === TAMPILKAN SEMUA DATA ===
         function tampilkanData() {
             const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
             const wadah = document.getElementById('wadahData');
@@ -381,25 +320,23 @@
                 <div class="tim-card bg-white rounded-xl p-4" data-nama="${tim.namaTim.toLowerCase()}" data-kapten="${tim.namaKapten.toLowerCase()}">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="flex gap-3 flex-shrink-0">
-                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo Tim</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
-                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey Tim</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
+                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
+                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
                         </div>
                         <div class="flex-grow">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
                                     <p class="text-gray-600">Kapten: ${tim.namaKapten}</p>
-                                    <p class="text-gray-600">WA Kapten: <a href="https://wa.me/${tim.waKapten}" target="_blank" class="text-pinkMain font-semibold">${tim.waKapten}</a></p>
+                                    <p class="text-gray-600">WA: ${tim.waKapten}</p>
                                 </div>
                                 <button onclick="hapusSatu(${idx})" class="text-red-500 p-2">
                                     <i class="fa fa-times-circle text-xl"></i>
                                 </button>
                             </div>
                             <div class="mt-3 p-3 bg-pinkLight/20 rounded-lg">
-                                <h4 class="font-semibold text-pinkDark mb-2">Daftar Anggota Tim:</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-1 text-sm">
-                                    ${tim.anggota.map(a => `<div class="text-gray-700">• ${a.nama} - ${a.wa}</div>`).join('')}
-                                </div>
+                                <h4 class="font-semibold text-pinkDark mb-2">Anggota:</h4>
+                                ${tim.anggota.map(a => `<div class="text-sm">• ${a.nama} - ${a.wa}</div>`).join('')}
                             </div>
                             <div class="mt-3">
                                 <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
@@ -408,8 +345,8 @@
                                 </div>
                             </div>
                             <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                                <h4 class="font-semibold text-green-700 mb-2">Bukti Transfer Pembayaran</h4>
-                                ${tim.buktiTransfer ? `<img src="${tim.buktiTransfer}" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` : `<p class="text-gray-500 italic">Belum mengunggah bukti transfer</p>`}
+                                <h4 class="font-semibold text-green-700 mb-2">Bukti Transfer</h4>
+                                ${tim.buktiTransfer ? `<img src="${tim.buktiTransfer}" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` : `<p class="text-gray-500 italic">Belum ada</p>`}
                             </div>
                         </div>
                     </div>
@@ -417,7 +354,6 @@
             });
         }
 
-        // === FUNGSI LAINNYA ===
         function cariData() {
             const k = document.getElementById('cariTim').value.toLowerCase();
             document.querySelectorAll('.tim-card').forEach(kartu => {
@@ -425,7 +361,7 @@
             });
         }
         function hapusSatu(idx) {
-            if(confirm('Yakin ingin menghapus data tim ini?')) {
+            if(confirm('Yakin ingin menghapus data ini?')) {
                 const d = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
                 d.splice(idx,1);
                 localStorage.setItem('dataPendaftaran', JSON.stringify(d));
@@ -433,12 +369,12 @@
             }
         }
         function hapusSemua() {
-            if(confirm('⚠️ Yakin hapus SEMUA data tim? Tindakan ini tidak bisa dibatalkan!')) {
+            if(confirm('⚠️ Yakin hapus SEMUA data? Tidak bisa dikembalikan!')) {
                 localStorage.removeItem('dataPendaftaran');
                 tampilkanData();
             }
         }
-        function refreshData() { tampilkanData(); perbaruiStatus(); alert('✅ Data sudah disegarkan!'); }
+        function refreshData() { tampilkanData(); perbaruiStatus(); alert('✅ Data diperbarui!'); }
     </script>
 </body>
 </html>
