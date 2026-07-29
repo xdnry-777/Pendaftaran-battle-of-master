@@ -59,6 +59,50 @@
             text-align: center;
             margin-bottom: 16px;
         }
+        /* KOTAK LOGIN KODE AKSES DESAIN SESUAI */
+        .layar-login {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; z-index: 999;
+        }
+        .kotak-login {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 28px 24px;
+            width: 100%; max-width: 380px;
+            box-shadow: 0 8px 25px rgba(101,67,33,0.2);
+            border: 2px solid #E8D4C0;
+        }
+        .kotak-login h3 {
+            color: #8B5A2B; font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 8px;
+        }
+        .kotak-login p {
+            color: #7A5533; font-size: 14px; text-align: center; margin-bottom: 20px;
+        }
+        .input-kode {
+            width: 100%; padding: 14px 16px;
+            border: 2px solid #E8D4C0; border-radius: 10px;
+            font-size: 16px; text-align: center;
+            outline: none; transition: 0.2s; margin-bottom: 16px;
+        }
+        .input-kode:focus { border-color: #8B5A2B; background: #FFF; }
+        .tombol-login {
+            display: flex; gap: 10px;
+        }
+        .tombol-batal {
+            flex: 1; padding: 12px; border: 2px solid #E8D4C0;
+            background: #FFF; color: #8B5A2B; font-weight: 600; border-radius: 10px; cursor: pointer; transition: 0.2s;
+        }
+        .tombol-masuk {
+            flex: 1; padding: 12px; border: none;
+            background: linear-gradient(90deg, #B57F50 0%, #8B5A2B 100%);
+            color: #FFF; font-weight: 700; border-radius: 10px; cursor: pointer; transition: 0.2s;
+        }
+        .tombol-batal:hover { background: #FFF5EB; }
+        .tombol-masuk:hover { transform: translateY(-2px); }
+
         .status {
             padding: 12px;
             border-radius: 10px;
@@ -102,28 +146,33 @@
         .tim h4 { color: #8B5A2B; font-size: 18px; margin-bottom: 8px; }
         .tim p { font-size: 14px; color: #654321; margin: 4px 0; }
         .tim img { max-width: 100px; border-radius: 8px; margin: 8px 4px; cursor: pointer; }
-        .peringatan {
-            background: #FFF3CD;
-            border: 1px solid #FFECB5;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: #856404;
-        }
+        .sembunyi { display: none !important; }
     </style>
 </head>
 <body>
-<div class="wadah">
+
+<!-- LAYAR LOGIN KODE AKSES DESAIN BARU -->
+<div id="layarLogin" class="layar-login">
+    <div class="kotak-login">
+        <h3>AKSES ADMIN</h3>
+        <p>Masukkan kode rahasia untuk masuk</p>
+        <input type="password" id="inputKode" class="input-kode" placeholder="Masukkan kode akses">
+        <div class="tombol-login">
+            <button class="tombol-batal" onclick="window.location.href='index.html'">BATAL</button>
+            <button class="tombol-masuk" onclick="cekKode()">MASUK</button>
+        </div>
+    </div>
+</div>
+
+<!-- ISI HALAMAN ADMIN -->
+<div id="isiAdmin" class="wadah sembunyi">
     <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">PENGATURAN & DATA PENDAFTARAN</h1>
 
-    <!-- STATUS PENDAFTARAN -->
     <div id="statusPendaftaran" class="status tutup">
         <i class="fa fa-info-circle"></i> Memuat status...
     </div>
 
-    <!-- TOMBOL BUKA TUTUP -->
     <button id="tombolBukaTutup" class="tombol tutup" onclick="ubahStatus()">
         Memuat...
     </button>
@@ -146,44 +195,45 @@
 </div>
 
 <script>
-// KODE AKSES ADMIN
 const KODE_ADMIN = "BOM2026";
 
-// Cek Akses
-function cekAkses() {
-    const kode = prompt("Masukkan Kode Akses Admin:");
-    if(kode !== KODE_ADMIN) {
-        alert("❌ Kode salah!");
-        window.location.href = "index.html";
-        return false;
+// CEK KODE DENGAN TAMPILAN DESAIN
+function cekKode() {
+    const input = document.getElementById('inputKode').value.trim();
+    if(input === KODE_ADMIN) {
+        document.getElementById('layarLogin').classList.add('sembunyi');
+        document.getElementById('isiAdmin').classList.remove('sembunyi');
+        tampilStatus();
+        tampilData();
+    } else {
+        alert("❌ Kode akses salah! Silakan coba lagi.");
+        document.getElementById('inputKode').value = "";
+        document.getElementById('inputKode').focus();
     }
-    return true;
 }
+
+// TEKAN ENTER UNTUK KIRIM
+document.getElementById('inputKode').addEventListener('keydown', e => {
+    if(e.key === 'Enter') cekKode();
+});
 
 // UBAH STATUS PENDAFTARAN + PERINGATAN
 function ubahStatus() {
     const sekarang = localStorage.getItem('pendaftaranDibuka') === 'true';
-    const tombol = document.getElementById('tombolBukaTutup');
-    const status = document.getElementById('statusPendaftaran');
-
     if(sekarang) {
         const konfirmasi = confirm("⚠️ Yakin ingin MENUTUP pendaftaran?\nSetelah ditutup, pendaftar tidak bisa mengirim formulir lagi!");
         if(!konfirmasi) return;
-        
         localStorage.setItem('pendaftaranDibuka', 'false');
         alert("✅ Pendaftaran BERHASIL DITUTUP!\nPendaftar sekarang tidak bisa mengirim data.");
     } else {
         const konfirmasi = confirm("⚠️ Yakin ingin MEMBUKA pendaftaran?");
         if(!konfirmasi) return;
-        
         localStorage.setItem('pendaftaranDibuka', 'true');
         alert("✅ Pendaftaran BERHASIL DIBUKA!\nPendaftar sekarang bisa mengirim formulir.");
     }
-
     tampilStatus();
 }
 
-// TAMPILKAN STATUS TERBARU
 function tampilStatus() {
     const buka = localStorage.getItem('pendaftaranDibuka') === 'true';
     const tombol = document.getElementById('tombolBukaTutup');
@@ -205,7 +255,6 @@ function tampilStatus() {
     document.getElementById('jumlahTim').textContent = `${total} / ${kuota}`;
 }
 
-// SIMPAN & CADANGKAN DATA
 function simpanCadangan() {
     const data = localStorage.getItem('dataPendaftaran') || '[]';
     const namaFile = "PENDAFTARAN BATTLE OF MASTER S1 - " + new Date().toLocaleDateString('id-ID') + ".json";
@@ -218,7 +267,6 @@ function simpanCadangan() {
     alert("✅ Data berhasil disimpan ke file!");
 }
 
-// KOSONGKAN DATA
 function kosongkanData() {
     const konfirmasi = confirm("⚠️ Yakin ingin menghapus SEMUA data pendaftaran?\nData yang sudah dicadangkan tetap aman di file yang kamu unduh.");
     if(!konfirmasi) return;
@@ -228,17 +276,14 @@ function kosongkanData() {
     alert("✅ Data pendaftaran sudah dikosongkan!");
 }
 
-// TAMPILKAN SEMUA DATA TIM
 function tampilData() {
     const wadah = document.getElementById('daftarTim');
     const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
     wadah.innerHTML = "";
-
     if(semua.length === 0) {
         wadah.innerHTML = `<p style="text-align:center; color:#887058;">Belum ada tim yang mendaftar</p>`;
         return;
     }
-
     semua.forEach((tim, urut) => {
         const kotak = document.createElement('div');
         kotak.className = "tim";
@@ -254,12 +299,6 @@ function tampilData() {
         `;
         wadah.appendChild(kotak);
     });
-}
-
-// JALANKAN SAAT HALAMAN DIBUKA
-if(cekAkses()) {
-    tampilStatus();
-    tampilData();
 }
 </script>
 </body>
