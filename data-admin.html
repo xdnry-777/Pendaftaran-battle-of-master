@@ -68,6 +68,9 @@
         .tombol.tutup { background:#DC143C; color:#FFF; }
         .tombol.merah { background:#B57F50; color:#FFF; }
         .info-total { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; text-align:center; }
+        .judul-daftar { font-size:17px; font-weight:700; margin:24px 0 12px; padding-bottom:8px; border-bottom:2px solid; }
+        .judul-gratis { color:#2E8B57; border-color:#2E8B57; }
+        .judul-bayar { color:#DC143C; border-color:#DC143C; }
         .tim { border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:12px; background:#FFF; }
         .tim h4 { color:#8B5A2B; font-size:18px; margin-bottom:8px; }
         .tim p { font-size:14px; color:#654321; margin:4px 0; }
@@ -125,8 +128,13 @@
     <button class="tombol tutup" onclick="kosongkanData()"><i class="fa fa-trash"></i> Kosongkan Semua Data</button>
 
     <hr style="margin:20px 0; border-color:#E8D4C0;">
-    <h3 style="color:#8B5A2B; margin-bottom:12px;">DAFTAR TIM PENDAFTAR</h3>
-    <div id="daftarTim"></div>
+
+    <!-- BAGIAN DAFTAR TIM TERPISAH -->
+    <h3 class="judul-daftar judul-gratis">🎁 DAFTAR TIM GRATIS</h3>
+    <div id="daftarGratis"></div>
+
+    <h3 class="judul-daftar judul-bayar">💳 DAFTAR TIM BERBAYAR</h3>
+    <div id="daftarBayar"></div>
 </div>
 
 <script>
@@ -143,7 +151,7 @@ function prosesLogin() {
     if(input === KODE_ADMIN) {
         document.getElementById('layarLogin').classList.add('sembunyi');
         document.getElementById('isiAdmin').classList.remove('sembunyi');
-        tampilSemuaStatus(); tampilData();
+        tampilSemuaStatus(); tampilDataTerpisah();
     } else {
         alert("❌ Kode akses salah!");
         document.getElementById('inputKode').value = "";
@@ -254,6 +262,55 @@ function tampilSemuaStatus() {
     }
 }
 
+function tampilDataTerpisah() {
+    const wadahGratis = document.getElementById('daftarGratis');
+    const wadahBayar = document.getElementById('daftarBayar');
+    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+    
+    // Tampil Tim Gratis
+    wadahGratis.innerHTML = "";
+    const listGratis = semua.filter(t=>t.jenis==='gratis');
+    if(listGratis.length === 0) {
+        wadahGratis.innerHTML = `<p style="text-align:center; color:#887058; padding:16px;">Belum ada tim gratis</p>`;
+    } else {
+        listGratis.forEach((tim,urut)=>{
+            const kotak = document.createElement('div'); kotak.className = "tim";
+            kotak.innerHTML = `
+                <h4>TIM ${urut+1}: ${tim.namaTim}</h4>
+                <p><b>Kapten:</b> ${tim.namaKapten}</p>
+                <p><b>WA:</b> ${tim.waKapten}</p>
+                ${tim.logo?`<p><b>Logo Tim:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')" alt="Logo">`:""}
+                ${tim.jersey?`<p><b>Jersey Tim:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')" alt="Jersey">`:""}
+                <p><b>Anggota Tim:</b></p>
+                ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
+            `;
+            wadahGratis.appendChild(kotak);
+        });
+    }
+
+    // Tampil Tim Berbayar
+    wadahBayar.innerHTML = "";
+    const listBayar = semua.filter(t=>t.jenis==='bayar');
+    if(listBayar.length === 0) {
+        wadahBayar.innerHTML = `<p style="text-align:center; color:#887058; padding:16px;">Belum ada tim berbayar</p>`;
+    } else {
+        listBayar.forEach((tim,urut)=>{
+            const kotak = document.createElement('div'); kotak.className = "tim";
+            kotak.innerHTML = `
+                <h4>TIM ${urut+1}: ${tim.namaTim}</h4>
+                <p><b>Kapten:</b> ${tim.namaKapten}</p>
+                <p><b>WA:</b> ${tim.waKapten}</p>
+                ${tim.logo?`<p><b>Logo Tim:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')" alt="Logo">`:""}
+                ${tim.jersey?`<p><b>Jersey Tim:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')" alt="Jersey">`:""}
+                ${tim.buktiTransfer?`<p><b>Bukti Transfer:</b></p><img src="${tim.buktiTransfer}" onclick="window.open('${tim.buktiTransfer}')" alt="Bukti">`:""}
+                <p><b>Anggota Tim:</b></p>
+                ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
+            `;
+            wadahBayar.appendChild(kotak);
+        });
+    }
+}
+
 function simpanCadangan() {
     const data = localStorage.getItem('dataPendaftaran') || '[]';
     const nama = "DATA PENDAFTARAN BOM S1 - " + new Date().toLocaleDateString('id-ID') + ".json";
@@ -266,53 +323,7 @@ function simpanCadangan() {
 function kosongkanData() {
     if(!confirm("⚠️ Yakin hapus SEMUA data pendaftaran?")) return;
     localStorage.removeItem('dataPendaftaran');
-    tampilSemuaStatus(); tampilData(); alert("✅ Data dikosongkan!");
-}
-
-function tampilData() {
-    const wadah = document.getElementById('daftarTim');
-    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-    wadah.innerHTML = "";
-    if(semua.length === 0) { wadah.innerHTML = `<p style="text-align:center; color:#887058;">Belum ada tim yang mendaftar</p>`; return; }
-    
-    // Tampil Gratis Dulu
-    const gratis = semua.filter(t=>t.jenis==='gratis');
-    if(gratis.length>0) {
-        wadah.innerHTML += `<h4 style="color:#2E8B57; margin-bottom:10px; font-size:16px;">🎁 PENDAFTARAN GRATIS (${gratis.length})</h4>`;
-        gratis.forEach((tim,urut)=>{
-            const kotak = document.createElement('div'); kotak.className = "tim";
-            kotak.innerHTML = `
-                <h4>TIM ${urut+1}: ${tim.namaTim}</h4>
-                <p><b>Kapten:</b> ${tim.namaKapten}</p>
-                <p><b>WA:</b> ${tim.waKapten}</p>
-                ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
-                ${tim.jersey?`<p><b>Jersey:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')">`:""}
-                <p><b>Anggota:</b></p>
-                ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
-            `;
-            wadah.appendChild(kotak);
-        });
-    }
-
-    // Tampil Berbayar
-    const bayar = semua.filter(t=>t.jenis==='bayar');
-    if(bayar.length>0) {
-        wadah.innerHTML += `<h4 style="color:#DC143C; margin:20px 0 10px; font-size:16px;">💳 PENDAFTARAN BERBAYAR (${bayar.length})</h4>`;
-        bayar.forEach((tim,urut)=>{
-            const kotak = document.createElement('div'); kotak.className = "tim";
-            kotak.innerHTML = `
-                <h4>TIM ${urut+1}: ${tim.namaTim}</h4>
-                <p><b>Kapten:</b> ${tim.namaKapten}</p>
-                <p><b>WA:</b> ${tim.waKapten}</p>
-                ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
-                ${tim.jersey?`<p><b>Jersey:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')">`:""}
-                ${tim.buktiTransfer?`<p><b>Bukti Transfer:</b></p><img src="${tim.buktiTransfer}" onclick="window.open('${tim.buktiTransfer}')">`:""}
-                <p><b>Anggota:</b></p>
-                ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
-            `;
-            wadah.appendChild(kotak);
-        });
-    }
+    tampilSemuaStatus(); tampilDataTerpisah(); alert("✅ Data dikosongkan!");
 }
 </script>
 </body>
