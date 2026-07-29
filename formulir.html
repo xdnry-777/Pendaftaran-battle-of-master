@@ -32,6 +32,10 @@
         .wadah-foto img { max-width:90px; max-height:90px; object-fit:contain; border-radius:8px; }
         .ada-foto i, .ada-foto .teks-tombol, .ada-foto .teks-kecil { opacity:0; }
         .ada-foto .wadah-foto { opacity:1; pointer-events:auto; }
+        .info-bayar { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:20px; text-align:center; margin-bottom:16px; }
+        .info-bayar p { font-size:15px; color:#654321; margin:6px 0; }
+        .info-bayar .nomor { font-size:17px; font-weight:700; color:#8B5A2B; }
+        .info-bayar img { width:170px; border-radius:10px; border:2px solid #B57F50; margin:12px auto; display:block; }
         .tombol-kirim { width:100%; padding:15px; background:linear-gradient(90deg,#B57F50,#8B5A2B); color:#FFF; font-size:18px; font-weight:700; border:none; border-radius:12px; cursor:pointer; }
         .tombol-kirim:disabled { background:#C9B8A5; cursor:not-allowed; }
         .sembunyi { display:none !important; }
@@ -73,6 +77,22 @@
             </label>
         </div>
 
+        <div id="bagianBayar" class="bagian sembunyi">
+            <h3 class="judul-bagian">PEMBAYARAN</h3>
+            <div class="info-bayar">
+                <p>Biaya pendaftaran: Rp 5.000 / Tim</p>
+                <img src="qris.png" alt="QRIS">
+                <p class="nomor">DANA: 0858xxxxxxx</p>
+                <p>Atau scan QRIS di atas</p>
+            </div>
+            <label class="label">Bukti Transfer *</label>
+            <label class="kotak-upload" id="kotakBayar">
+                <input type="file" id="buktiTransfer" accept="image/*" class="hidden" onchange="cekFoto(this,'kotakBayar','wadahBayar')">
+                <i class="fa fa-file-text-o"></i><span class="teks-tombol">Pilih Bukti</span>
+                <div id="wadahBayar" class="wadah-foto"></div>
+            </label>
+        </div>
+
         <div class="bagian">
             <h3 class="judul-bagian">DATA ANGGOTA TIM *</h3>
             <label class="label">Pemain 1</label><input type="text" id="p1Nama" class="input" required><input type="tel" id="p1Wa" class="input" required>
@@ -88,20 +108,32 @@
 </div>
 
 <script>
-// CEK STATUS SEKARANG SAAT HALAMAN DIBUKA
-const pendaftaranDibuka = localStorage.getItem('pendaftaranDibuka') === 'true';
+const url = new URLSearchParams(window.location.search);
+const jenis = url.get('jenis') || 'gratis';
 const kuota = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
 const totalTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
 const teksJenis = document.getElementById('teksJenis');
 const btnKirim = document.getElementById('btnKirim');
+const bagianShare = document.getElementById('bagianShare');
+const bagianBayar = document.getElementById('bagianBayar');
 
-if(!pendaftaranDibuka || totalTerdaftar >= kuota) {
-    teksJenis.textContent = "⚠️ PENDAFTARAN SUDAH DITUTUP";
+// CEK STATUS SESUAI JENIS PENDAFTARAN
+let dibuka = false;
+if(jenis === 'gratis') {
+    dibuka = localStorage.getItem('gratisDibuka') === 'true';
+    teksJenis.textContent = `PENDAFTARAN GRATIS • Sisa ${kuota-totalTerdaftar} kuota`;
+    bagianBayar.classList.add('sembunyi');
+} else {
+    dibuka = localStorage.getItem('bayarDibuka') === 'true';
+    teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa ${kuota-totalTerdaftar} kuota`;
+    bagianShare.classList.add('sembunyi');
+}
+
+if(!dibuka || totalTerdaftar >= kuota) {
+    teksJenis.textContent = `⚠️ PENDAFTARAN ${jenis.toUpperCase()} SUDAH DITUTUP`;
     teksJenis.style.color = "#DC143C";
     btnKirim.disabled = true;
-    btnKirim.textContent = "PENDAFTARAN DITUTUP";
-} else {
-    teksJenis.textContent = `PENDAFTARAN DIBUKA • Sisa ${kuota-totalTerdaftar} kuota`;
+    btnKirim.textContent = "DITUTUP";
 }
 
 function cekFoto(input, kotakId, wadahId) {
@@ -122,11 +154,14 @@ function bacaFile(file) {
 }
 
 async function kirimData() {
-    // CEK ULANG STATUS TERBARU SAAT TEKAN KIRIM
-    const statusTerbaru = localStorage.getItem('pendaftaranDibuka') === 'true';
+    // CEK ULANG STATUS TERBARU
+    let statusTerbaru = false;
+    if(jenis === 'gratis') statusTerbaru = localStorage.getItem('gratisDibuka') === 'true';
+    else statusTerbaru = localStorage.getItem('bayarDibuka') === 'true';
     const totalTerbaru = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
+    
     if(!statusTerbaru || totalTerbaru >= kuota) {
-        alert("⚠️ Pendaftaran sudah ditutup atau kuota penuh!");
+        alert(`⚠️ Pendaftaran ${jenis.toUpperCase()} sudah ditutup atau kuota penuh!`);
         location.reload(); return;
     }
 
@@ -135,14 +170,15 @@ async function kirimData() {
     const namaKapten = document.getElementById('namaKapten').value.trim();
     const waKapten = document.getElementById('waKapten').value.trim();
     const logo = document.getElementById('logoTim').files[0];
-    const buktiShare = document.getElementById('buktiShare').files;
 
     if(!namaTim || !namaKapten || !waKapten || !logo) { alert("⚠️ Lengkapi data wajib!"); btnKirim.disabled=false; btnKirim.textContent="KIRIM"; return; }
-    if(buktiShare.length !==5) { alert("⚠️ Wajib upload tepat 5 foto bukti share!"); btnKirim.disabled=false; btnKirim.textContent="KIRIM"; return; }
+    if(jenis === 'gratis' && document.getElementById('buktiShare').files.length !==5) { alert("⚠️ Wajib upload tepat 5 foto bukti share!"); btnKirim.disabled=false; btnKirim.textContent="KIRIM"; return; }
+    if(jenis === 'bayar' && !document.getElementById('buktiTransfer').files[0]) { alert("⚠️ Wajib upload bukti transfer!"); btnKirim.disabled=false; btnKirim.textContent="KIRIM"; return; }
 
     try {
-        const data = { namaTim, namaKapten, waKapten, logo:await bacaFile(logo), jersey:document.getElementById('jerseyTim').files[0]?await bacaFile(document.getElementById('jerseyTim').files[0]):'', buktiShare:[], anggota:[] };
-        for(let f of buktiShare) data.buktiShare.push(await bacaFile(f));
+        const data = { jenis, namaTim, namaKapten, waKapten, logo:await bacaFile(logo), jersey:document.getElementById('jerseyTim').files[0]?await bacaFile(document.getElementById('jerseyTim').files[0]):'', buktiShare:[], buktiTransfer:'', anggota:[] };
+        if(jenis === 'gratis') for(let f of document.getElementById('buktiShare').files) data.buktiShare.push(await bacaFile(f));
+        else data.buktiTransfer = await bacaFile(document.getElementById('buktiTransfer').files[0]);
         for(let i=1; i<=6; i++) {
             const n = document.getElementById(`p${i}Nama`).value.trim();
             const w = document.getElementById(`p${i}Wa`).value.trim();
