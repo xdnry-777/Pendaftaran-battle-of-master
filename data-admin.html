@@ -14,7 +14,6 @@
                         coklatTerang: '#D4A574',
                         coklatUtama: '#B57F50',
                         coklatGelap: '#8B5A2B',
-                        coklatPalingGelap: '#654321',
                         latarCoklat: '#FFF5EB',
                         garisCoklat: '#E8D4C0',
                         hijau: '#2E8B57',
@@ -54,18 +53,21 @@
         .tombol-masuk { flex:1; padding:13px; border:none; background:linear-gradient(90deg,#B57F50,#8B5A2B); color:#FFF; font-weight:700; border-radius:10px; cursor:pointer; }
         .wadah { max-width:480px; margin:0 auto; background:#FFF; border-radius:16px; padding:24px; box-shadow:0 4px 15px rgba(139,90,43,0.15); }
         .kembali { display:flex; align-items:center; gap:6px; color:#8B5A2B; font-weight:600; text-decoration:none; margin-bottom:20px; font-size:15px; }
-        .judul { font-size:26px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:16px; }
-        .kotak-status { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; }
-        .label-status { font-size:15px; font-weight:600; color:#654321; margin-bottom:8px; display:block; }
+        .judul { font-size:26px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:20px; }
+        .kartu { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:18px; margin-bottom:20px; }
+        .judul-kartu { font-size:18px; font-weight:700; color:#8B5A2B; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
         .status { padding:10px; border-radius:8px; text-align:center; font-weight:600; margin-bottom:10px; }
         .status.buka { background:#E6FFFA; color:#2E8B57; border:2px solid #2E8B57; }
         .status.tutup { background:#FFEEEE; color:#DC143C; border:2px solid #DC143C; }
-        .tombol { width:100%; padding:13px; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; margin-bottom:10px; }
+        .baris-kuota { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+        .label-kuota { font-size:14px; font-weight:600; color:#654321; flex:1; }
+        .input-kuota { width:80px; padding:8px; border:2px solid #E8D4C0; border-radius:8px; text-align:center; font-size:15px; font-weight:700; color:#8B5A2B; outline:none; }
+        .input-kuota:focus { border-color:#8B5A2B; }
+        .tombol { width:100%; padding:13px; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; margin-bottom:8px; }
         .tombol.buka { background:#2E8B57; color:#FFF; }
         .tombol.tutup { background:#DC143C; color:#FFF; }
         .tombol.merah { background:#B57F50; color:#FFF; }
-        .info { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; text-align:center; }
-        .jumlah { font-size:22px; font-weight:700; color:#8B5A2B; margin:8px 0; }
+        .info-total { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; text-align:center; }
         .tim { border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:12px; background:#FFF; }
         .tim h4 { color:#8B5A2B; font-size:18px; margin-bottom:8px; }
         .tim p { font-size:14px; color:#654321; margin:4px 0; }
@@ -90,27 +92,37 @@
     <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">PENGATURAN & DATA PENDAFTARAN</h1>
 
-    <!-- BAGIAN PENDAFTARAN GRATIS -->
-    <div class="kotak-status">
-        <span class="label-status">🎁 PENDAFTARAN GRATIS</span>
+    <!-- KARTU PENDAFTARAN GRATIS -->
+    <div class="kartu">
+        <h3 class="judul-kartu">🎁 PENDAFTARAN GRATIS</h3>
         <div id="statusGratis" class="status tutup">Memuat...</div>
+        <div class="baris-kuota">
+            <span class="label-kuota">Kuota Maksimal Tim:</span>
+            <input type="number" id="kuotaGratis" class="input-kuota" min="1" onchange="simpanKuotaGratis()">
+        </div>
+        <p style="text-align:center; font-size:14px; color:#7A5533; margin-bottom:10px;">Terdaftar: <span id="jmlGratis">0</span> Tim</p>
         <button id="tombolGratis" class="tombol tutup" onclick="ubahGratis()">Memuat...</button>
     </div>
 
-    <!-- BAGIAN PENDAFTARAN BERBAYAR -->
-    <div class="kotak-status">
-        <span class="label-status">💳 PENDAFTARAN BERBAYAR</span>
+    <!-- KARTU PENDAFTARAN BERBAYAR -->
+    <div class="kartu">
+        <h3 class="judul-kartu">💳 PENDAFTARAN BERBAYAR</h3>
         <div id="statusBayar" class="status tutup">Memuat...</div>
+        <div class="baris-kuota">
+            <span class="label-kuota">Kuota Maksimal Tim:</span>
+            <input type="number" id="kuotaBayar" class="input-kuota" min="1" onchange="simpanKuotaBayar()">
+        </div>
+        <p style="text-align:center; font-size:14px; color:#7A5533; margin-bottom:10px;">Terdaftar: <span id="jmlBayar">0</span> Tim</p>
         <button id="tombolBayar" class="tombol tutup" onclick="ubahBayar()">Memuat...</button>
     </div>
 
-    <div class="info">
-        <p>Jumlah Tim Terdaftar:</p>
-        <div class="jumlah" id="jumlahTim">0 / 16</div>
+    <div class="info-total">
+        <p><b>TOTAL SELURUH TIM:</b></p>
+        <div style="font-size:24px; font-weight:700; color:#8B5A2B; margin:6px 0;" id="totalSemua">0 Tim</div>
     </div>
 
-    <button class="tombol merah" onclick="simpanCadangan()"><i class="fa fa-download"></i> Simpan & Cadangkan Data</button>
-    <button class="tombol tutup" onclick="kosongkanData()"><i class="fa fa-trash"></i> Kosongkan Data Pendaftaran</button>
+    <button class="tombol merah" onclick="simpanCadangan()"><i class="fa fa-download"></i> Simpan & Cadangkan Semua Data</button>
+    <button class="tombol tutup" onclick="kosongkanData()"><i class="fa fa-trash"></i> Kosongkan Semua Data</button>
 
     <hr style="margin:20px 0; border-color:#E8D4C0;">
     <h3 style="color:#8B5A2B; margin-bottom:12px;">DAFTAR TIM PENDAFTAR</h3>
@@ -119,6 +131,12 @@
 
 <script>
 const KODE_ADMIN = "BOM2026";
+
+// Inisialisasi nilai awal jika belum ada
+if(!localStorage.getItem('kuotaGratis')) localStorage.setItem('kuotaGratis','8');
+if(!localStorage.getItem('kuotaBayar')) localStorage.setItem('kuotaBayar','8');
+if(!localStorage.getItem('gratisDibuka')) localStorage.setItem('gratisDibuka','false');
+if(!localStorage.getItem('bayarDibuka')) localStorage.setItem('bayarDibuka','false');
 
 function prosesLogin() {
     const input = document.getElementById('inputKode').value.trim();
@@ -133,52 +151,88 @@ function prosesLogin() {
 }
 document.getElementById('inputKode').addEventListener('keydown', e=>{if(e.key==='Enter') prosesLogin();});
 
-// UBAH STATUS PENDAFTARAN GRATIS
+// Simpan Kuota Gratis
+function simpanKuotaGratis() {
+    const nilai = parseInt(document.getElementById('kuotaGratis').value);
+    if(nilai <1) { alert("Minimal kuota 1 tim!"); tampilSemuaStatus(); return; }
+    localStorage.setItem('kuotaGratis', nilai);
+    alert("✅ Kuota Gratis berhasil diubah!");
+    tampilSemuaStatus();
+}
+
+// Simpan Kuota Berbayar
+function simpanKuotaBayar() {
+    const nilai = parseInt(document.getElementById('kuotaBayar').value);
+    if(nilai <1) { alert("Minimal kuota 1 tim!"); tampilSemuaStatus(); return; }
+    localStorage.setItem('kuotaBayar', nilai);
+    alert("✅ Kuota Berbayar berhasil diubah!");
+    tampilSemuaStatus();
+}
+
+// Ubah Status Gratis
 function ubahGratis() {
     const sekarang = localStorage.getItem('gratisDibuka') === 'true';
+    const kuota = parseInt(localStorage.getItem('kuotaGratis'));
+    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='gratis').length;
+    
     if(sekarang) {
-        if(!confirm("⚠️ Yakin ingin MENUTUP PENDAFTARAN GRATIS?\nPendaftar gratis tidak bisa kirim formulir lagi!")) return;
+        if(!confirm("⚠️ Yakin ingin MENUTUP PENDAFTARAN GRATIS?")) return;
         localStorage.setItem('gratisDibuka', 'false');
-        alert("✅ PENDAFTARAN GRATIS BERHASIL DITUTUP!");
+        alert("✅ PENDAFTARAN GRATIS DITUTUP!");
     } else {
+        if(semua >= kuota) { alert("❌ Kuota Gratis sudah penuh!"); return; }
         if(!confirm("⚠️ Yakin ingin MEMBUKA PENDAFTARAN GRATIS?")) return;
         localStorage.setItem('gratisDibuka', 'true');
-        alert("✅ PENDAFTARAN GRATIS BERHASIL DIBUKA!");
+        alert("✅ PENDAFTARAN GRATIS DIBUKA!");
     }
     tampilSemuaStatus();
 }
 
-// UBAH STATUS PENDAFTARAN BERBAYAR
+// Ubah Status Berbayar
 function ubahBayar() {
     const sekarang = localStorage.getItem('bayarDibuka') === 'true';
+    const kuota = parseInt(localStorage.getItem('kuotaBayar'));
+    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='bayar').length;
+    
     if(sekarang) {
-        if(!confirm("⚠️ Yakin ingin MENUTUP PENDAFTARAN BERBAYAR?\nPendaftar berbayar tidak bisa kirim formulir lagi!")) return;
+        if(!confirm("⚠️ Yakin ingin MENUTUP PENDAFTARAN BERBAYAR?")) return;
         localStorage.setItem('bayarDibuka', 'false');
-        alert("✅ PENDAFTARAN BERBAYAR BERHASIL DITUTUP!");
+        alert("✅ PENDAFTARAN BERBAYAR DITUTUP!");
     } else {
+        if(semua >= kuota) { alert("❌ Kuota Berbayar sudah penuh!"); return; }
         if(!confirm("⚠️ Yakin ingin MEMBUKA PENDAFTARAN BERBAYAR?")) return;
         localStorage.setItem('bayarDibuka', 'true');
-        alert("✅ PENDAFTARAN BERBAYAR BERHASIL DIBUKA!");
+        alert("✅ PENDAFTARAN BERBAYAR DIBUKA!");
     }
     tampilSemuaStatus();
 }
 
 function tampilSemuaStatus() {
-    const kuota = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
-    const total = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
+    const kuotaGratis = parseInt(localStorage.getItem('kuotaGratis'));
+    const kuotaBayar = parseInt(localStorage.getItem('kuotaBayar'));
+    const dataSemua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+    const jmlGratis = dataSemua.filter(t=>t.jenis==='gratis').length;
+    const jmlBayar = dataSemua.filter(t=>t.jenis==='bayar').length;
+
+    // Isi kolom kuota
+    document.getElementById('kuotaGratis').value = kuotaGratis;
+    document.getElementById('kuotaBayar').value = kuotaBayar;
+    document.getElementById('jmlGratis').textContent = `${jmlGratis}/${kuotaGratis}`;
+    document.getElementById('jmlBayar').textContent = `${jmlBayar}/${kuotaBayar}`;
+    document.getElementById('totalSemua').textContent = `${jmlGratis + jmlBayar} Tim`;
 
     // Tampil Gratis
     const bukaGratis = localStorage.getItem('gratisDibuka') === 'true';
     const stGratis = document.getElementById('statusGratis');
     const tbGratis = document.getElementById('tombolGratis');
-    if(bukaGratis && total < kuota) {
+    if(bukaGratis && jmlGratis < kuotaGratis) {
         stGratis.className = "status buka";
         stGratis.innerHTML = `<i class="fa fa-check-circle"></i> SEDANG DIBUKA`;
         tbGratis.className = "tombol tutup";
         tbGratis.innerHTML = `<i class="fa fa-lock"></i> TUTUP GRATIS`;
     } else {
         stGratis.className = "status tutup";
-        stGratis.innerHTML = `<i class="fa fa-times-circle"></i> SUDAH DITUTUP`;
+        stGratis.innerHTML = `<i class="fa fa-times-circle"></i> ${jmlGratis>=kuotaGratis?"KUOTA PENUH":"SUDAH DITUTUP"}`;
         tbGratis.className = "tombol buka";
         tbGratis.innerHTML = `<i class="fa fa-unlock"></i> BUKA GRATIS`;
     }
@@ -187,24 +241,22 @@ function tampilSemuaStatus() {
     const bukaBayar = localStorage.getItem('bayarDibuka') === 'true';
     const stBayar = document.getElementById('statusBayar');
     const tbBayar = document.getElementById('tombolBayar');
-    if(bukaBayar && total < kuota) {
+    if(bukaBayar && jmlBayar < kuotaBayar) {
         stBayar.className = "status buka";
         stBayar.innerHTML = `<i class="fa fa-check-circle"></i> SEDANG DIBUKA`;
         tbBayar.className = "tombol tutup";
         tbBayar.innerHTML = `<i class="fa fa-lock"></i> TUTUP BERBAYAR`;
     } else {
         stBayar.className = "status tutup";
-        stBayar.innerHTML = `<i class="fa fa-times-circle"></i> SUDAH DITUTUP`;
+        stBayar.innerHTML = `<i class="fa fa-times-circle"></i> ${jmlBayar>=kuotaBayar?"KUOTA PENUH":"SUDAH DITUTUP"}`;
         tbBayar.className = "tombol buka";
         tbBayar.innerHTML = `<i class="fa fa-unlock"></i> BUKA BERBAYAR`;
     }
-
-    document.getElementById('jumlahTim').textContent = `${total} / ${kuota}`;
 }
 
 function simpanCadangan() {
     const data = localStorage.getItem('dataPendaftaran') || '[]';
-    const nama = "PENDAFTARAN BATTLE OF MASTER S1 - " + new Date().toLocaleDateString('id-ID') + ".json";
+    const nama = "DATA PENDAFTARAN BOM S1 - " + new Date().toLocaleDateString('id-ID') + ".json";
     const blob = new Blob([data], {type:'application/json'});
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob); link.download = nama; link.click();
@@ -221,20 +273,46 @@ function tampilData() {
     const wadah = document.getElementById('daftarTim');
     const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
     wadah.innerHTML = "";
-    if(semua.length === 0) { wadah.innerHTML = `<p style="text-align:center; color:#887058;">Belum ada tim</p>`; return; }
-    semua.forEach((tim,urut)=>{
-        const kotak = document.createElement('div'); kotak.className = "tim";
-        kotak.innerHTML = `
-            <h4>TIM KE-${urut+1}: ${tim.namaTim} <span style="font-size:13px; font-weight:normal; color:#7A5533;">(${tim.jenis.toUpperCase()})</span></h4>
-            <p><b>Kapten:</b> ${tim.namaKapten}</p>
-            <p><b>WA:</b> ${tim.waKapten}</p>
-            ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
-            ${tim.jersey?`<p><b>Jersey:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')">`:""}
-            <p><b>Anggota:</b></p>
-            ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
-        `;
-        wadah.appendChild(kotak);
-    });
+    if(semua.length === 0) { wadah.innerHTML = `<p style="text-align:center; color:#887058;">Belum ada tim yang mendaftar</p>`; return; }
+    
+    // Tampil Gratis Dulu
+    const gratis = semua.filter(t=>t.jenis==='gratis');
+    if(gratis.length>0) {
+        wadah.innerHTML += `<h4 style="color:#2E8B57; margin-bottom:10px; font-size:16px;">🎁 PENDAFTARAN GRATIS (${gratis.length})</h4>`;
+        gratis.forEach((tim,urut)=>{
+            const kotak = document.createElement('div'); kotak.className = "tim";
+            kotak.innerHTML = `
+                <h4>TIM ${urut+1}: ${tim.namaTim}</h4>
+                <p><b>Kapten:</b> ${tim.namaKapten}</p>
+                <p><b>WA:</b> ${tim.waKapten}</p>
+                ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
+                ${tim.jersey?`<p><b>Jersey:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')">`:""}
+                <p><b>Anggota:</b></p>
+                ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
+            `;
+            wadah.appendChild(kotak);
+        });
+    }
+
+    // Tampil Berbayar
+    const bayar = semua.filter(t=>t.jenis==='bayar');
+    if(bayar.length>0) {
+        wadah.innerHTML += `<h4 style="color:#DC143C; margin:20px 0 10px; font-size:16px;">💳 PENDAFTARAN BERBAYAR (${bayar.length})</h4>`;
+        bayar.forEach((tim,urut)=>{
+            const kotak = document.createElement('div'); kotak.className = "tim";
+            kotak.innerHTML = `
+                <h4>TIM ${urut+1}: ${tim.namaTim}</h4>
+                <p><b>Kapten:</b> ${tim.namaKapten}</p>
+                <p><b>WA:</b> ${tim.waKapten}</p>
+                ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
+                ${tim.jersey?`<p><b>Jersey:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')">`:""}
+                ${tim.buktiTransfer?`<p><b>Bukti Transfer:</b></p><img src="${tim.buktiTransfer}" onclick="window.open('${tim.buktiTransfer}')">`:""}
+                <p><b>Anggota:</b></p>
+                ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
+            `;
+            wadah.appendChild(kotak);
+        });
+    }
 }
 </script>
 </body>
