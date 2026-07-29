@@ -123,6 +123,7 @@
         .tombol-kirim:hover { background: linear-gradient(90deg, #8B5A2B 0%, #654321 100%); transform: translateY(-2px); }
         .tombol-kirim:disabled { background: #C9B8A5; cursor: not-allowed; }
         .sembunyi { display: none !important; }
+        .peringatan-penyimpanan { background: #FFF3CD; border: 1px solid #FFECB5; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 13px; color: #856404; }
     </style>
 </head>
 <body>
@@ -130,6 +131,10 @@
     <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">FORMULIR PENDAFTARAN</h1>
     <p id="teksJenis" class="keterangan"></p>
+
+    <div class="peringatan-penyimpanan">
+        <i class="fa fa-info-circle"></i> Saran: Gunakan foto ukuran kecil/kompres agar tidak gagal simpan.
+    </div>
 
     <form id="formDaftar" onsubmit="return false;">
         <div class="bagian">
@@ -217,6 +222,32 @@
 </div>
 
 <script>
+// Kompres foto agar ukuran kecil & tidak cepat penuh
+function kompresFoto(file, maxLebar=800, kualitas=0.7) {
+    return new Promise(siap => {
+        const baca = new FileReader();
+        baca.onload = e => {
+            const img = new Image();
+            img.onload = () => {
+                const kanvas = document.createElement('canvas');
+                let lebar = img.width;
+                let tinggi = img.height;
+                if (lebar > maxLebar) {
+                    tinggi = tinggi * (maxLebar / lebar);
+                    lebar = maxLebar;
+                }
+                kanvas.width = lebar;
+                kanvas.height = tinggi;
+                const ctx = kanvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, lebar, tinggi);
+                siap(kanvas.toDataURL('image/jpeg', kualitas));
+            };
+            img.src = e.target.result;
+        };
+        baca.readAsDataURL(file);
+    });
+}
+
 // Tampil foto & sembunyi tulisan setelah dipilih
 function cekFoto(input, kotakId, wadahId) {
     const kotak = document.getElementById(kotakId);
@@ -249,15 +280,6 @@ if(jenis === 'gratis') {
     teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa kuota: ${kuota - totalTerdaftar} Tim`;
     bagianShare.classList.add('sembunyi');
     bagianBayar.classList.remove('sembunyi');
-}
-
-// Baca file foto jadi teks
-function bacaFile(file) {
-    return new Promise(siap => {
-        const baca = new FileReader();
-        baca.onload = e => siap(e.target.result);
-        baca.readAsDataURL(file);
-    });
 }
 
 // Fungsi kirim data utama
@@ -298,19 +320,25 @@ async function kirimData() {
         }
     }
 
-    // Simpan semua data
+    // Bersihkan data lama agar tidak penuh
+    if(totalTerdaftar >= 10) {
+        const konfirmasi = confirm("⚠️ Penyimpanan hampir penuh! Sebaiknya arsipkan data lama di halaman Admin dulu. Lanjut simpan?");
+        if(!konfirmasi) { btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN"; return; }
+    }
+
+    // Simpan semua data dengan foto yang sudah dikompres
     try {
         const data = {
             jenis: jenis, namaTim: namaTim, namaKapten: namaKapten, waKapten: waKapten,
-            logo: await bacaFile(logoTim),
-            jersey: document.getElementById('jerseyTim').files[0] ? await bacaFile(document.getElementById('jerseyTim').files[0]) : '',
+            logo: await kompresFoto(logoTim),
+            jersey: document.getElementById('jerseyTim').files[0] ? await kompresFoto(document.getElementById('jerseyTim').files[0]) : '',
             buktiShare: [], buktiTransfer: '', anggota: []
         };
 
         if(jenis === 'gratis') {
-            for(let f of document.getElementById('buktiShare').files) data.buktiShare.push(await bacaFile(f));
+            for(let f of document.getElementById('buktiShare').files) data.buktiShare.push(await kompresFoto(f));
         } else {
-            data.buktiTransfer = await bacaFile(document.getElementById('buktiTransfer').files[0]);
+            data.buktiTransfer = await kompresFoto(document.getElementById('buktiTransfer').files[0]);
         }
 
         for(let i=1; i<=6; i++) {
@@ -327,7 +355,7 @@ async function kirimData() {
         alert(`✅ Berhasil mendaftar sebagai ${jenis.toUpperCase()}!`);
         window.location.href = "index.html";
     } catch (err) {
-        alert("❌ Gagal menyimpan: " + err.message);
+        alert("❌ Gagal menyimpan: Penyimpanan penuh! Silakan arsipkan data lama di halaman Admin dulu.");
         btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN";
     }
 }
