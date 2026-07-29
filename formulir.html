@@ -79,150 +79,71 @@
             display: block;
         }
         .label {
-            font-size: 15px;
-            font-weight: 600;
-            color: #654321;
-            margin-bottom: 6px;
-            display: block;
+            font-size: 15px; font-weight: 600; color: #654321;
+            margin-bottom: 6px; display: block;
         }
         .input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #E8D4C0;
-            border-radius: 10px;
-            font-size: 15px;
-            margin-bottom: 16px;
-            outline: none;
-            transition: 0.2s;
-            background: #FFF;
-            display: block;
+            width: 100%; padding: 12px 16px; border: 2px solid #E8D4C0;
+            border-radius: 10px; font-size: 15px; margin-bottom: 16px;
+            outline: none; background: #FFF; display: block;
         }
         .input:focus { border-color: #8B5A2B; background: #FFF; }
         .kotak-upload {
-            width: 100%;
-            min-height: 140px;
-            border: 2px dashed #B57F50;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-bottom: 12px;
-            background: #FFF;
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding: 16px;
-            text-align: center;
+            width: 100%; min-height: 140px; border: 2px dashed #B57F50;
+            border-radius: 12px; cursor: pointer; margin-bottom: 12px;
+            background: #FFF; transition: 0.2s; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding: 16px; text-align: center;
         }
         .kotak-upload:hover { background: #FFF5EB; border-color: #8B5A2B; }
-        .kotak-upload i {
-            font-size: 36px;
-            color: #B57F50;
-            margin-bottom: 8px;
-            transition: opacity 0.2s ease;
-        }
-        .teks-tombol {
-            font-size: 15px;
-            font-weight: 600;
-            color: #8B5A2B;
-            transition: opacity 0.2s ease;
-        }
-        .teks-kecil {
-            font-size: 12px;
-            color: #887058;
-            margin-top: 4px;
-            transition: opacity 0.2s ease;
-        }
+        .kotak-upload i { font-size: 36px; color: #B57F50; margin-bottom: 8px; transition: opacity 0.2s; }
+        .teks-tombol { font-size: 15px; font-weight: 600; color: #8B5A2B; transition: opacity 0.2s; }
+        .teks-kecil { font-size: 12px; color: #887058; margin-top: 4px; transition: opacity 0.2s; }
         .wadah-foto {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            background: #FFF;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+            gap: 8px; padding: 12px; background: #FFF; opacity: 0;
+            transition: opacity 0.2s; pointer-events: none;
         }
-        .wadah-foto img {
-            max-width: 90px;
-            max-height: 90px;
-            object-fit: contain;
-            border-radius: 8px;
-            border: 1px solid #E8D4C0;
-        }
+        .wadah-foto img { max-width: 90px; max-height: 90px; object-fit: contain; border-radius: 8px; }
         .ada-foto i, .ada-foto .teks-tombol, .ada-foto .teks-kecil { opacity: 0; }
         .ada-foto .wadah-foto { opacity: 1; pointer-events: auto; }
         .info-bayar {
-            background: #FFF5EB;
-            border: 2px solid #E8D4C0;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 16px;
-            width: 100%;
-            box-sizing: border-box;
+            background: #FFF5EB; border: 2px solid #E8D4C0; border-radius: 12px;
+            padding: 20px; text-align: center; margin-bottom: 16px; width: 100%;
         }
         .info-bayar p { font-size: 15px; color: #654321; margin: 6px 0; }
         .info-bayar .nomor { font-size: 17px; font-weight: 700; color: #8B5A2B; }
-        .info-bayar img {
-            width: 170px;
-            border-radius: 10px;
-            border: 2px solid #B57F50;
-            margin: 12px auto;
-            display: block;
-        }
+        .info-bayar img { width: 170px; border-radius: 10px; border: 2px solid #B57F50; margin: 12px auto; display: block; }
         .tombol-kirim {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(90deg, #B57F50 0%, #8B5A2B 100%);
-            color: #FFF;
-            font-size: 18px;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: block;
+            width: 100%; padding: 15px; background: linear-gradient(90deg, #B57F50 0%, #8B5A2B 100%);
+            color: #FFF; font-size: 18px; font-weight: 700; border: none;
+            border-radius: 12px; cursor: pointer; transition: 0.2s; display: block;
         }
-        .tombol-kirim:hover {
-            background: linear-gradient(90deg, #8B5A2B 0%, #654321 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(101,67,33,0.25);
-        }
+        .tombol-kirim:hover { background: linear-gradient(90deg, #8B5A2B 0%, #654321 100%); transform: translateY(-2px); }
+        .tombol-kirim:disabled { background: #C9B8A5; cursor: not-allowed; }
         .sembunyi { display: none !important; }
     </style>
 </head>
 <body>
 <div class="wadah">
-    <a href="index.html" class="kembali">
-        <i class="fa fa-arrow-left"></i> Kembali ke Beranda
-    </a>
-
+    <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">FORMULIR PENDAFTARAN</h1>
     <p id="teksJenis" class="keterangan"></p>
 
-    <form id="formDaftar">
+    <form id="formDaftar" onsubmit="return false;">
         <div class="bagian">
             <h3 class="judul-bagian">DATA TIM</h3>
-            <label class="label">Nama Tim</label>
-            <input type="text" id="namaTim" class="input" placeholder="Contoh: Elit FF" required>
-            <label class="label">Nama Kapten</label>
-            <input type="text" id="namaKapten" class="input" placeholder="Nama lengkap kapten" required>
-            <label class="label">Nomor WhatsApp</label>
+            <label class="label">Nama Tim *</label>
+            <input type="text" id="namaTim" class="input" placeholder="Wajib diisi" required>
+            <label class="label">Nama Kapten *</label>
+            <input type="text" id="namaKapten" class="input" placeholder="Wajib diisi" required>
+            <label class="label">Nomor WhatsApp *</label>
             <input type="tel" id="waKapten" class="input" placeholder="0812xxxxxxx" required>
             
-            <label class="label">Logo Tim</label>
+            <label class="label">Logo Tim *</label>
             <label class="kotak-upload" id="kotakLogo">
-                <input type="file" id="logoTim" accept="image/*" class="hidden" required onchange="cekFoto(this, 'kotakLogo', 'wadahLogo')">
+                <input type="file" id="logoTim" accept="image/*" class="hidden" onchange="cekFoto(this, 'kotakLogo', 'wadahLogo')">
                 <i class="fa fa-image"></i>
                 <span class="teks-tombol">Pilih File Logo</span>
                 <span class="teks-kecil">Format: JPG / PNG</span>
@@ -234,16 +155,16 @@
                 <input type="file" id="jerseyTim" accept="image/*" class="hidden" onchange="cekFoto(this, 'kotakJersey', 'wadahJersey')">
                 <i class="fa fa-shield"></i>
                 <span class="teks-tombol">Pilih File Jersey</span>
-                <span class="teks-kecil">Format: JPG / PNG (Opsional)</span>
+                <span class="teks-kecil">Boleh dikosongkan</span>
                 <div id="wadahJersey" class="wadah-foto"></div>
             </label>
         </div>
 
         <div id="bagianShare" class="bagian">
-            <h3 class="judul-bagian">BUKTI SHARE LINK</h3>
+            <h3 class="judul-bagian">BUKTI SHARE LINK *</h3>
             <label class="label">Wajib upload tepat 5 foto</label>
             <label class="kotak-upload" id="kotakShare">
-                <input type="file" id="buktiShare" accept="image/*" multiple class="hidden" required onchange="cekFoto(this, 'kotakShare', 'wadahShare')">
+                <input type="file" id="buktiShare" accept="image/*" multiple class="hidden" onchange="cekFoto(this, 'kotakShare', 'wadahShare')">
                 <i class="fa fa-share-alt"></i>
                 <span class="teks-tombol">Pilih 5 Foto Bukti</span>
                 <span class="teks-kecil">Pilih semua file sekaligus</span>
@@ -259,9 +180,9 @@
                 <p class="nomor">DANA: 0858xxxxxxx</p>
                 <p>Atau scan QRIS di atas</p>
             </div>
-            <label class="label">Bukti Transfer</label>
+            <label class="label">Bukti Transfer *</label>
             <label class="kotak-upload" id="kotakBayar">
-                <input type="file" id="buktiTransfer" accept="image/*" class="hidden" required onchange="cekFoto(this, 'kotakBayar', 'wadahBayar')">
+                <input type="file" id="buktiTransfer" accept="image/*" class="hidden" onchange="cekFoto(this, 'kotakBayar', 'wadahBayar')">
                 <i class="fa fa-file-text-o"></i>
                 <span class="teks-tombol">Pilih File Bukti</span>
                 <span class="teks-kecil">Format: JPG / PNG</span>
@@ -270,74 +191,67 @@
         </div>
 
         <div class="bagian">
-            <h3 class="judul-bagian">DATA ANGGOTA TIM</h3>
+            <h3 class="judul-bagian">DATA ANGGOTA TIM *</h3>
             <label class="label">Pemain 1</label>
-            <input type="text" id="p1Nama" class="input" placeholder="Nama Pemain" required>
+            <input type="text" id="p1Nama" class="input" placeholder="Nama" required>
             <input type="tel" id="p1Wa" class="input" placeholder="Nomor WA" required>
             <label class="label">Pemain 2</label>
-            <input type="text" id="p2Nama" class="input" placeholder="Nama Pemain" required>
+            <input type="text" id="p2Nama" class="input" placeholder="Nama" required>
             <input type="tel" id="p2Wa" class="input" placeholder="Nomor WA" required>
             <label class="label">Pemain 3</label>
-            <input type="text" id="p3Nama" class="input" placeholder="Nama Pemain" required>
+            <input type="text" id="p3Nama" class="input" placeholder="Nama" required>
             <input type="tel" id="p3Wa" class="input" placeholder="Nomor WA" required>
             <label class="label">Pemain 4</label>
-            <input type="text" id="p4Nama" class="input" placeholder="Nama Pemain" required>
+            <input type="text" id="p4Nama" class="input" placeholder="Nama" required>
             <input type="tel" id="p4Wa" class="input" placeholder="Nomor WA" required>
             <label class="label">Pemain Cadangan 1</label>
-            <input type="text" id="p5Nama" class="input" placeholder="Nama Pemain" required>
+            <input type="text" id="p5Nama" class="input" placeholder="Nama" required>
             <input type="tel" id="p5Wa" class="input" placeholder="Nomor WA" required>
             <label class="label">Pemain Cadangan 2</label>
-            <input type="text" id="p6Nama" class="input" placeholder="Nama Pemain" required>
+            <input type="text" id="p6Nama" class="input" placeholder="Nama" required>
             <input type="tel" id="p6Wa" class="input" placeholder="Nomor WA" required>
         </div>
 
-        <button type="submit" class="tombol-kirim">KIRIM PENDAFTARAN</button>
+        <button type="button" id="btnKirim" class="tombol-kirim" onclick="kirimData()">KIRIM PENDAFTARAN</button>
     </form>
 </div>
 
 <script>
-// FUNGSI: SEBELUM ADA FOTO ADA TULISAN, SETELAH ADA FOTO TULISAN HILANG
+// Tampil foto & sembunyi tulisan setelah dipilih
 function cekFoto(input, kotakId, wadahId) {
     const kotak = document.getElementById(kotakId);
     const wadah = document.getElementById(wadahId);
     wadah.innerHTML = "";
-
     if (!input.files || input.files.length === 0) {
-        kotak.classList.remove("ada-foto");
-        return;
+        kotak.classList.remove("ada-foto"); return;
     }
-
     kotak.classList.add("ada-foto");
     Array.from(input.files).forEach(file => {
         const baca = new FileReader();
-        baca.onload = e => {
-            const img = document.createElement("img");
-            img.src = e.target.result;
-            wadah.appendChild(img);
-        };
+        baca.onload = e => { const img = document.createElement("img"); img.src = e.target.result; wadah.appendChild(img); };
         baca.readAsDataURL(file);
     });
 }
 
+// Cek jenis pendaftaran
 const url = new URLSearchParams(window.location.search);
 const jenis = url.get('jenis') || 'gratis';
 const teksJenis = document.getElementById('teksJenis');
 const bagianShare = document.getElementById('bagianShare');
 const bagianBayar = document.getElementById('bagianBayar');
 const kuota = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
-const total = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
+const totalTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
 
 if(jenis === 'gratis') {
-    teksJenis.textContent = `PENDAFTARAN GRATIS • Sisa kuota: ${kuota - total} Tim`;
+    teksJenis.textContent = `PENDAFTARAN GRATIS • Sisa kuota: ${kuota - totalTerdaftar} Tim`;
     bagianBayar.classList.add('sembunyi');
-    document.getElementById('buktiTransfer').removeAttribute('required');
 } else {
-    teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa kuota: ${kuota - total} Tim`;
+    teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa kuota: ${kuota - totalTerdaftar} Tim`;
     bagianShare.classList.add('sembunyi');
-    document.getElementById('buktiShare').removeAttribute('required');
     bagianBayar.classList.remove('sembunyi');
 }
 
+// Baca file foto jadi teks
 function bacaFile(file) {
     return new Promise(siap => {
         const baca = new FileReader();
@@ -346,38 +260,77 @@ function bacaFile(file) {
     });
 }
 
-document.getElementById('formDaftar').addEventListener('submit', async e => {
-    e.preventDefault();
-    if(!localStorage.getItem('pendaftaranDibuka') || total >= kuota) {
-        return alert("⚠️ Pendaftaran sudah ditutup atau penuh!");
+// Fungsi kirim data utama
+async function kirimData() {
+    const btn = document.getElementById('btnKirim');
+    btn.disabled = true;
+    btn.textContent = "SEDANG MENYIMPAN...";
+
+    // Cek syarat pendaftaran
+    if(!localStorage.getItem('pendaftaranDibuka') || totalTerdaftar >= kuota) {
+        alert("⚠️ Pendaftaran sudah ditutup atau kuota penuh!");
+        btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN"; return;
     }
-    const data = {
-        jenis: jenis, namaTim: document.getElementById('namaTim').value.trim(),
-        namaKapten: document.getElementById('namaKapten').value.trim(),
-        waKapten: document.getElementById('waKapten').value.trim(),
-        logo: await bacaFile(document.getElementById('logoTim').files[0]),
-        jersey: document.getElementById('jerseyTim').files[0] ? await bacaFile(document.getElementById('jerseyTim').files[0]) : '',
-        buktiShare: [], buktiTransfer: '', anggota: []
-    };
+
+    // Cek data wajib
+    const namaTim = document.getElementById('namaTim').value.trim();
+    const namaKapten = document.getElementById('namaKapten').value.trim();
+    const waKapten = document.getElementById('waKapten').value.trim();
+    const logoTim = document.getElementById('logoTim').files[0];
+
+    if(!namaTim || !namaKapten || !waKapten || !logoTim) {
+        alert("⚠️ Lengkapi dulu data yang bertanda *");
+        btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN"; return;
+    }
+
+    // Cek bukti share / bayar
     if(jenis === 'gratis') {
-        const fileShare = document.getElementById('buktiShare').files;
-        if(fileShare.length !== 5) return alert("⚠️ Wajib pilih tepat 5 foto!");
-        for(let f of fileShare) data.buktiShare.push(await bacaFile(f));
+        const share = document.getElementById('buktiShare').files;
+        if(share.length !== 5) {
+            alert("⚠️ Wajib pilih tepat 5 foto bukti share link!");
+            btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN"; return;
+        }
     } else {
-        data.buktiTransfer = await bacaFile(document.getElementById('buktiTransfer').files[0]);
+        const buktiBayar = document.getElementById('buktiTransfer').files[0];
+        if(!buktiBayar) {
+            alert("⚠️ Wajib upload bukti transfer!");
+            btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN"; return;
+        }
     }
-    for(let i=1; i<=6; i++) {
-        data.anggota.push({
-            nama: document.getElementById(`p${i}Nama`).value.trim(),
-            wa: document.getElementById(`p${i}Wa`).value.trim()
-        });
+
+    // Simpan semua data
+    try {
+        const data = {
+            jenis: jenis, namaTim: namaTim, namaKapten: namaKapten, waKapten: waKapten,
+            logo: await bacaFile(logoTim),
+            jersey: document.getElementById('jerseyTim').files[0] ? await bacaFile(document.getElementById('jerseyTim').files[0]) : '',
+            buktiShare: [], buktiTransfer: '', anggota: []
+        };
+
+        if(jenis === 'gratis') {
+            for(let f of document.getElementById('buktiShare').files) data.buktiShare.push(await bacaFile(f));
+        } else {
+            data.buktiTransfer = await bacaFile(document.getElementById('buktiTransfer').files[0]);
+        }
+
+        for(let i=1; i<=6; i++) {
+            const nama = document.getElementById(`p${i}Nama`).value.trim();
+            const wa = document.getElementById(`p${i}Wa`).value.trim();
+            if(!nama || !wa) { alert(`⚠️ Lengkapi data Pemain ${i}!`); btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN"; return; }
+            data.anggota.push({nama: nama, wa: wa});
+        }
+
+        const semuaData = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+        semuaData.push(data);
+        localStorage.setItem('dataPendaftaran', JSON.stringify(semuaData));
+
+        alert(`✅ Berhasil mendaftar sebagai ${jenis.toUpperCase()}!`);
+        window.location.href = "index.html";
+    } catch (err) {
+        alert("❌ Gagal menyimpan: " + err.message);
+        btn.disabled = false; btn.textContent = "KIRIM PENDAFTARAN";
     }
-    const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-    semua.push(data);
-    localStorage.setItem('dataPendaftaran', JSON.stringify(semua));
-    alert(`✅ Berhasil daftar sebagai ${jenis.toUpperCase()}!`);
-    window.location.href = "index.html";
-});
+}
 </script>
 </body>
 </html>
