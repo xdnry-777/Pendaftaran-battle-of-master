@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DATA ADMIN - BATTLE OF MASTER</title>
+    <title>HALAMAN ADMIN - BATTLE OF MASTER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -11,418 +11,261 @@
             theme: {
                 extend: {
                     colors: {
-                        pinkMain: '#FF4D88',
-                        pinkDark: '#CC2E66',
-                        pinkLight: '#FFB6C9',
+                        coklatTerang: '#D4A574',
+                        coklatUtama: '#B57F50',
+                        coklatGelap: '#8B5A2B',
+                        coklatPalingGelap: '#654321',
+                        latarCoklat: '#FFF5EB',
+                        garisCoklat: '#E8D4C0',
                     },
-                    fontFamily: {
-                        poppins: ['Poppins', 'sans-serif'],
-                    },
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        * {
-            font-family: 'Poppins', sans-serif;
+        * { font-family: 'Poppins', sans-serif; margin:0; padding:0; box-sizing:border-box; }
+        body { 
+            background: linear-gradient(180deg, #FFF5EB 0%, #E8D4C0 100%); 
+            min-height:100vh; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            padding:20px;
         }
-
-        .bg-gradient-pink {
-            background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
+        .wadah { max-width:420px; width:100%; }
+        .judul-atas { text-align:center; margin-bottom:30px; }
+        .judul-atas h1 { font-size:26px; font-weight:800; color:#8B5A2B; margin-bottom:8px; }
+        .judul-atas p { font-size:14px; color:#7A5533; }
+        .ikon-lock { font-size:50px; color:#B57F50; margin-bottom:15px; display:inline-block; }
+        .kotak-login { 
+            background:#FFFFFF; 
+            border-radius:16px; 
+            padding:30px 24px; 
+            border:2px solid #E8D4C0; 
+            box-shadow:0 6px 20px rgba(139,90,43,0.18);
+            text-align:center;
         }
-
-        .card-admin {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 40px rgba(255, 77, 136, 0.15);
+        .kotak-login h3 { font-size:20px; font-weight:700; color:#8B5A2B; margin-bottom:20px; }
+        .input-kode { 
+            width:100%; 
+            padding:14px 16px; 
+            border:2px solid #E8D4C0; 
+            border-radius:10px; 
+            font-size:15px; 
+            margin-bottom:16px; 
+            outline:none; 
+            transition:0.2s;
         }
-
-        .btn-pink {
-            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
-            transition: all 0.3s ease;
+        .input-kode:focus { border-color:#8B5A2B; background:#FFF; }
+        .tombol-masuk { 
+            width:100%; 
+            padding:14px; 
+            background:linear-gradient(90deg, #B57F50 0%, #8B5A2B 100%); 
+            color:#FFFFFF; 
+            font-size:17px; 
+            font-weight:700; 
+            border:none; 
+            border-radius:10px; 
+            cursor:pointer; 
+            transition:0.2s;
         }
-
-        .tim-card {
-            border-left: 4px solid #FF4D88;
-            transition: all 0.3s ease;
+        .tombol-masuk:hover { background:linear-gradient(90deg, #8B5A2B 0%, #654321 100%); transform:translateY(-2px); }
+        .peringatan { 
+            margin-top:20px; 
+            padding:12px; 
+            background:#FFF5EB; 
+            border-radius:8px; 
+            border:1px solid #E8D4C0;
+            font-size:13px; 
+            color:#7A5533; 
+            line-height:1.6;
+            text-align:left;
         }
-
-        .tim-card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 5px 15px rgba(255, 77, 136, 0.1);
+        .peringatan i { color:#B57F50; margin-right:6px; }
+        .label-peran { display:inline-block; padding:3px 8px; border-radius:6px; font-size:12px; font-weight:600; color:#FFF; margin-bottom:15px; }
+        .peran-owner { background:#8B5A2B; }
+        .peran-admin { background:#A67C52; }
+        .garis-pemisah { 
+            height:2px; 
+            background:linear-gradient(90deg, transparent, #E8D4C0, transparent); 
+            margin:20px 0;
         }
-
-        .logo-tim, .jersey-tim {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: #FFF;
-            border: 2px solid #FFD6E2;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .logo-tim:hover, .jersey-tim:hover {
-            transform: scale(1.1);
-        }
-
-        .foto-bukti {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            border: 1px solid #FFD6E2;
-        }
-
-        .foto-bukti:hover {
-            transform: scale(1.2);
-        }
-
-        .bukti-transfer-img {
-            max-width: 150px;
-            border-radius: 8px;
-            border: 2px solid #FF4D88;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .bukti-transfer-img:hover {
-            transform: scale(1.05);
-        }
-
-        .pengaturan-kontrol {
-            background: #FFF7ED;
-            border: 2px solid #FED7AA;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .tombol-buka {
-            background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
-        }
-
-        .tombol-tutup {
-            background: linear-gradient(90deg, #EF4444 0%, #F87171 100%);
-        }
-
-        .status-indikator {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .status-buka {
-            background: #D1FAE5;
-            color: #065F46;
-        }
-
-        .status-tutup {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .modal-zoom {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-
-        .modal-zoom img {
-            max-width: 90%;
-            max-height: 70vh;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .label-role {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-weight: bold;
-        }
+        .sembunyi { display:none !important; }
+        /* Isi Halaman Admin */
+        .isi-admin { width:100%; max-width:700px; margin:0 auto; }
+        .kotak-pengaturan { background:#FFF; border-radius:12px; padding:16px; margin-bottom:20px; border:2px solid #E8D4C0; }
+        .baris { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; }
+        .tombol { padding:10px 16px; border-radius:8px; border:none; font-weight:600; cursor:pointer; transition:0.2s; color:#FFF; }
+        .tombol-coklat { background:linear-gradient(90deg, #B57F50, #8B5A2B); }
+        .tombol-coklat:hover { background:linear-gradient(90deg, #8B5A2B, #654321); }
+        .tombol-merah { background:#C25450; }
+        .tombol-nonaktif { background:#C9B8A5; cursor:not-allowed; opacity:0.7; }
+        .kotak-tim { background:#FFF; border-radius:12px; padding:16px; margin-bottom:16px; border:2px solid #E8D4C0; }
+        .tim-nama { font-size:18px; font-weight:700; color:#8B5A2B; margin-bottom:8px; }
+        .tim-data { font-size:14px; color:#654321; margin:4px 0; }
+        .foto-bukti { max-width:120px; border-radius:8px; border:1px solid #E8D4C0; margin:8px 4px; cursor:zoom-in; }
+        .input-angka { padding:8px; border:2px solid #E8D4C0; border-radius:8px; width:80px; outline:none; }
     </style>
 </head>
-<body class="bg-gradient-pink min-h-screen py-6 px-4">
-
-    <div id="modalZoom" class="modal-zoom" onclick="tutupModal()">
-        <img id="gambarZoom" src="" alt="Perbesar">
-        <div class="flex gap-3 mt-4">
-            <button class="bg-green-500 text-white px-5 py-2 rounded-lg font-semibold" onclick="event.stopPropagation(); unduhGambar()"><i class="fa fa-download mr-2"></i>Unduh</button>
-            <button class="bg-red-500 text-white px-5 py-2 rounded-lg font-semibold" onclick="tutupModal()"><i class="fa fa-times mr-2"></i>Tutup</button>
+<body>
+<div class="wadah">
+    <!-- BAGIAN LOGIN -->
+    <div id="bagianLogin">
+        <div class="judul-atas">
+            <h1>HALAMAN ADMIN</h1>
+            <p>BATTLE OF MASTER - Pengelola Pendaftaran Turnamen</p>
         </div>
-    </div>
 
-    <div id="halamanMasuk" class="container mx-auto max-w-md">
-        <div class="card-admin rounded-2xl p-8 text-center">
-            <i class="fa fa-shield text-5xl text-pinkMain mb-4"></i>
-            <h2 class="text-2xl font-bold text-pinkDark mb-2">AKSES DATA TURNAMEN</h2>
-            <p class="text-gray-500 mb-6">Masukkan kode akses sesuai akun Anda</p>
-            <input type="password" id="kunciAkses" placeholder="Masukkan Kode Akses" class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain mb-4">
-            <button onclick="cekAkses()" class="btn-pink w-full py-3 rounded-lg text-white font-bold">MASUK</button>
-        </div>
-    </div>
-
-    <div id="halamanUtama" class="container mx-auto max-w-5xl hidden">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-3">
-            <div>
-                <div class="flex items-center gap-2 mb-1">
-                    <h1 class="text-2xl font-bold text-pinkDark">DAFTAR TIM TERDAFTAR</h1>
-                    <span id="jenisAkun" class="label-role"></span>
-                </div>
-                <p class="text-gray-500 text-sm">BATTLE OF MASTER - Data Lengkap Pendaftaran</p>
+        <div class="kotak-login">
+            <div class="ikon-lock">
+                <i class="fa fa-shield"></i>
             </div>
-            <div class="flex gap-2 flex-wrap">
-                <button onclick="refreshData()" class="bg-blue-100 text-blue-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-blue-200">
-                    <i class="fa fa-refresh mr-1"></i>Segarkan
-                </button>
-                <button onclick="keluar()" class="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded-lg font-semibold text-sm text-gray-700">
-                    <i class="fa fa-sign-out mr-1"></i>Keluar
-                </button>
-            </div>
-        </div>
+            <h3>AKSES KHUSUS TIM INTI</h3>
+            <input type="password" id="kodeAkses" class="input-kode" placeholder="Masukkan kode akses disini...">
+            <button onclick="cekLogin()" class="tombol-masuk">MASUK KE DASHBOARD</button>
+            
+            <div class="garis-pemisah"></div>
 
-        <div id="bagianKontrolOwner" class="pengaturan-kontrol">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <h3 class="font-bold text-orange-700 flex items-center">
-                        <i class="fa fa-sliders mr-2"></i> KONTROL PENDAFTARAN
-                    </h3>
-                    <span id="statusPendaftaran" class="status-indikator">
-                        <i class="fa fa-circle"></i> Memuat...
-                    </span>
-                </div>
-                <div class="flex flex-wrap gap-2 items-center">
-                    <button id="btnBukaTutup" onclick="ubahStatusPendaftaran()" class="tombol-tutup px-4 py-2 rounded-lg text-white font-bold text-sm">
-                        <i class="fa fa-lock mr-1"></i>TUTUP
-                    </button>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="inputKuota" min="1" max="200" class="w-16 px-2 py-2 rounded-lg border-2 border-orange-300 outline-none focus:border-orange-500 text-center font-bold text-sm">
-                        <button onclick="simpanKuota()" class="bg-orange-500 text-white px-3 py-2 rounded-lg font-semibold text-sm hover:bg-orange-600">
-                            <i class="fa fa-check mr-1"></i>Atur Kuota
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="font-semibold text-gray-700 text-sm">Total Tim Masuk: <span id="totalTim" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTim">16</span></p>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="hapusSemua()" class="bg-red-100 text-red-600 px-3 py-2 rounded-lg font-semibold text-sm hover:bg-red-200">
-                        <i class="fa fa-trash mr-1"></i>Hapus Semua
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="bagianInfoAdmin" class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 hidden">
-            <p class="text-blue-700 font-semibold"><i class="fa fa-info-circle mr-2"></i>Anda masuk sebagai Admin Biasa: Hanya dapat melihat data tim, tidak dapat mengubah pengaturan atau menghapus data.</p>
-            <p class="font-semibold text-gray-700 text-sm mt-2">Total Tim Masuk: <span id="totalTimAdmin" class="text-pinkMain font-bold text-lg">0</span> / <span id="maksimalTimAdmin">16</span></p>
-        </div>
-
-        <div class="mb-4">
-            <input type="text" id="cariTim" placeholder="Cari nama tim / nama kapten..." class="w-full px-4 py-3 rounded-lg border-2 border-pinkLight outline-none focus:border-pinkMain" oninput="cariData()">
-        </div>
-
-        <div id="wadahData" class="space-y-4">
-            <div class="text-center py-12 text-gray-500">
-                <i class="fa fa-folder-open text-4xl mb-3"></i>
-                <p class="text-lg">Belum ada data pendaftaran</p>
-                <p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p>
+            <div class="peringatan">
+                <i class="fa fa-exclamation-triangle"></i>
+                <b>PERINGATAN KEAMANAN:</b><br>
+                Halaman ini hanya untuk Owner dan Admin resmi.<br>
+                Jangan pernah bagikan kode akses kepada pihak lain.<br>
+                Hubungi Owner jika lupa kode akses.
             </div>
         </div>
     </div>
 
-    <script>
-        // === PENGATURAN AKUN & KODE AKSES ===
-        const DAFTAR_AKUN = {
-            "owner2026": { peran: "OWNER", namaTampil: "PEMILIK UTAMA" },
-            "admin123": { peran: "ADMIN", namaTampil: "ADMIN 1" },
-            "admin456": { peran: "ADMIN", namaTampil: "ADMIN 2" }
-        };
-        let peranSaatIni = "";
-        let linkGambarAktif = "";
+    <!-- BAGIAN UTAMA ADMIN -->
+    <div id="bagianUtama" class="isi-admin sembunyi">
+        <div class="text-center mb-6">
+            <span id="labelPeran" class="label-peran"></span>
+            <h1 class="text-2xl font-bold text-coklatGelap">DASHBOARD PENDAFTARAN</h1>
+        </div>
 
-        // === FUNGSI ZOOM FOTO ===
-        function bukaZoom(link) {
-            linkGambarAktif = link;
-            document.getElementById('gambarZoom').src = link;
-            document.getElementById('modalZoom').style.display = 'flex';
-        }
-        function tutupModal() { document.getElementById('modalZoom').style.display = 'none'; }
-        function unduhGambar() {
-            const a = document.createElement('a');
-            a.href = linkGambarAktif;
-            a.download = `foto-tim-${Date.now()}.png`;
-            a.click();
-            alert('✅ Gambar terunduh!');
+        <div class="kotak-pengaturan">
+            <h3 class="font-bold text-coklatGelap mb-3">PENGATURAN UMUM</h3>
+            <div class="baris">
+                <button id="btnBuka" onclick="bukaDaftar()" class="tombol tombol-coklat">Buka Pendaftaran</button>
+                <button id="btnTutup" onclick="tutupDaftar()" class="tombol tombol-merah">Tutup Pendaftaran</button>
+            </div>
+            <div class="baris">
+                <label>Batas Kuota Tim:</label>
+                <input type="number" id="batasKuota" class="input-angka" value="16" min="1">
+                <button id="btnSimpanKuota" onclick="simpanKuota()" class="tombol tombol-coklat">Simpan</button>
+            </div>
+            <p class="text-sm mt-2 text-coklatPalingGelap">Status: <span id="statusDaftar">Tertutup</span> | Total Terdaftar: <span id="jumlahTerdaftar">0</span> Tim</p>
+        </div>
+
+        <div id="daftarTim"></div>
+        <button id="btnHapusSemua" onclick="hapusSemua()" class="tombol tombol-merah w-full mt-4">Hapus Semua Data Pendaftaran</button>
+    </div>
+</div>
+
+<script>
+// DAFTAR AKUN & HAK AKSES (TIDAK TAMPIL DI LAYAR)
+const daftarAkun = {
+    "owner01": { peran: "Owner", aksesPenuh: true },
+    "admin01": { peran: "Admin 1", aksesPenuh: false },
+    "admin02": { peran: "Admin 2", aksesPenuh: false }
+};
+let peranSaatIni = "";
+
+function cekLogin() {
+    const input = document.getElementById('kodeAkses').value.trim();
+    if(daftarAkun[input]) {
+        peranSaatIni = daftarAkun[input].peran;
+        const akses = daftarAkun[input].aksesPenuh;
+
+        // Tampilkan halaman utama
+        document.getElementById('bagianLogin').classList.add('sembunyi');
+        document.getElementById('bagianUtama').classList.remove('sembunyi');
+
+        // Tampilkan label peran
+        const label = document.getElementById('labelPeran');
+        label.textContent = peranSaatIni.toUpperCase();
+        label.className = "label-peran " + (akses ? "peran-owner" : "peran-admin");
+
+        // Nonaktifkan fitur pengaturan jika bukan Owner
+        if(!akses) {
+            document.getElementById('btnBuka').className = "tombol tombol-nonaktif";
+            document.getElementById('btnBuka').disabled = true;
+            document.getElementById('btnTutup').className = "tombol tombol-nonaktif";
+            document.getElementById('btnTutup').disabled = true;
+            document.getElementById('btnSimpanKuota').className = "tombol tombol-nonaktif";
+            document.getElementById('btnSimpanKuota').disabled = true;
+            document.getElementById('btnHapusSemua').className = "tombol tombol-nonaktif";
+            document.getElementById('btnHapusSemua').disabled = true;
         }
 
-        // === PENGATURAN PENDAFTARAN ===
-        function ambilPengaturan() {
-            return { kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'), dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false' };
-        }
-        function simpanKuota() {
-            if(peranSaatIni !== "OWNER") return alert("❌ Hanya OWNER yang boleh mengubah kuota!");
-            const v = parseInt(document.getElementById('inputKuota').value);
-            if(isNaN(v) || v < 1) return alert('❌ Masukkan angka yang benar!');
-            localStorage.setItem('kuotaMaksimal', v);
-            document.getElementById('maksimalTim').textContent = v;
-            document.getElementById('maksimalTimAdmin').textContent = v;
-            alert(`✅ Kuota diubah menjadi ${v} Tim`);
-        }
-        function ubahStatusPendaftaran() {
-            if(peranSaatIni !== "OWNER") return alert("❌ Hanya OWNER yang boleh membuka/menutup pendaftaran!");
-            const s = ambilPengaturan();
-            const b = !s.dibuka;
-            localStorage.setItem('pendaftaranDibuka', b);
-            perbaruiStatus();
-            alert(b ? '✅ PENDAFTARAN DIBUKA!' : '❌ PENDAFTARAN DITUTUP!');
-        }
-        function perbaruiStatus() {
-            const s = ambilPengaturan();
-            const st = document.getElementById('statusPendaftaran');
-            const btn = document.getElementById('btnBukaTutup');
-            if(s.dibuka) {
-                st.innerHTML = `<i class="fa fa-circle"></i> TERBUKA`;
-                st.className = 'status-indikator status-buka';
-                btn.innerHTML = `<i class="fa fa-unlock mr-1"></i>TUTUP`;
-            } else {
-                st.innerHTML = `<i class="fa fa-circle"></i> DITUTUP`;
-                st.className = 'status-indikator status-tutup';
-                btn.innerHTML = `<i class="fa fa-lock mr-1"></i>BUKA`;
+        tampilkanData();
+        updateStatus();
+    } else {
+        alert("❌ Kode akses salah! Coba periksa kembali atau hubungi Owner.");
+    }
+}
+
+// FUNGSI PENGATURAN (HANYA BISA DIPAKAI OWNER)
+function bukaDaftar() { localStorage.setItem('pendaftaranDibuka', 'true'); updateStatus(); }
+function tutupDaftar() { localStorage.setItem('pendaftaranDibuka', 'false'); updateStatus(); }
+function simpanKuota() {
+    const kuota = document.getElementById('batasKuota').value;
+    localStorage.setItem('kuotaMaksimal', kuota);
+    alert("✅ Batas kuota tim berhasil disimpan!");
+    tampilkanData();
+}
+function updateStatus() {
+    const buka = localStorage.getItem('pendaftaranDibuka') === 'true';
+    document.getElementById('statusDaftar').textContent = buka ? "TERBUKA" : "TERTUTUP";
+    document.getElementById('statusDaftar').style.color = buka ? "#15803D" : "#C25450";
+    const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+    document.getElementById('jumlahTerdaftar').textContent = data.length;
+}
+
+// TAMPILKAN DATA TIM (BISA DILIH SEMUA)
+function tampilkanData() {
+    const wadah = document.getElementById('daftarTim');
+    const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+    wadah.innerHTML = "";
+    if(data.length === 0) { wadah.innerHTML = "<p class='text-center text-coklatPalingGelap py-6'>Belum ada tim yang mendaftar saat ini</p>"; return; }
+    
+    data.forEach((tim, no) => {
+        const kartu = document.createElement('div');
+        kartu.className = "kotak-tim";
+        kartu.innerHTML = `
+            <div class="tim-nama">${no+1}. ${tim.namaTim} <span class="text-sm font-normal px-2 py-1 rounded ${tim.jenis === 'gratis' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}">${tim.jenis.toUpperCase()}</span></div>
+            <div class="tim-data">👤 Kapten: ${tim.namaKapten} | 📞 ${tim.waKapten}</div>
+            <div class="tim-data">📋 Anggota: ${tim.anggota.map(a => a.nama).join(', ')}</div>
+            ${tim.logo ? `<p class="tim-data">🖼️ Logo Tim:</p><img src="${tim.logo}" class="foto-bukti" onclick="window.open('${tim.logo}')">` : ''}
+            ${tim.jersey ? `<p class="tim-data">👕 Jersey Tim:</p><img src="${tim.jersey}" class="foto-bukti" onclick="window.open('${tim.jersey}')">` : ''}
+            ${tim.buktiShare.length > 0 ? `<p class="tim-data">📸 Bukti Share Link:</p>${tim.buktiShare.map(f=>`<img src="${f}" class="foto-bukti" onclick="window.open('${f}')">`).join('')}` : ''}
+            ${tim.buktiTransfer ? `<p class="tim-data">🧾 Bukti Pembayaran:</p><img src="${tim.buktiTransfer}" class="foto-bukti" onclick="window.open('${tim.buktiTransfer}')">` : ''}
+            ${daftarAkun[document.getElementById('kodeAkses').value]?.aksesPenuh ? 
+                `<button onclick="hapusTim(${no})" class="tombol tombol-merah mt-3">Hapus Tim Ini</button>` : 
+                `<p class="text-sm text-gray-500 mt-3">Hanya Owner yang bisa menghapus data</p>`
             }
-        }
+        `;
+        wadah.appendChild(kartu);
+    });
+}
 
-        // === LOGIN & HAK AKSES ===
-        function cekAkses() {
-            const kode = document.getElementById('kunciAkses').value.trim();
-            if(!DAFTAR_AKUN[kode]) return alert("❌ Kode akses salah!");
-            
-            peranSaatIni = DAFTAR_AKUN[kode].peran;
-            const labelAkun = document.getElementById('jenisAkun');
-            labelAkun.textContent = DAFTAR_AKUN[kode].namaTampil;
-            labelAkun.className = `label-role ${peranSaatIni === "OWNER" ? "bg-pink-100 text-pink-700" : "bg-blue-100 text-blue-700"}`;
-
-            // Tampilkan/Sembunyikan menu sesuai peran
-            document.getElementById('halamanMasuk').classList.add('hidden');
-            document.getElementById('halamanUtama').classList.remove('hidden');
-            
-            if(peranSaatIni === "OWNER") {
-                document.getElementById('bagianKontrolOwner').classList.remove('hidden');
-                document.getElementById('bagianInfoAdmin').classList.add('hidden');
-            } else {
-                document.getElementById('bagianKontrolOwner').classList.add('hidden');
-                document.getElementById('bagianInfoAdmin').classList.remove('hidden');
-            }
-
-            // Muat data awal
-            const pengaturan = ambilPengaturan();
-            document.getElementById('inputKuota').value = pengaturan.kuota;
-            document.getElementById('maksimalTim').textContent = pengaturan.kuota;
-            document.getElementById('maksimalTimAdmin').textContent = pengaturan.kuota;
-            if(peranSaatIni === "OWNER") perbaruiStatus();
-            tampilkanData();
-        }
-        function keluar() {
-            document.getElementById('halamanUtama').classList.add('hidden');
-            document.getElementById('halamanMasuk').classList.remove('hidden');
-            document.getElementById('kunciAkses').value = '';
-            peranSaatIni = "";
-        }
-
-        // === TAMPILKAN DATA ===
-        function tampilkanData() {
-            const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-            const wadah = document.getElementById('wadahData');
-            document.getElementById('totalTim').textContent = data.length;
-            document.getElementById('totalTimAdmin').textContent = data.length;
-            
-            if(data.length === 0) {
-                wadah.innerHTML = `<div class="text-center py-12 text-gray-500"><i class="fa fa-folder-open text-4xl mb-3"></i><p class="text-lg">Belum ada data pendaftaran</p><p class="text-sm mt-1">Data akan muncul otomatis setelah tim mengirim formulir</p></div>`;
-                return;
-            }
-
-            wadah.innerHTML = '';
-            data.forEach((tim, idx) => {
-                wadah.innerHTML += `
-                <div class="tim-card bg-white rounded-xl p-4" data-nama="${tim.namaTim.toLowerCase()}" data-kapten="${tim.namaKapten.toLowerCase()}">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex gap-3 flex-shrink-0">
-                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Logo</p><img src="${tim.logo}" class="logo-tim" onclick="bukaZoom('${tim.logo}')"></div>
-                            <div class="text-center"><p class="text-xs text-gray-500 mb-1">Jersey</p><img src="${tim.jersey}" class="jersey-tim" onclick="bukaZoom('${tim.jersey}')"></div>
-                        </div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="text-xl font-bold text-pinkDark">${tim.namaTim}</h3>
-                                    <p class="text-gray-600">Kapten: ${tim.namaKapten}</p>
-                                    <p class="text-gray-600">WA: ${tim.waKapten}</p>
-                                </div>
-                                ${peranSaatIni === "OWNER" ? `<button onclick="hapusSatu(${idx})" class="text-red-500 p-2"><i class="fa fa-times-circle text-xl"></i></button>` : ""}
-                            </div>
-                            <div class="mt-3 p-3 bg-pinkLight/20 rounded-lg">
-                                <h4 class="font-semibold text-pinkDark mb-2">Anggota:</h4>
-                                ${tim.anggota.map(a => `<div class="text-sm">• ${a.nama} - ${a.wa}</div>`).join('')}
-                            </div>
-                            <div class="mt-3">
-                                <h4 class="font-semibold text-pinkDark mb-2">Bukti Share Link:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    ${tim.buktiShare.map(f => `<img src="${f}" class="foto-bukti" onclick="bukaZoom('${f}')">`).join('')}
-                                </div>
-                            </div>
-                            <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                                <h4 class="font-semibold text-green-700 mb-2">Bukti Transfer</h4>
-                                ${tim.buktiTransfer ? `<img src="${tim.buktiTransfer}" class="bukti-transfer-img" onclick="bukaZoom('${tim.buktiTransfer}')">` : `<p class="text-gray-500 italic">Belum ada</p>`}
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            });
-        }
-
-        // === FUNGSI LAINNYA ===
-        function cariData() {
-            const k = document.getElementById('cariTim').value.toLowerCase();
-            document.querySelectorAll('.tim-card').forEach(kartu => {
-                kartu.classList.toggle('hidden', !(kartu.dataset.nama.includes(k) || kartu.dataset.kapten.includes(k)));
-            });
-        }
-        function hapusSatu(idx) {
-            if(peranSaatIni !== "OWNER") return alert("❌ Hanya OWNER yang boleh menghapus data!");
-            if(confirm('Yakin ingin menghapus data ini?')) {
-                const d = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
-                d.splice(idx,1);
-                localStorage.setItem('dataPendaftaran', JSON.stringify(d));
-                tampilkanData();
-            }
-        }
-        function hapusSemua() {
-            if(peranSaatIni !== "OWNER") return alert("❌ Hanya OWNER yang boleh menghapus semua data!");
-            if(confirm('⚠️ Yakin hapus SEMUA data? Tidak bisa dikembalikan!')) {
-                localStorage.removeItem('dataPendaftaran');
-                tampilkanData();
-            }
-        }
-        function refreshData() { tampilkanData(); if(peranSaatIni === "OWNER") perbaruiStatus(); alert('✅ Data diperbarui!'); }
-    </script>
+// HAPUS DATA (HANYA OWNER)
+function hapusTim(indeks) {
+    if(confirm("Yakin ingin menghapus data tim ini?")) {
+        const data = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
+        data.splice(indeks,1);
+        localStorage.setItem('dataPendaftaran', JSON.stringify(data));
+        tampilkanData(); updateStatus();
+    }
+}
+function hapusSemua() {
+    if(confirm("⚠️ PERINGATAN: Yakin ingin menghapus SEMUA data pendaftaran? Tindakan ini tidak bisa dibatalkan!")) {
+        localStorage.removeItem('dataPendaftaran');
+        tampilkanData(); updateStatus();
+    }
+}
+</script>
 </body>
 </html>
