@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BATTLE OF MASTER - Turnamen Free Fire</title>
+    <title>BATTLE OF MASTER - Pendaftaran Turnamen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -14,6 +14,8 @@
                         pinkMain: '#FF4D88',
                         pinkDark: '#CC2E66',
                         pinkLight: '#FFB6C9',
+                        hijauGratis: '#10B981',
+                        biruBayar: '#2563EB',
                     },
                     fontFamily: {
                         poppins: ['Poppins', 'sans-serif'],
@@ -28,78 +30,78 @@
         * {
             font-family: 'Poppins', sans-serif;
         }
-
-        .bg-gradient-pink {
+        body {
             background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
+            min-height: 100vh;
         }
-
-        .btn-utama {
+        .btn-pink {
             background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 77, 136, 0.3);
         }
-
-        .btn-utama:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 77, 136, 0.4);
-        }
-
-        .btn-admin {
-            background: rgba(0,0,0,0.1);
+        .btn-gratis {
+            background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
             transition: all 0.3s ease;
         }
-
-        .btn-admin:hover {
-            background: rgba(0,0,0,0.2);
+        .btn-bayar {
+            background: linear-gradient(90deg, #2563EB 0%, #3B82F6 100%);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
     </style>
 </head>
-<body class="bg-gradient-pink min-h-screen flex flex-col">
-
-    <!-- Bagian Atas -->
-    <header class="py-6 px-4">
-        <div class="container mx-auto max-w-3xl flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-pinkDark">BATTLE OF MASTER</h1>
-                <p class="text-gray-600 text-sm">Turnamen Free Fire Para Cees Elite</p>
-            </div>
-            <!-- ✅ TOMBOL ADMIN BARU -->
-            <a href="data-admin.html" class="btn-admin px-3 py-2 rounded-lg text-gray-600 text-sm font-medium flex items-center gap-1">
-                <i class="fa fa-lock"></i>
-                <span class="hidden sm:inline">Admin</span>
-            </a>
+<body class="p-6 max-w-md mx-auto">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-pinkDark">BATTLE OF MASTER</h1>
+            <p class="text-gray-600 text-sm">Turnamen Free Fire Para Cees Elite</p>
         </div>
-    </header>
+        <a href="data-admin.html" class="bg-white p-2 rounded-full shadow-sm">
+            <i class="fa fa-lock text-pinkMain"></i>
+        </a>
+    </div>
 
-    <!-- Bagian Tengah -->
-    <main class="flex-grow flex flex-col justify-center px-4 py-10">
-        <div class="container mx-auto max-w-xl text-center">
-            <div class="mb-8">
-                <i class="fa fa-trophy text-5xl text-pinkMain mb-4"></i>
-                <h2 class="text-3xl md:text-4xl font-bold text-pinkDark mb-3">AYO DAFTARKAN TIM KAMU!</h2>
-                <p class="text-gray-600 text-lg">Bergabunglah di turnamen Battle Of Master, Dan buktikan tim kamu yang paling terbaik!</p>
-            </div>
+    <div class="text-center my-12">
+        <i class="fa fa-trophy text-6xl text-pinkMain mb-4"></i>
+        <h2 class="text-3xl font-bold text-pinkDark mb-3">AYO DAFTARKAN TIM KAMU!</h2>
+        <p class="text-gray-600 mb-8">Bergabunglah di turnamen Battle Of Master, dan buktikan tim kamu yang paling terbaik!</p>
+    </div>
 
-            <a href="formulir.html" class="btn-utama block w-full py-4 rounded-xl text-white font-bold text-xl mb-6">
-                <i class="fa fa-pencil-square-o mr-2"></i> DAFTAR SEKARANG
-            </a>
+    <!-- PILIH JENIS PENDAFTARAN -->
+    <div class="space-y-4 mb-8">
+        <button onclick="window.location.href='formulir.html?jenis=gratis'" class="btn-gratis w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-2">
+            <i class="fa fa-gift"></i> PENDAFTARAN GRATIS
+        </button>
+        <button onclick="window.location.href='formulir.html?jenis=berbayar'" class="btn-bayar w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-2">
+            <i class="fa fa-credit-card"></i> PENDAFTARAN BERBAYAR
+        </button>
+    </div>
 
-            <div class="bg-white/70 rounded-xl p-5 text-left">
-                <h3 class="font-bold text-pinkDark mb-3"><i class="fa fa-info-circle mr-2"></i> Informasi Penting</h3>
-                <ul class="text-gray-700 space-y-2 text-sm">
-                    <li>• Biaya pendaftaran: Rp 5.000 / Tim</li>
-                    <li>• Kuota terbatas: Hanya 16 Tim</li>
-                    <li>• Format: 4 Inti + 2 Cadangan</li>
-                    <li>• Waktu pendaftaran: 20 JULI 2026 s/d 30 JULI 2026</li>
-                </ul>
-            </div>
-        </div>
-    </main>
+    <div class="bg-white rounded-xl p-5 shadow-sm">
+        <h3 class="font-bold text-pinkDark mb-3 flex items-center gap-2">
+            <i class="fa fa-info-circle"></i> Informasi Penting
+        </h3>
+        <ul class="text-gray-700 text-sm space-y-2">
+            <li>• Biaya berbayar: Rp 5.000 / Tim</li>
+            <li>• Kuota terbatas: Maksimal 16 Tim</li>
+            <li>• Format: 4 Inti + 2 Cadangan</li>
+            <li>• Waktu pendaftaran: 20 Juli - 30 Juli 2026</li>
+        </ul>
+    </div>
 
-    <!-- Bagian Bawah -->
-    <footer class="py-5 px-4 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 BATTLE OF MASTER. Semua Hak Dilindungi.</p>
-    </footer>
-
+    <script>
+        // Cek jika pendaftaran ditutup
+        const pengaturan = {
+            kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'),
+            dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false',
+            total: JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length
+        };
+        if(!pengaturan.dibuka || pengaturan.total >= pengaturan.kuota) {
+            alert("⚠️ Pendaftaran sudah ditutup atau kuota sudah penuh!");
+            document.querySelectorAll('button').forEach(b => b.disabled = true);
+        }
+    </script>
 </body>
 </html>
