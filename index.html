@@ -11,11 +11,13 @@
             theme: {
                 extend: {
                     colors: {
-                        pinkMain: '#FF4D88',
-                        pinkDark: '#CC2E66',
-                        pinkLight: '#FFB6C9',
-                        hijauGratis: '#10B981',
-                        biruBayar: '#2563EB',
+                        coklatTerang: '#D4A574',
+                        coklatUtama: '#B57F50',
+                        coklatGelap: '#8B5A2B',
+                        coklatPalingGelap: '#654321',
+                        latarCoklat: '#FFF5EB',
+                        tombolGratis: '#A67C52',
+                        tombolBayar: '#8B5A2B',
                     },
                     fontFamily: {
                         poppins: ['Poppins', 'sans-serif'],
@@ -25,82 +27,240 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
         
         * {
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         body {
-            background: linear-gradient(135deg, #FFF5F8 0%, #FFE6EE 100%);
+            background: linear-gradient(180deg, #FFF5EB 0%, #E8D4C0 100%);
             min-height: 100vh;
+            padding: 20px 16px;
         }
-        .btn-pink {
-            background: linear-gradient(90deg, #FF4D88 0%, #FF6B9E 100%);
+        .wadah-utama {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .bagian-atas {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .judul-atas h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #8B5A2B;
+            line-height: 1.2;
+        }
+        .judul-atas p {
+            font-size: 14px;
+            color: #7A5533;
+            margin-top: 4px;
+        }
+        .tombol-admin {
+            width: 42px;
+            height: 42px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(139,90,43,0.15);
+            color: #8B5A2B;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .tombol-admin:hover {
+            background: #8B5A2B;
+            color: #FFFFFF;
+        }
+        .bagian-tengah {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .ikon-piala {
+            font-size: 72px;
+            color: #B57F50;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .judul-utama {
+            font-size: 32px;
+            font-weight: 800;
+            color: #8B5A2B;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .deskripsi {
+            font-size: 16px;
+            color: #7A5533;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+        .pilihan-daftar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .tombol-pilihan {
+            padding: 18px 24px;
+            border-radius: 14px;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(101,67,33,0.2);
         }
-        .btn-gratis {
-            background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
-            transition: all 0.3s ease;
+        .tombol-pilihan:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(101,67,33,0.25);
         }
-        .btn-bayar {
-            background: linear-gradient(90deg, #2563EB 0%, #3B82F6 100%);
-            transition: all 0.3s ease;
+        .tombol-gratis {
+            background: linear-gradient(90deg, #A67C52 0%, #C19A6B 100%);
         }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        .tombol-berbayar {
+            background: linear-gradient(90deg, #8B5A2B 0%, #A67C52 100%);
+        }
+        .kotak-info {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(139,90,43,0.15);
+        }
+        .judul-info {
+            font-size: 18px;
+            font-weight: 700;
+            color: #8B5A2B;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .daftar-info {
+            list-style: none;
+        }
+        .daftar-info li {
+            font-size: 15px;
+            color: #654321;
+            padding: 8px 0;
+            border-bottom: 1px solid #E8D4C0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .daftar-info li:last-child {
+            border-bottom: none;
+        }
+        .daftar-info li i {
+            color: #B57F50;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .keterangan-kuota {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7A5533;
+            font-weight: 500;
+        }
+        .keterangan-kuota span {
+            font-weight: 700;
+            color: #8B5A2B;
         }
     </style>
 </head>
-<body class="p-6 max-w-md mx-auto">
-    <div class="flex justify-between items-center mb-8">
-        <div>
-            <h1 class="text-2xl font-bold text-pinkDark">BATTLE OF MASTER</h1>
-            <p class="text-gray-600 text-sm">Turnamen Free Fire Para Cees Elite</p>
+<body>
+    <div class="wadah-utama">
+        <!-- BAGIAN ATAS -->
+        <div class="bagian-atas">
+            <div class="judul-atas">
+                <h1>BATTLE OF MASTER</h1>
+                <p>Turnamen Free Fire Para Cees Elite</p>
+            </div>
+            <a href="data-admin.html" class="tombol-admin">
+                <i class="fa fa-lock"></i>
+            </a>
         </div>
-        <a href="data-admin.html" class="bg-white p-2 rounded-full shadow-sm">
-            <i class="fa fa-lock text-pinkMain"></i>
-        </a>
-    </div>
 
-    <div class="text-center my-12">
-        <i class="fa fa-trophy text-6xl text-pinkMain mb-4"></i>
-        <h2 class="text-3xl font-bold text-pinkDark mb-3">AYO DAFTARKAN TIM KAMU!</h2>
-        <p class="text-gray-600 mb-8">Bergabunglah di turnamen Battle Of Master, dan buktikan tim kamu yang paling terbaik!</p>
-    </div>
+        <!-- BAGIAN TENGAH -->
+        <div class="bagian-tengah">
+            <div class="ikon-piala">
+                <i class="fa fa-trophy"></i>
+            </div>
+            <h2 class="judul-utama">AYO DAFTARKAN TIM KAMU!</h2>
+            <p class="deskripsi">
+                Bergabunglah di turnamen Battle Of Master, dan buktikan tim kamu yang paling terbaik!
+            </p>
+        </div>
 
-    <!-- PILIH JENIS PENDAFTARAN -->
-    <div class="space-y-4 mb-8">
-        <button onclick="window.location.href='formulir.html?jenis=gratis'" class="btn-gratis w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-2">
-            <i class="fa fa-gift"></i> PENDAFTARAN GRATIS
-        </button>
-        <button onclick="window.location.href='formulir.html?jenis=berbayar'" class="btn-bayar w-full py-4 rounded-xl text-white font-bold text-lg flex items-center justify-center gap-2">
-            <i class="fa fa-credit-card"></i> PENDAFTARAN BERBAYAR
-        </button>
-    </div>
+        <!-- PILIHAN PENDAFTARAN -->
+        <div class="pilihan-daftar">
+            <button onclick="window.location.href='formulir.html?jenis=gratis'" class="tombol-pilihan tombol-gratis">
+                <i class="fa fa-gift"></i> PENDAFTARAN GRATIS
+            </button>
+            <button onclick="window.location.href='formulir.html?jenis=berbayar'" class="tombol-pilihan tombol-berbayar">
+                <i class="fa fa-credit-card"></i> PENDAFTARAN BERBAYAR
+            </button>
+        </div>
 
-    <div class="bg-white rounded-xl p-5 shadow-sm">
-        <h3 class="font-bold text-pinkDark mb-3 flex items-center gap-2">
-            <i class="fa fa-info-circle"></i> Informasi Penting
-        </h3>
-        <ul class="text-gray-700 text-sm space-y-2">
-            <li>• Biaya berbayar: Rp 5.000 / Tim</li>
-            <li>• Kuota terbatas: Maksimal 16 Tim</li>
-            <li>• Format: 4 Inti + 2 Cadangan</li>
-            <li>• Waktu pendaftaran: 20 Juli - 30 Juli 2026</li>
-        </ul>
+        <!-- INFORMASI PENTING -->
+        <div class="kotak-info">
+            <h3 class="judul-info">
+                <i class="fa fa-info-circle"></i> INFORMASI PENTING
+            </h3>
+            <ul class="daftar-info">
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    Biaya berbayar: Rp 5.000 / Tim
+                </li>
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    Kuota terbatas: Maksimal 16 Tim
+                </li>
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    Format: 4 Inti + 2 Cadangan
+                </li>
+                <li>
+                    <i class="fa fa-check-circle"></i>
+                    Waktu pendaftaran: 20 Juli - 30 Juli 2026
+                </li>
+            </ul>
+        </div>
+
+        <!-- KETERANGAN SISA KUOTA -->
+        <div class="keterangan-kuota">
+            Sisa kuota saat ini: <span id="sisaKuota">16</span> Tim
+        </div>
     </div>
 
     <script>
-        // Cek jika pendaftaran ditutup
-        const pengaturan = {
-            kuota: parseInt(localStorage.getItem('kuotaMaksimal') || '16'),
-            dibuka: localStorage.getItem('pendaftaranDibuka') !== 'false',
-            total: JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length
-        };
-        if(!pengaturan.dibuka || pengaturan.total >= pengaturan.kuota) {
+        // Tampilkan sisa kuota otomatis
+        const kuotaMaksimal = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
+        const totalTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
+        const sisa = kuotaMaksimal - totalTerdaftar;
+        document.getElementById('sisaKuota').textContent = sisa > 0 ? sisa : 'HABIS';
+
+        // Cek jika pendaftaran ditutup/penuh
+        if(!localStorage.getItem('pendaftaranDibuka') || sisa <= 0) {
+            const tombol = document.querySelectorAll('.tombol-pilihan');
+            tombol.forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+                btn.style.cursor = 'not-allowed';
+            });
             alert("⚠️ Pendaftaran sudah ditutup atau kuota sudah penuh!");
-            document.querySelectorAll('button').forEach(b => b.disabled = true);
         }
     </script>
 </body>
