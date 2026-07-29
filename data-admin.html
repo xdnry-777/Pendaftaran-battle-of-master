@@ -33,205 +33,68 @@
             padding: 16px;
             min-height: 100vh;
         }
-
-        /* TAMPILAN LOGIN KHUSUS - TIDAK ADA KOTAK STANDAR */
         .layar-login {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 9999;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+            display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 9999;
         }
         .kotak-login {
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 32px 24px;
-            width: 100%;
-            max-width: 360px;
-            box-shadow: 0 8px 30px rgba(139,90,43,0.25);
+            background: #FFFFFF; border-radius: 16px; padding: 32px 24px;
+            width: 100%; max-width: 360px; box-shadow: 0 8px 30px rgba(139,90,43,0.25);
             border: 2px solid #E8D4C0;
         }
-        .kotak-login h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #8B5A2B;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        .kotak-login p {
-            font-size: 14px;
-            color: #7A5533;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        .kotak-login h2 { font-size: 22px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:8px; }
+        .kotak-login p { font-size:14px; color:#7A5533; text-align:center; margin-bottom:20px; }
         .input-kode {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #E8D4C0;
-            border-radius: 10px;
-            font-size: 16px;
-            text-align: center;
-            outline: none;
-            transition: 0.2s;
-            margin-bottom: 16px;
-            background: #FFF;
+            width:100%; padding:14px 16px; border:2px solid #E8D4C0; border-radius:10px;
+            font-size:16px; text-align:center; outline:none; margin-bottom:16px;
         }
-        .input-kode:focus {
-            border-color: #8B5A2B;
-            background: #FFF;
-        }
-        .grup-tombol {
-            display: flex;
-            gap: 10px;
-        }
-        .tombol-batal {
-            flex: 1;
-            padding: 13px;
-            border: 2px solid #E8D4C0;
-            background: #FFF;
-            color: #8B5A2B;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 15px;
-        }
-        .tombol-batal:hover {
-            background: #FFF5EB;
-        }
-        .tombol-masuk {
-            flex: 1;
-            padding: 13px;
-            border: none;
-            background: linear-gradient(90deg, #B57F50 0%, #8B5A2B 100%);
-            color: #FFF;
-            font-weight: 700;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 15px;
-        }
-        .tombol-masuk:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139,90,43,0.2);
-        }
-
-        /* ISI HALAMAN ADMIN */
-        .wadah {
-            max-width: 480px;
-            margin: 0 auto;
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 15px rgba(139,90,43,0.15);
-        }
-        .kembali {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #8B5A2B;
-            font-weight: 600;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-size: 15px;
-        }
-        .kembali:hover { color: #654321; }
-        .judul {
-            font-size: 26px;
-            font-weight: 700;
-            color: #8B5A2B;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-        .status {
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        .status.buka { background: #E6FFFA; color: #2E8B57; border: 2px solid #2E8B57; }
-        .status.tutup { background: #FFEEEE; color: #DC143C; border: 2px solid #DC143C; }
-        .tombol {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 12px;
-            transition: 0.2s;
-        }
-        .tombol.buka { background: #2E8B57; color: #FFF; }
-        .tombol.tutup { background: #DC143C; color: #FFF; }
-        .tombol.merah { background: #B57F50; color: #FFF; }
-        .tombol:hover { transform: translateY(-2px); }
-        .info {
-            background: #FFF5EB;
-            border: 2px solid #E8D4C0;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        .jumlah { font-size: 24px; font-weight: 700; color: #8B5A2B; margin: 8px 0; }
-        .tim {
-            border: 2px solid #E8D4C0;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            background: #FFF;
-        }
-        .tim h4 { color: #8B5A2B; font-size: 18px; margin-bottom: 8px; }
-        .tim p { font-size: 14px; color: #654321; margin: 4px 0; }
-        .tim img { max-width: 100px; border-radius: 8px; margin: 8px 4px; cursor: pointer; }
-        .sembunyi { display: none !important; }
+        .input-kode:focus { border-color:#8B5A2B; }
+        .grup-tombol { display:flex; gap:10px; }
+        .tombol-batal { flex:1; padding:13px; border:2px solid #E8D4C0; background:#FFF; color:#8B5A2B; font-weight:600; border-radius:10px; cursor:pointer; }
+        .tombol-masuk { flex:1; padding:13px; border:none; background:linear-gradient(90deg,#B57F50,#8B5A2B); color:#FFF; font-weight:700; border-radius:10px; cursor:pointer; }
+        .wadah { max-width:480px; margin:0 auto; background:#FFF; border-radius:16px; padding:24px; box-shadow:0 4px 15px rgba(139,90,43,0.15); }
+        .kembali { display:flex; align-items:center; gap:6px; color:#8B5A2B; font-weight:600; text-decoration:none; margin-bottom:20px; font-size:15px; }
+        .judul { font-size:26px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:16px; }
+        .status { padding:12px; border-radius:10px; text-align:center; font-weight:600; margin-bottom:20px; }
+        .status.buka { background:#E6FFFA; color:#2E8B57; border:2px solid #2E8B57; }
+        .status.tutup { background:#FFEEEE; color:#DC143C; border:2px solid #DC143C; }
+        .tombol { width:100%; padding:14px; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; margin-bottom:12px; }
+        .tombol.buka { background:#2E8B57; color:#FFF; }
+        .tombol.tutup { background:#DC143C; color:#FFF; }
+        .tombol.merah { background:#B57F50; color:#FFF; }
+        .info { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; text-align:center; }
+        .jumlah { font-size:24px; font-weight:700; color:#8B5A2B; margin:8px 0; }
+        .tim { border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:12px; background:#FFF; }
+        .tim h4 { color:#8B5A2B; font-size:18px; margin-bottom:8px; }
+        .tim p { font-size:14px; color:#654321; margin:4px 0; }
+        .tim img { max-width:100px; border-radius:8px; margin:8px 4px; cursor:pointer; }
+        .sembunyi { display:none !important; }
     </style>
 </head>
 <body>
-
-<!-- LAYAR LOGIN KHUSUS - TIDAK ADA LAGI KOTAK BAWAAAN -->
 <div id="layarLogin" class="layar-login">
     <div class="kotak-login">
         <h2>🔐 AKSES ADMIN</h2>
         <p>Masukkan kode rahasia untuk mengelola turnamen</p>
-        <input type="password" id="inputKode" class="input-kode" placeholder="Ketik kode akses di sini">
+        <input type="password" id="inputKode" class="input-kode" placeholder="Ketik kode akses">
         <div class="grup-tombol">
-            <button class="tombol-batal" onclick="window.location.href='index.html'">BATAL</button>
+            <button class="tombol-batal" onclick="location.href='index.html'">BATAL</button>
             <button class="tombol-masuk" onclick="prosesLogin()">MASUK</button>
         </div>
     </div>
 </div>
 
-<!-- ISI HALAMAN ADMIN -->
 <div id="isiAdmin" class="wadah sembunyi">
     <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">PENGATURAN & DATA PENDAFTARAN</h1>
-
-    <div id="statusPendaftaran" class="status tutup">
-        <i class="fa fa-info-circle"></i> Memuat status...
-    </div>
-
-    <button id="tombolBukaTutup" class="tombol tutup" onclick="ubahStatus()">
-        Memuat...
-    </button>
-
+    <div id="statusPendaftaran" class="status tutup">Memuat status...</div>
+    <button id="tombolBukaTutup" class="tombol tutup" onclick="ubahStatus()">Memuat...</button>
     <div class="info">
         <p>Jumlah Tim Terdaftar:</p>
         <div class="jumlah" id="jumlahTim">0 / 16</div>
     </div>
-
-    <button class="tombol merah" onclick="simpanCadangan()">
-        <i class="fa fa-download"></i> Simpan & Cadangkan Semua Data
-    </button>
-    <button class="tombol tutup" onclick="kosongkanData()">
-        <i class="fa fa-trash"></i> Kosongkan Data Pendaftaran
-    </button>
-
+    <button class="tombol merah" onclick="simpanCadangan()"><i class="fa fa-download"></i> Simpan & Cadangkan Data</button>
+    <button class="tombol tutup" onclick="kosongkanData()"><i class="fa fa-trash"></i> Kosongkan Data Pendaftaran</button>
     <hr style="margin:20px 0; border-color:#E8D4C0;">
     <h3 style="color:#8B5A2B; margin-bottom:12px;">DAFTAR TIM PENDAFTAR</h3>
     <div id="daftarTim"></div>
@@ -240,58 +103,49 @@
 <script>
 const KODE_ADMIN = "BOM2026";
 
-// PROSES LOGIN TANPA KOTAK BAWAAAN
 function prosesLogin() {
     const input = document.getElementById('inputKode').value.trim();
     if(input === KODE_ADMIN) {
         document.getElementById('layarLogin').classList.add('sembunyi');
         document.getElementById('isiAdmin').classList.remove('sembunyi');
-        tampilStatus();
-        tampilData();
+        tampilStatus(); tampilData();
     } else {
-        alert("❌ Kode akses salah! Coba lagi ya.");
+        alert("❌ Kode akses salah!");
         document.getElementById('inputKode').value = "";
-        document.getElementById('inputKode').focus();
     }
 }
+document.getElementById('inputKode').addEventListener('keydown', e=>{if(e.key==='Enter') prosesLogin();});
 
-// Bisa tekan Enter untuk masuk
-document.getElementById('inputKode').addEventListener('keydown', e => {
-    if(e.key === 'Enter') prosesLogin();
-});
-
-// UBAH STATUS PENDAFTARAN
+// FUNGSI UBAH STATUS YANG PASTI BERHASIL
 function ubahStatus() {
     const sekarang = localStorage.getItem('pendaftaranDibuka') === 'true';
     if(sekarang) {
-        const konfirmasi = confirm("⚠️ Yakin ingin MENUTUP pendaftaran?\nSetelah ditutup, pendaftar tidak bisa mengirim formulir lagi!");
-        if(!konfirmasi) return;
+        if(!confirm("⚠️ Yakin ingin MENUTUP pendaftaran?\nPendaftar tidak bisa kirim formulir lagi!")) return;
         localStorage.setItem('pendaftaranDibuka', 'false');
-        alert("✅ Pendaftaran BERHASIL DITUTUP!\nPendaftar sekarang tidak bisa mengirim data.");
+        alert("✅ Pendaftaran BERHASIL DITUTUP!\nPerubahan langsung berlaku.");
     } else {
-        const konfirmasi = confirm("⚠️ Yakin ingin MEMBUKA pendaftaran?");
-        if(!konfirmasi) return;
+        if(!confirm("⚠️ Yakin ingin MEMBUKA pendaftaran?")) return;
         localStorage.setItem('pendaftaranDibuka', 'true');
-        alert("✅ Pendaftaran BERHASIL DIBUKA!\nPendaftar sekarang bisa mengirim formulir.");
+        alert("✅ Pendaftaran BERHASIL DIBUKA!\nPendaftar bisa mengisi kembali.");
     }
     tampilStatus();
 }
 
 function tampilStatus() {
     const buka = localStorage.getItem('pendaftaranDibuka') === 'true';
-    const tombol = document.getElementById('tombolBukaTutup');
-    const status = document.getElementById('statusPendaftaran');
     const kuota = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
     const total = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
+    const status = document.getElementById('statusPendaftaran');
+    const tombol = document.getElementById('tombolBukaTutup');
 
     if(buka && total < kuota) {
         status.className = "status buka";
-        status.innerHTML = `<i class="fa fa-check-circle"></i> PENDAFTARAN SEDANG DIBUKA • Sisa ${kuota-total} kuota`;
+        status.innerHTML = `<i class="fa fa-check-circle"></i> PENDAFTARAN DIBUKA • Sisa ${kuota-total} kuota`;
         tombol.className = "tombol tutup";
         tombol.innerHTML = `<i class="fa fa-lock"></i> TUTUP PENDAFTARAN`;
     } else {
         status.className = "status tutup";
-        status.innerHTML = `<i class="fa fa-times-circle"></i> PENDAFTARAN SUDAH DITUTUP ${total>=kuota?"(Kuota Penuh)":""}`;
+        status.innerHTML = `<i class="fa fa-times-circle"></i> PENDAFTARAN DITUTUP ${total>=kuota?"(Kuota Penuh)":""}`;
         tombol.className = "tombol buka";
         tombol.innerHTML = `<i class="fa fa-unlock"></i> BUKA PENDAFTARAN`;
     }
@@ -300,44 +154,33 @@ function tampilStatus() {
 
 function simpanCadangan() {
     const data = localStorage.getItem('dataPendaftaran') || '[]';
-    const namaFile = "PENDAFTARAN BATTLE OF MASTER S1 - " + new Date().toLocaleDateString('id-ID') + ".json";
+    const nama = "PENDAFTARAN BATTLE OF MASTER S1 - " + new Date().toLocaleDateString('id-ID') + ".json";
     const blob = new Blob([data], {type:'application/json'});
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = namaFile;
-    link.click();
-    URL.revokeObjectURL(link.href);
-    alert("✅ Data berhasil disimpan ke file!");
+    link.href = URL.createObjectURL(blob); link.download = nama; link.click();
+    URL.revokeObjectURL(link.href); alert("✅ Data tersimpan!");
 }
 
 function kosongkanData() {
-    const konfirmasi = confirm("⚠️ Yakin ingin menghapus SEMUA data pendaftaran?\nData yang sudah dicadangkan tetap aman di file yang kamu unduh.");
-    if(!konfirmasi) return;
+    if(!confirm("⚠️ Yakin hapus SEMUA data pendaftaran?")) return;
     localStorage.removeItem('dataPendaftaran');
-    tampilStatus();
-    tampilData();
-    alert("✅ Data pendaftaran sudah dikosongkan!");
+    tampilStatus(); tampilData(); alert("✅ Data dikosongkan!");
 }
 
 function tampilData() {
     const wadah = document.getElementById('daftarTim');
     const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
     wadah.innerHTML = "";
-    if(semua.length === 0) {
-        wadah.innerHTML = `<p style="text-align:center; color:#887058;">Belum ada tim yang mendaftar</p>`;
-        return;
-    }
-    semua.forEach((tim, urut) => {
-        const kotak = document.createElement('div');
-        kotak.className = "tim";
+    if(semua.length === 0) { wadah.innerHTML = `<p style="text-align:center; color:#887058;">Belum ada tim</p>`; return; }
+    semua.forEach((tim,urut)=>{
+        const kotak = document.createElement('div'); kotak.className = "tim";
         kotak.innerHTML = `
             <h4>TIM KE-${urut+1}: ${tim.namaTim}</h4>
             <p><b>Kapten:</b> ${tim.namaKapten}</p>
-            <p><b>WA Kapten:</b> ${tim.waKapten}</p>
-            <p><b>Jenis Daftar:</b> ${tim.jenis.toUpperCase()}</p>
-            ${tim.logo?`<p><b>Logo Tim:</b></p><img src="${tim.logo}" alt="Logo" onclick="window.open('${tim.logo}')">`:""}
-            ${tim.jersey?`<p><b>Jersey Tim:</b></p><img src="${tim.jersey}" alt="Jersey" onclick="window.open('${tim.jersey}')">`:""}
-            <p><b>Anggota Tim:</b></p>
+            <p><b>WA:</b> ${tim.waKapten}</p>
+            ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
+            ${tim.jersey?`<p><b>Jersey:</b></p><img src="${tim.jersey}" onclick="window.open('${tim.jersey}')">`:""}
+            <p><b>Anggota:</b></p>
             ${tim.anggota.map((a,i)=>`<p>• Pemain ${i+1}: ${a.nama} (${a.wa})</p>`).join('')}
         `;
         wadah.appendChild(kotak);
