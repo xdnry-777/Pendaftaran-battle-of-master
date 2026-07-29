@@ -55,15 +55,17 @@
         .wadah { max-width:480px; margin:0 auto; background:#FFF; border-radius:16px; padding:24px; box-shadow:0 4px 15px rgba(139,90,43,0.15); }
         .kembali { display:flex; align-items:center; gap:6px; color:#8B5A2B; font-weight:600; text-decoration:none; margin-bottom:20px; font-size:15px; }
         .judul { font-size:26px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:16px; }
-        .status { padding:12px; border-radius:10px; text-align:center; font-weight:600; margin-bottom:20px; }
+        .kotak-status { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; }
+        .label-status { font-size:15px; font-weight:600; color:#654321; margin-bottom:8px; display:block; }
+        .status { padding:10px; border-radius:8px; text-align:center; font-weight:600; margin-bottom:10px; }
         .status.buka { background:#E6FFFA; color:#2E8B57; border:2px solid #2E8B57; }
         .status.tutup { background:#FFEEEE; color:#DC143C; border:2px solid #DC143C; }
-        .tombol { width:100%; padding:14px; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; margin-bottom:12px; }
+        .tombol { width:100%; padding:13px; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; margin-bottom:10px; }
         .tombol.buka { background:#2E8B57; color:#FFF; }
         .tombol.tutup { background:#DC143C; color:#FFF; }
         .tombol.merah { background:#B57F50; color:#FFF; }
         .info { background:#FFF5EB; border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:16px; text-align:center; }
-        .jumlah { font-size:24px; font-weight:700; color:#8B5A2B; margin:8px 0; }
+        .jumlah { font-size:22px; font-weight:700; color:#8B5A2B; margin:8px 0; }
         .tim { border:2px solid #E8D4C0; border-radius:12px; padding:16px; margin-bottom:12px; background:#FFF; }
         .tim h4 { color:#8B5A2B; font-size:18px; margin-bottom:8px; }
         .tim p { font-size:14px; color:#654321; margin:4px 0; }
@@ -87,14 +89,29 @@
 <div id="isiAdmin" class="wadah sembunyi">
     <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">PENGATURAN & DATA PENDAFTARAN</h1>
-    <div id="statusPendaftaran" class="status tutup">Memuat status...</div>
-    <button id="tombolBukaTutup" class="tombol tutup" onclick="ubahStatus()">Memuat...</button>
+
+    <!-- BAGIAN PENDAFTARAN GRATIS -->
+    <div class="kotak-status">
+        <span class="label-status">🎁 PENDAFTARAN GRATIS</span>
+        <div id="statusGratis" class="status tutup">Memuat...</div>
+        <button id="tombolGratis" class="tombol tutup" onclick="ubahGratis()">Memuat...</button>
+    </div>
+
+    <!-- BAGIAN PENDAFTARAN BERBAYAR -->
+    <div class="kotak-status">
+        <span class="label-status">💳 PENDAFTARAN BERBAYAR</span>
+        <div id="statusBayar" class="status tutup">Memuat...</div>
+        <button id="tombolBayar" class="tombol tutup" onclick="ubahBayar()">Memuat...</button>
+    </div>
+
     <div class="info">
         <p>Jumlah Tim Terdaftar:</p>
         <div class="jumlah" id="jumlahTim">0 / 16</div>
     </div>
+
     <button class="tombol merah" onclick="simpanCadangan()"><i class="fa fa-download"></i> Simpan & Cadangkan Data</button>
     <button class="tombol tutup" onclick="kosongkanData()"><i class="fa fa-trash"></i> Kosongkan Data Pendaftaran</button>
+
     <hr style="margin:20px 0; border-color:#E8D4C0;">
     <h3 style="color:#8B5A2B; margin-bottom:12px;">DAFTAR TIM PENDAFTAR</h3>
     <div id="daftarTim"></div>
@@ -108,7 +125,7 @@ function prosesLogin() {
     if(input === KODE_ADMIN) {
         document.getElementById('layarLogin').classList.add('sembunyi');
         document.getElementById('isiAdmin').classList.remove('sembunyi');
-        tampilStatus(); tampilData();
+        tampilSemuaStatus(); tampilData();
     } else {
         alert("❌ Kode akses salah!");
         document.getElementById('inputKode').value = "";
@@ -116,39 +133,72 @@ function prosesLogin() {
 }
 document.getElementById('inputKode').addEventListener('keydown', e=>{if(e.key==='Enter') prosesLogin();});
 
-// FUNGSI UBAH STATUS YANG PASTI BERHASIL
-function ubahStatus() {
-    const sekarang = localStorage.getItem('pendaftaranDibuka') === 'true';
+// UBAH STATUS PENDAFTARAN GRATIS
+function ubahGratis() {
+    const sekarang = localStorage.getItem('gratisDibuka') === 'true';
     if(sekarang) {
-        if(!confirm("⚠️ Yakin ingin MENUTUP pendaftaran?\nPendaftar tidak bisa kirim formulir lagi!")) return;
-        localStorage.setItem('pendaftaranDibuka', 'false');
-        alert("✅ Pendaftaran BERHASIL DITUTUP!\nPerubahan langsung berlaku.");
+        if(!confirm("⚠️ Yakin ingin MENUTUP PENDAFTARAN GRATIS?\nPendaftar gratis tidak bisa kirim formulir lagi!")) return;
+        localStorage.setItem('gratisDibuka', 'false');
+        alert("✅ PENDAFTARAN GRATIS BERHASIL DITUTUP!");
     } else {
-        if(!confirm("⚠️ Yakin ingin MEMBUKA pendaftaran?")) return;
-        localStorage.setItem('pendaftaranDibuka', 'true');
-        alert("✅ Pendaftaran BERHASIL DIBUKA!\nPendaftar bisa mengisi kembali.");
+        if(!confirm("⚠️ Yakin ingin MEMBUKA PENDAFTARAN GRATIS?")) return;
+        localStorage.setItem('gratisDibuka', 'true');
+        alert("✅ PENDAFTARAN GRATIS BERHASIL DIBUKA!");
     }
-    tampilStatus();
+    tampilSemuaStatus();
 }
 
-function tampilStatus() {
-    const buka = localStorage.getItem('pendaftaranDibuka') === 'true';
+// UBAH STATUS PENDAFTARAN BERBAYAR
+function ubahBayar() {
+    const sekarang = localStorage.getItem('bayarDibuka') === 'true';
+    if(sekarang) {
+        if(!confirm("⚠️ Yakin ingin MENUTUP PENDAFTARAN BERBAYAR?\nPendaftar berbayar tidak bisa kirim formulir lagi!")) return;
+        localStorage.setItem('bayarDibuka', 'false');
+        alert("✅ PENDAFTARAN BERBAYAR BERHASIL DITUTUP!");
+    } else {
+        if(!confirm("⚠️ Yakin ingin MEMBUKA PENDAFTARAN BERBAYAR?")) return;
+        localStorage.setItem('bayarDibuka', 'true');
+        alert("✅ PENDAFTARAN BERBAYAR BERHASIL DIBUKA!");
+    }
+    tampilSemuaStatus();
+}
+
+function tampilSemuaStatus() {
     const kuota = parseInt(localStorage.getItem('kuotaMaksimal') || '16');
     const total = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').length;
-    const status = document.getElementById('statusPendaftaran');
-    const tombol = document.getElementById('tombolBukaTutup');
 
-    if(buka && total < kuota) {
-        status.className = "status buka";
-        status.innerHTML = `<i class="fa fa-check-circle"></i> PENDAFTARAN DIBUKA • Sisa ${kuota-total} kuota`;
-        tombol.className = "tombol tutup";
-        tombol.innerHTML = `<i class="fa fa-lock"></i> TUTUP PENDAFTARAN`;
+    // Tampil Gratis
+    const bukaGratis = localStorage.getItem('gratisDibuka') === 'true';
+    const stGratis = document.getElementById('statusGratis');
+    const tbGratis = document.getElementById('tombolGratis');
+    if(bukaGratis && total < kuota) {
+        stGratis.className = "status buka";
+        stGratis.innerHTML = `<i class="fa fa-check-circle"></i> SEDANG DIBUKA`;
+        tbGratis.className = "tombol tutup";
+        tbGratis.innerHTML = `<i class="fa fa-lock"></i> TUTUP GRATIS`;
     } else {
-        status.className = "status tutup";
-        status.innerHTML = `<i class="fa fa-times-circle"></i> PENDAFTARAN DITUTUP ${total>=kuota?"(Kuota Penuh)":""}`;
-        tombol.className = "tombol buka";
-        tombol.innerHTML = `<i class="fa fa-unlock"></i> BUKA PENDAFTARAN`;
+        stGratis.className = "status tutup";
+        stGratis.innerHTML = `<i class="fa fa-times-circle"></i> SUDAH DITUTUP`;
+        tbGratis.className = "tombol buka";
+        tbGratis.innerHTML = `<i class="fa fa-unlock"></i> BUKA GRATIS`;
     }
+
+    // Tampil Berbayar
+    const bukaBayar = localStorage.getItem('bayarDibuka') === 'true';
+    const stBayar = document.getElementById('statusBayar');
+    const tbBayar = document.getElementById('tombolBayar');
+    if(bukaBayar && total < kuota) {
+        stBayar.className = "status buka";
+        stBayar.innerHTML = `<i class="fa fa-check-circle"></i> SEDANG DIBUKA`;
+        tbBayar.className = "tombol tutup";
+        tbBayar.innerHTML = `<i class="fa fa-lock"></i> TUTUP BERBAYAR`;
+    } else {
+        stBayar.className = "status tutup";
+        stBayar.innerHTML = `<i class="fa fa-times-circle"></i> SUDAH DITUTUP`;
+        tbBayar.className = "tombol buka";
+        tbBayar.innerHTML = `<i class="fa fa-unlock"></i> BUKA BERBAYAR`;
+    }
+
     document.getElementById('jumlahTim').textContent = `${total} / ${kuota}`;
 }
 
@@ -164,7 +214,7 @@ function simpanCadangan() {
 function kosongkanData() {
     if(!confirm("⚠️ Yakin hapus SEMUA data pendaftaran?")) return;
     localStorage.removeItem('dataPendaftaran');
-    tampilStatus(); tampilData(); alert("✅ Data dikosongkan!");
+    tampilSemuaStatus(); tampilData(); alert("✅ Data dikosongkan!");
 }
 
 function tampilData() {
@@ -175,7 +225,7 @@ function tampilData() {
     semua.forEach((tim,urut)=>{
         const kotak = document.createElement('div'); kotak.className = "tim";
         kotak.innerHTML = `
-            <h4>TIM KE-${urut+1}: ${tim.namaTim}</h4>
+            <h4>TIM KE-${urut+1}: ${tim.namaTim} <span style="font-size:13px; font-weight:normal; color:#7A5533;">(${tim.jenis.toUpperCase()})</span></h4>
             <p><b>Kapten:</b> ${tim.namaKapten}</p>
             <p><b>WA:</b> ${tim.waKapten}</p>
             ${tim.logo?`<p><b>Logo:</b></p><img src="${tim.logo}" onclick="window.open('${tim.logo}')">`:""}
