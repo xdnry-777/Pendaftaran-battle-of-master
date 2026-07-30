@@ -42,15 +42,18 @@
             border: 2px solid #E8D4C0;
         }
         .kotak-login h2 { font-size: 22px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:8px; }
-        .kotak-login p { font-size:14px; color:#7A5533; text-align:center; margin-bottom:20px; }
+        .kotak-login p { font-size:14px; color:#7A5533; text-align:center; margin-bottom:16px; }
+        .peringatan { background:#FFEEEE; border:2px solid #DC143C; border-radius:10px; padding:12px; margin-bottom:16px; text-align:center; font-size:14px; color:#DC143C; font-weight:600; }
         .input-kode {
             width:100%; padding:14px 16px; border:2px solid #E8D4C0; border-radius:10px;
             font-size:16px; text-align:center; outline:none; margin-bottom:16px;
         }
+        .input-kode:disabled { background:#F0E6D8; cursor:not-allowed; }
         .input-kode:focus { border-color:#8B5A2B; }
         .grup-tombol { display:flex; gap:10px; }
         .tombol-batal { flex:1; padding:13px; border:2px solid #E8D4C0; background:#FFF; color:#8B5A2B; font-weight:600; border-radius:10px; cursor:pointer; }
         .tombol-masuk { flex:1; padding:13px; border:none; background:linear-gradient(90deg,#B57F50,#8B5A2B); color:#FFF; font-weight:700; border-radius:10px; cursor:pointer; }
+        .tombol-masuk:disabled { background:#C9B8A5; cursor:not-allowed; }
         .wadah { max-width:480px; margin:0 auto; background:#FFF; border-radius:16px; padding:24px; box-shadow:0 4px 15px rgba(139,90,43,0.15); }
         .kembali { display:flex; align-items:center; gap:6px; color:#8B5A2B; font-weight:600; text-decoration:none; margin-bottom:20px; font-size:15px; }
         .judul { font-size:26px; font-weight:700; color:#8B5A2B; text-align:center; margin-bottom:20px; }
@@ -83,10 +86,11 @@
     <div class="kotak-login">
         <h2>🔐 AKSES ADMIN</h2>
         <p>Masukkan kode rahasia untuk mengelola turnamen</p>
+        <div id="pesanPeringatan" class="peringatan sembunyi"></div>
         <input type="password" id="inputKode" class="input-kode" placeholder="Ketik kode akses">
         <div class="grup-tombol">
             <button class="tombol-batal" onclick="location.href='index.html'">BATAL</button>
-            <button class="tombol-masuk" onclick="prosesLogin()">MASUK</button>
+            <button id="btnMasuk" class="tombol-masuk" onclick="prosesLogin()">MASUK</button>
         </div>
     </div>
 </div>
@@ -95,7 +99,6 @@
     <a href="index.html" class="kembali"><i class="fa fa-arrow-left"></i> Kembali ke Beranda</a>
     <h1 class="judul">PENGATURAN & DATA PENDAFTARAN</h1>
 
-    <!-- KARTU PENDAFTARAN GRATIS -->
     <div class="kartu">
         <h3 class="judul-kartu">🎁 PENDAFTARAN GRATIS</h3>
         <div id="statusGratis" class="status tutup">Memuat...</div>
@@ -107,7 +110,6 @@
         <button id="tombolGratis" class="tombol tutup" onclick="ubahGratis()">Memuat...</button>
     </div>
 
-    <!-- KARTU PENDAFTARAN BERBAYAR -->
     <div class="kartu">
         <h3 class="judul-kartu">💳 PENDAFTARAN BERBAYAR</h3>
         <div id="statusBayar" class="status tutup">Memuat...</div>
@@ -129,7 +131,6 @@
 
     <hr style="margin:20px 0; border-color:#E8D4C0;">
 
-    <!-- BAGIAN DAFTAR TIM TERPISAH -->
     <h3 class="judul-daftar judul-gratis">🎁 DAFTAR TIM GRATIS</h3>
     <div id="daftarGratis"></div>
 
@@ -139,27 +140,76 @@
 
 <script>
 const KODE_ADMIN = "BOM2026";
+const MAKS_SALAH = 5;
+const KUNCI_DURASI = 24 * 60 * 60 * 1000; // 24 JAM
 
-// Inisialisasi nilai awal jika belum ada
+// Inisialisasi data percobaan
+if(!localStorage.getItem('salahCoba')) localStorage.setItem('salahCoba','0');
+if(!localStorage.getItem('waktuKunci')) localStorage.setItem('waktuKunci','0');
+
+const inputKode = document.getElementById('inputKode');
+const btnMasuk = document.getElementById('btnMasuk');
+const pesanPeringatan = document.getElementById('pesanPeringatan');
+
+function cekKunci() {
+    const sekarang = Date.now();
+    const waktuKunci = parseInt(localStorage.getItem('waktuKunci'));
+    const sisaSalah = MAKS_SALAH - parseInt(localStorage.getItem('salahCoba'));
+
+    if(waktuKunci > sekarang) {
+        const sisaJam = Math.ceil((waktuKunci - sekarang) / (60 * 60 * 1000));
+        pesanPeringatan.textContent = `🔒 TERKUNCI! Coba lagi setelah ${sisaJam} jam.`;
+        pesanPeringatan.classList.remove('sembunyi');
+        inputKode.disabled = true;
+        btnMasuk.disabled = true;
+        return true;
+    } else if(sisaSalah <= 2) {
+        pesanPeringatan.textContent = `⚠️ Sisa percobaan: ${sisaSalah} kali lagi!`;
+        pesanPeringatan.classList.remove('sembunyi');
+        return false;
+    } else {
+        pesanPeringatan.classList.add('sembunyi');
+        return false;
+    }
+}
+
+function prosesLogin() {
+    if(cekKunci()) return;
+
+    const input = inputKode.value.trim();
+    if(input === KODE_ADMIN) {
+        localStorage.setItem('salahCoba','0'); // Reset percobaan jika berhasil
+        document.getElementById('layarLogin').classList.add('sembunyi');
+        document.getElementById('isiAdmin').classList.remove('sembunyi');
+        tampilSemuaStatus(); tampilDataTerpisah();
+    } else {
+        let percobaan = parseInt(localStorage.getItem('salahCoba')) + 1;
+        localStorage.setItem('salahCoba', percobaan.toString());
+
+        if(percobaan >= MAKS_SALAH) {
+            const waktuBuka = Date.now() + KUNCI_DURASI;
+            localStorage.setItem('waktuKunci', waktuBuka.toString());
+            pesanPeringatan.textContent = `❌ ${MAKS_SALAH} kali salah! Terkunci selama 24 jam.`;
+            pesanPeringatan.classList.remove('sembunyi');
+            inputKode.disabled = true;
+            btnMasuk.disabled = true;
+        } else {
+            pesanPeringatan.textContent = `❌ Kode salah! Sisa ${MAKS_SALAH - percobaan} kali.`;
+            pesanPeringatan.classList.remove('sembunyi');
+            inputKode.value = "";
+        }
+    }
+}
+
+document.getElementById('inputKode').addEventListener('keydown', e=>{if(e.key==='Enter') prosesLogin();});
+cekKunci(); // Cek kunci saat halaman dibuka
+
+// Sisa fungsi admin tetap sama seperti sebelumnya
 if(!localStorage.getItem('kuotaGratis')) localStorage.setItem('kuotaGratis','8');
 if(!localStorage.getItem('kuotaBayar')) localStorage.setItem('kuotaBayar','8');
 if(!localStorage.getItem('gratisDibuka')) localStorage.setItem('gratisDibuka','false');
 if(!localStorage.getItem('bayarDibuka')) localStorage.setItem('bayarDibuka','false');
 
-function prosesLogin() {
-    const input = document.getElementById('inputKode').value.trim();
-    if(input === KODE_ADMIN) {
-        document.getElementById('layarLogin').classList.add('sembunyi');
-        document.getElementById('isiAdmin').classList.remove('sembunyi');
-        tampilSemuaStatus(); tampilDataTerpisah();
-    } else {
-        alert("❌ Kode akses salah!");
-        document.getElementById('inputKode').value = "";
-    }
-}
-document.getElementById('inputKode').addEventListener('keydown', e=>{if(e.key==='Enter') prosesLogin();});
-
-// Simpan Kuota Gratis
 function simpanKuotaGratis() {
     const nilai = parseInt(document.getElementById('kuotaGratis').value);
     if(nilai <1) { alert("Minimal kuota 1 tim!"); tampilSemuaStatus(); return; }
@@ -168,7 +218,6 @@ function simpanKuotaGratis() {
     tampilSemuaStatus();
 }
 
-// Simpan Kuota Berbayar
 function simpanKuotaBayar() {
     const nilai = parseInt(document.getElementById('kuotaBayar').value);
     if(nilai <1) { alert("Minimal kuota 1 tim!"); tampilSemuaStatus(); return; }
@@ -177,7 +226,6 @@ function simpanKuotaBayar() {
     tampilSemuaStatus();
 }
 
-// Ubah Status Gratis
 function ubahGratis() {
     const sekarang = localStorage.getItem('gratisDibuka') === 'true';
     const kuota = parseInt(localStorage.getItem('kuotaGratis'));
@@ -196,7 +244,6 @@ function ubahGratis() {
     tampilSemuaStatus();
 }
 
-// Ubah Status Berbayar
 function ubahBayar() {
     const sekarang = localStorage.getItem('bayarDibuka') === 'true';
     const kuota = parseInt(localStorage.getItem('kuotaBayar'));
@@ -222,14 +269,12 @@ function tampilSemuaStatus() {
     const jmlGratis = dataSemua.filter(t=>t.jenis==='gratis').length;
     const jmlBayar = dataSemua.filter(t=>t.jenis==='bayar').length;
 
-    // Isi kolom kuota
     document.getElementById('kuotaGratis').value = kuotaGratis;
     document.getElementById('kuotaBayar').value = kuotaBayar;
     document.getElementById('jmlGratis').textContent = `${jmlGratis}/${kuotaGratis}`;
     document.getElementById('jmlBayar').textContent = `${jmlBayar}/${kuotaBayar}`;
     document.getElementById('totalSemua').textContent = `${jmlGratis + jmlBayar} Tim`;
 
-    // Tampil Gratis
     const bukaGratis = localStorage.getItem('gratisDibuka') === 'true';
     const stGratis = document.getElementById('statusGratis');
     const tbGratis = document.getElementById('tombolGratis');
@@ -245,7 +290,6 @@ function tampilSemuaStatus() {
         tbGratis.innerHTML = `<i class="fa fa-unlock"></i> BUKA GRATIS`;
     }
 
-    // Tampil Berbayar
     const bukaBayar = localStorage.getItem('bayarDibuka') === 'true';
     const stBayar = document.getElementById('statusBayar');
     const tbBayar = document.getElementById('tombolBayar');
@@ -267,7 +311,6 @@ function tampilDataTerpisah() {
     const wadahBayar = document.getElementById('daftarBayar');
     const semua = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]');
     
-    // Tampil Tim Gratis
     wadahGratis.innerHTML = "";
     const listGratis = semua.filter(t=>t.jenis==='gratis');
     if(listGratis.length === 0) {
@@ -288,7 +331,6 @@ function tampilDataTerpisah() {
         });
     }
 
-    // Tampil Tim Berbayar
     wadahBayar.innerHTML = "";
     const listBayar = semua.filter(t=>t.jenis==='bayar');
     if(listBayar.length === 0) {
