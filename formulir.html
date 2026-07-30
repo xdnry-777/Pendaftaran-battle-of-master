@@ -77,21 +77,22 @@
             </label>
         </div>
 
+        <!-- BAGIAN PEMBAYARAN KHUSUS BERBAYAR -->
         <div id="bagianBayar" class="bagian sembunyi">
-            <h3 class="judul-bagian">INFORMASI PEMBAYARAN</h3>
+            <h3 class="judul-bagian">💳 INFORMASI PEMBAYARAN</h3>
             <div class="info-bayar">
-                <h4>💳 BIAYA PENDAFTARAN: Rp 5.000 / TIM</h4>
-                <p>Silakan bayar melalui salah satu cara di bawah ini:</p>
+                <h4>BIAYA PENDAFTARAN: Rp 5.000 / TIM</h4>
+                <p>Silakan bayar melalui salah satu cara berikut:</p>
                 
-                <p><b>1. SCAN QRIS</b></p>
+                <p style="margin-top:16px;"><b>1. SCAN QRIS</b></p>
                 <img src="qris.png" alt="QRIS Pembayaran">
-                <p style="font-size:13px; color:#887058;">Bisa untuk semua E-Wallet & Mobile Banking</p>
+                <p style="font-size:13px; color:#887058;">Bisa dipakai untuk semua E-Wallet & Mobile Banking</p>
 
                 <hr style="margin:16px 0; border-color:#E8D4C0;">
 
                 <p><b>2. TRANSFER DANA</b></p>
                 <div class="nomor">0858-XXXX-XXXX</div>
-                <p style="font-size:13px; color:#887058;">Atas Nama: ....................</p>
+                <p style="font-size:13px; color:#887058;">Atas Nama: Nama Kamu Sendiri</p>
             </div>
 
             <label class="label">Bukti Transfer Pembayaran *</label>
@@ -124,7 +125,7 @@ const btnKirim = document.getElementById('btnKirim');
 const bagianShare = document.getElementById('bagianShare');
 const bagianBayar = document.getElementById('bagianBayar');
 
-// CEK STATUS & KUOTA SESUAI JENIS
+// TAMPILKAN SESUAI JENIS PENDAFTARAN
 let dibuka = false;
 let kuotaMaks = 0;
 let jumlahTerdaftar = 0;
@@ -141,6 +142,7 @@ if(jenis === 'gratis') {
     jumlahTerdaftar = JSON.parse(localStorage.getItem('dataPendaftaran') || '[]').filter(t=>t.jenis==='bayar').length;
     teksJenis.textContent = `PENDAFTARAN BERBAYAR • Sisa ${kuotaMaks - jumlahTerdaftar} kuota`;
     bagianShare.classList.add('sembunyi');
+    bagianBayar.classList.remove('sembunyi'); // PASTIKAN BAGIAN BAYAR MUNCUL
 }
 
 if(!dibuka || jumlahTerdaftar >= kuotaMaks) {
@@ -168,7 +170,6 @@ function bacaFile(file) {
 }
 
 async function kirimData() {
-    // CEK ULANG TERBARU SAAT TEKAN KIRIM
     let statusTerbaru = false;
     let kuotaTerbaru = 0;
     let totalTerbaru = 0;
